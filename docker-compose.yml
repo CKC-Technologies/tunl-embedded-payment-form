@@ -7,4 +7,4 @@ services:
     volumes:
      - ./src:/var/www/html
     environment:
-     - API_URL=https://ideposit.atrecon.io
+     - API_URL=https://test-payment.tunl.com
