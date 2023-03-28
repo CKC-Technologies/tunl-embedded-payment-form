@@ -11,16 +11,16 @@ $payment_data = array(
     'comments' => 'My Custom Comments',
     'street' => '2200 Oak St.',
     'zip' => '49203',
-
 );
 
 $tunl_form_options = array(
-    "api_key" => $tunl_api_key,
-    "secret" => $tunl_secret,
-    "iframe_referer" => "https://ideposit.zwco.cc/",
+    "api_key" => $tunl_api_key, // from secrets.php
+    "secret" => $tunl_secret,   // from secrets.php
+    "iframe_referer" => "https://localhost:8082/",
     "payment_data" => $payment_data,
-    "web_hook" => "https://ideposit.zwco.cc/web_hook.php",
-    "custom_style_url" => "https://ideposit.zwco.cc/custom-embed.css?sdf",
+    // can't test webhooks with localhost
+    // "web_hook" => "https://localhost:8082/web_hook.php",
+    "custom_style_url" => "https://localhost:8082/custom-embed.css?sdf",
     "test_mode" => true
 );
 

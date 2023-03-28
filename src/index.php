@@ -6,7 +6,7 @@ $ideposit_sdk = new iDeposit_SDK;
 $tunl_form_options = array(
     "api_key" => $tunl_api_key,
     "secret" => $tunl_secret,
-    "iframe_referer" => "https://ideposit.zwco.cc/",
+    "iframe_referer" => "https://localhost:8082/",
 );
 
 $form = $ideposit_sdk->get_form_url($tunl_form_options);

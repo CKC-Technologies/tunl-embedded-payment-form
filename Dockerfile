@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y nano zip unzip && rm -rf /var/lib/apt/l
 
 RUN apt-get update && apt-get upgrade -y
 
+COPY ./000-default.conf /etc/apache2/sites-enabled/
+RUN apt install ssl-cert;
+RUN a2enmod ssl
+
 # Shut off Apache Server Signature
 RUN echo "ServerSignature Off" >> /etc/apache2/apache2.conf
 RUN echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
