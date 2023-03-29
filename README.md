@@ -14,6 +14,10 @@ The code in this repo currently uses PHP, but could very easily be ported into o
 - [All Available Options](#all-available-options)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
+- [COMPLETE EXAMPLE](#complete-example)
+  - [Client Side HTML](#client-side-html)
+  - [Client Side Javascript](#client-side-javascript)
+  - [PHP Backend](#php-backend)
 - [Troubleshooting](#troubleshooting)
 
 # Pre-Reqs
@@ -249,6 +253,139 @@ All other parameters are optional, but allow much more control over the output.
         </tr>
     </tbody>   
 </table>
+
+# Complete Example
+
+A complete example is already available in less than 100 lines of code in the [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) but we are going to break that down piece by piece here.
+
+In the "complete example" we create a front end client that has a few fields to gather some info from the customer.  This code will not render a very pretty page, but it cuts right to the core of the intention.
+
+#### Client Side HTML
+
+```html
+<style>
+    input, button, modal {display: block; margin-bottom: 10px;}
+    iframe {height: 500px; border: none;}
+</style>
+
+Card Holder Name    <input name="cardholdername" />
+Order No            <input name="ordernum" />
+Comment             <input name="comments" />
+Street              <input name="street" />
+Zip                 <input name="zip" />
+
+<!-- example only, do not use inline event handlers like onclick in production -->
+<button onclick="start()">Make Payment</button>
+
+<modal style="display: none;">
+    <iframe></iframe>
+</modal>
+
+<script src="client-side.js"></script>
+```
+
+This HTML will render a form that looks like so:
+
+![image](https://user-images.githubusercontent.com/2927894/228682190-d425278c-e3ab-45b7-a2b6-cdde903f2ddb.png)
+
+In the code above, the user will fill out there details and click the `Make Payment` button.  This button will call some javascript to generate our unique embeddable form url.  We can then udpate the iframe in our mock modal and display it to the user to fill out their credit card details.
+
+#### Client Side Javascript
+
+The javascript in our example `client-side.js` looks like this:
+
+```javascript
+    async function start() {
+        const payment_data = {
+            cardholdername: document.querySelector('[name=cardholdername]').value,
+            ordernum: document.querySelector('[name=ordernum]').value,
+            comments: document.querySelector('[name=comments]').value,
+            street: document.querySelector('[name=street]').value,
+            zip: document.querySelector('[name=zip]').value,
+        }
+
+        const form = await get_form_url(payment_data);
+        document.querySelector("iframe").src = form.url;
+        document.querySelector("modal").style.display = ''
+    }
+
+    async function get_form_url(payment_data) {
+        const resp = await fetch("",
+            {
+                method: "POST", 
+                body: JSON.stringify(payment_data)
+            }
+        )
+        return await resp.json();
+    }
+```
+
+The `start` function collects the data from the html input fields and stores them in `payment-data` const.  It then passes this data into the `get_form_url` function that we see just below.  
+
+This function just POST's this data back to the page we are already on (which is actually a php page as can be seen in the full example: [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) and then simply returns the parsed JSON directly to the caller.
+
+The `start` function uses these results to update the `src` attribute on the iframe on our html and removes the `display: none` style from our modal.  The user can now see the credit card form as shown in the image below.
+
+![image](https://user-images.githubusercontent.com/2927894/228682312-9c5c8054-f9a5-4534-a90e-3251c8bbc5a0.png)
+
+Not exactly a modal, but you can easily imagine that part!
+
+#### PHP Backend
+
+```php
+    require_once('./secrets.php');
+    require_once("./ideposit-embed-sdk.php");
+    $ideposit_sdk = new iDeposit_SDK;
+
+    // get json payload
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
+
+    $amount = get_amount_from_order($data['ordernum']);
+
+    $payment_data = array(
+        'amount' => $amount,
+        'cardholdername' => $data['cardholdername'] ?? null,
+        'action' => 'preauth',
+        'ordernum' => $data['ordernum'] ?? null,
+        'comments' => $data['comments'] ?? null,
+        'street' => $data['street'] ?? null,
+        'zip' => $data['zip'] ?? null,
+    );
+
+    $tunl_form_options = array(
+        "api_key" => $tunl_api_key,
+        "secret" => $tunl_secret,
+        "iframe_referer" => "https://localhost:8082/",
+        "tunl_sandbox" => true,
+        "payment_data" => $payment_data,
+        // "web_hook" => "https://localhost:8082/web_hook.php",
+        "custom_style_url" => "https://localhost:8082/custom-embed.css",
+        // "debug_mode" => true,
+        "verify_only" => true // true is actually the default value
+    );
+
+    $form = $ideposit_sdk->get_form_url($tunl_form_options);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($form);
+
+```
+
+The above will look familiar as it is basically a copy and paste of "All available options".  The changes that have been made are to be able to receive input via a JSON POST request that takes in the parameters from our HTML form above.
+
+Notice that we are doing a lookup in our own database to set the `amount` field.  This is important to make sure the amount cannot be tampered with by the client performing the request.  The specific implementation here will heavily depened on your own code structure, database, framework, etc.  But the stub function in [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) looks like this:
+
+```php
+function get_amount_from_order($ordernum){
+    // do something to get the payment amount from your database or backend
+    // this prevents abuse of this endpoint and protects against bad actors setting their own amount
+
+    // $amount = fetch_from_db($ordernum);
+    // return $amount;
+    return "123.45";
+}
+```
+
 
 # Troubleshooting
 
