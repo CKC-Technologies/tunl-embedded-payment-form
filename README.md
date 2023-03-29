@@ -25,15 +25,15 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 Before attempting to embed our hosted payment form in your web application,
 you will need an account on our Tunl merchant platform.  https://tunl.com/contact/
 
-Once you have an account, you will need to log in to your Tunl dashboard and create an API Key and Secret.  
-To create your keys, navigate to your Settings page by clicking on the gear icon in the upper left menu bar. Scroll down and select Create API Key.
-
-IMPORTANT: Copy and save your Secret. Your Secret will be inaccessible once you navigate away from this page. If this happens, simply create another set of keys, and delete the inaccessible keys.
-
 Already have an account? Here are some quick links to create API Keys.
 
 - https://merchant.tunl.com/merchant/settings (Production Accounts)
 - https://test.tunl.com/merchant/settings (Test Accounts ONLY)
+
+Once you have an account, you will need to log in to your Tunl dashboard (links provided above) and create an API Key and Secret.  
+To create your keys, navigate to your Settings page by clicking on the gear icon in the upper left menu bar. Scroll down and select Create API Key.
+
+IMPORTANT: Copy and save your Secret. Your Secret will be inaccessible once you navigate away from this page. If this happens, simply create another set of keys, and delete the inaccessible keys.
 
 # Quick Start
 
