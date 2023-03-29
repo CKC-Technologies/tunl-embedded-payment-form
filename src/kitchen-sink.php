@@ -22,7 +22,8 @@ $tunl_form_options = array(
     // can't test webhooks with localhost
     // "web_hook" => "https://localhost:8082/web_hook.php",
     "custom_style_url" => "https://localhost:8082/custom-embed.css",
-    "debug_mode" => true
+    "debug_mode" => true,
+    "verify_only" => true // true is actually the default value
 );
 
 $form = $ideposit_sdk->get_form_url($tunl_form_options);
