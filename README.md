@@ -130,51 +130,51 @@ All other parameters are optional, but allow much more control over the output.
 <table>
     <thead>
         <tr>
-            <td>Param</td>
-            <td>Default</td>
-            <td>Description</td>
+            <th>Param</th>
+            <th>Default</th>
+            <th>Description</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>api_key</td>
-            <td></td>
-            <td></td>
+            <td>null</td>
+            <td>Your Tunl API Key</td>
         </tr>
         <tr>
             <td>secret</td>
-            <td></td>
-            <td></td>
+            <td>null</td>
+            <td>Your Tunl API Secret</td>
         </tr>
         <tr>
             <td>iframe_referer</td>
-            <td></td>
-            <td></td>
+            <td>null</td>
+            <td>Your Domain URL. ie: https://your.domain.com <br> This must be set to the domain you intend to host the embedded form on.</td>
         </tr>
         <tr>
             <td>tunl_sandbox</td>
-            <td></td>
-            <td></td>
+            <td>false</td>
+            <td>Selects the tunl api environment. <br> true = https://test-api.tunl.com <br> false = https://api.tunl.com <br><br> If you created your API keys using a test merchant account via https://test.tunl.com instead of https://merchant.tunl.com then make sure to set this parameter to <code>true</code></td>
         </tr>
         <tr>
             <td>payment_data</td>
-            <td></td>
-            <td></td>
+            <td>[]</td>
+            <td>Type: PHP Associative Array. See example in code snippet above under <code>$payment_data</code> <br> Additional Data to post to the tunl payments endpoint.  See below for info on the available options. </td>
         </tr>
         <tr>
             <td>web_hook</td>
-            <td></td>
-            <td></td>
+            <td>null</td>
+            <td>A url of the endpoint that you own/control to be called upon successful Tunl Payments API submission. <br> See <a href="https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/web_hook.php"><code>src/web_hook.php</code></a> for an example web hook.  </td>
         </tr>
         <tr>
             <td>custom_style_url</td>
-            <td></td>
-            <td></td>
+            <td>null</td>
+            <td>A url to your own custom stylesheet that will be used in the embedded form. <br> See <a href="https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/custom-embed.css"><code>src/custom-embed.css</code></a> for an example stylesheet.</td>
         </tr>
         <tr>
             <td>test_mode</td>
-            <td></td>
-            <td></td>
+            <td>false</td>
+            <td>If set to true, puts PHP in an extreme error reporting mode.  Additional data will be displayed related to the embeded form as well. For example: instead of seeing a success page, you will see a prettified JSON object of all the transaction response data and any response returned by the web_hook</td>
         </tr>
     </tbody>   
 </table>
@@ -184,9 +184,9 @@ All other parameters are optional, but allow much more control over the output.
 <table>
     <thead>
         <tr>
-            <td>Param</td>
-            <td>Default</td>
-            <td>Description</td>
+            <th>Param</th>
+            <th>Default</th>
+            <th>Description</th>
         </tr>
     </thead>
     <tbody>
