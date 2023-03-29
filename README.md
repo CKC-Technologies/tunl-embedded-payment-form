@@ -23,8 +23,8 @@ Then you should be able to navigate to either
 - https://localhost:8082/kitchen-sink.php
 
 these files can be found in the `src` folder respectively
-- `src/index.php`
-- `src/kitchen-sink.php`
+- [`src/index.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/index.php)
+- [`src/kitchen-sink.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/kitchen-sink.php)
 
 However, keep in mind the webhook functionality is not able to be tested when using the localhost.
 
