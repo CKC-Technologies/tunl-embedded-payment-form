@@ -88,7 +88,7 @@ Zip                 <input name="zip" />
     }
 
     async function get_form_url(payment_data) {
-        const resp = await fetch("/get-form-url.php",
+        const resp = await fetch("",
             {
                 method: "POST", 
                 body: JSON.stringify(payment_data)
