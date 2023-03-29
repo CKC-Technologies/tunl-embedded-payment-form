@@ -20,7 +20,7 @@ if ($some_potential_error){
 }
 
 // returing data is not required 
-// will ONLY be displayed when using 'test_mode'
+// will ONLY be displayed when using 'debug_mode'
 echo json_encode($data);
 
 // FULL RESPONSE EXAMPLE/REFERENCE:

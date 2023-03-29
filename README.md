@@ -118,7 +118,7 @@ $tunl_form_options = array(
     "payment_data" => $payment_data,
     "web_hook" => "https://localhost:8082/web_hook.php",
     "custom_style_url" => "https://localhost:8082/custom-embed.css",
-    "test_mode" => true
+    "debug_mode" => true
 );
 
 ```
@@ -172,7 +172,7 @@ All other parameters are optional, but allow much more control over the output.
             <td>A url to your own custom stylesheet that will be used in the embedded form. <br> See <a href="https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/custom-embed.css"><code>src/custom-embed.css</code></a> for an example stylesheet.</td>
         </tr>
         <tr>
-            <td>test_mode</td>
+            <td>debug_mode</td>
             <td>false</td>
             <td>If set to true, puts PHP in an extreme error reporting mode.  Additional data will be displayed related to the embeded form as well. For example: instead of seeing a success page, you will see a prettified JSON object of all the transaction response data and any response returned by the web_hook</td>
         </tr>
