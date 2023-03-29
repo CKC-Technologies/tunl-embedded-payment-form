@@ -43,7 +43,7 @@ Alternatively, you could point the webhook setting directly to a public endpoint
 
 Basic Steps involved:
 - Craft the options to customize the embedded form
-- Generate a unique URL (similar to stripes "Create Payment Intent")
+- Generate a unique URL (similar to Stripe's "Create Payment Intent")
 - Use the generated url in an iframe
 
 Condensed Example in PHP:
