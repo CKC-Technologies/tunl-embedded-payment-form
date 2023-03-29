@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/2927894/228584754-deded60e-5a15-41da-9712-f5cb25db3d4f.png)
 
-The code in this repo currently uses PHP, but could very easily be ported into other languages.  Eventually there will be more code examples and samples in this repo that demonstrate use in other languages.
+The code in this repo currently uses PHP but could very easily be ported into other languages.  Eventually, there will be more code examples and samples in this repo that demonstrate use in other languages.
 
 ## Contents
 
@@ -22,46 +22,47 @@ The code in this repo currently uses PHP, but could very easily be ported into o
 
 # Pre-Reqs
 
-Before attempting to embed our hosted payment form in your web application
-you will need an account on our TUNL merchant platform.  https://tunl.com/contact/
+Before attempting to embed our hosted payment form in your web application,
+you will need an account on our Tunl merchant platform.  https://tunl.com/contact/
 
-Once you have an account you will need to create an API and Secret.  
-This can be performed by clicking the Settings (Gear) Icon in the top of the sidebar
-on the left and scrolling down to the API Keys section and clicking "Create API Key"
+Once you have an account, you will need to log in to your Tunl dashboard and create an API Key and Secret.  
+To create your keys, navigate to your Settings page by clicking on the gear icon in the upper left menu bar. Scroll down and select Create API Key.
+
+IMPORTANT: Copy and save your Secret. Your Secret will be inaccessible once you navigate away from this page. If this happens, simply create another set of keys, and delete the inaccessible keys.
 
 Already have an account? Here are some quick links to create API Keys.
 
-- https://merchant.tunl.com/merchant/settings (Standard Accounts)
-- https://test.tunl.com/merchant/settings (Test accounts only)
+- https://merchant.tunl.com/merchant/settings (Production Accounts)
+- https://test.tunl.com/merchant/settings (Test Accounts ONLY)
 
 # Quick Start
 
-This Repo is setup with docker and docker-compose.  You can quickly get started by cloning this repository to your local dev environment and running:
+This repo is setup with docker and docker-compose.  You can quickly get started by cloning this repository to your local dev environment and running:
 
 ```bash
 docker-compose up
 ```
 
 Once running, you can update the `src/secrets.php` file with your
-TUNL API Key and Secret.
+Tunl API Key and Secret.
 
-Then you should be able to navigate to either
+Then you should be able to navigate to either:
 - https://localhost:8082/
 - https://localhost:8082/kitchen-sink.php
 - https://localhost:8082/client-side-example.php
 
-these files can be found in the `src` folder respectively
+These files can be found in the `src` folder respectively
 - [`src/index.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/index.php)
 - [`src/kitchen-sink.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/kitchen-sink.php)
 - [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php)
 
 However, keep in mind the webhook functionality is not able to be tested when using the localhost.
 
-If you want to test the webhook feature using the quickstart docker-compose approach you will need to run it in an environment that is publicly available, behind SSL and a domain you have control of.
+If you want to test the webhook feature using the quickstart docker-compose approach, you will need to run it in an environment that is publicly available, behind SSL and a domain you have control of.
 
 Alternatively, you could point the webhook setting directly to a public endpoint that is not in this project.  Take a look at the [`src/web_hook.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/web_hook.php) file for more info on how to structure your webhook to receive data back from the form.
 
-# Process overview
+# Process Overview
 
 BARE MINIMUM Steps involved:
 - Craft the options to customize the embedded form
@@ -89,7 +90,7 @@ echo $form['url'];
 
 The above code could be called from a client side fetch call to retreive the unique url and then dynamically render the iframe.  This code could also be modified to accept a JSON body that would allow some custom options to be passed in.  
 
-#### Security Warning !
+#### !!! Security Warning !!!
 
 > Keep in mind, this is potentially a sensitive operation and you should review for secure implementation.  For example, the `iframe_referer` should always be a statically set value that is a domain you own.  
 
@@ -97,7 +98,7 @@ The above code could be called from a client side fetch call to retreive the uni
 
 Alternatively you could modify this code to be completely Server Side Rendered.  Checkout [`src/index.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/index.php) for an example that uses this technique.
 
-### A peek under the hood
+### A Peek Under the Hood
 
 The [`ideposit-embed-sdk.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/ideposit-embed-sdk.php) is nothing fancy at present.  It just contains all the boilerplate to do CURL calls and a wrapper method to get the form url.  To illustrate, here is a command line version of the CURL call being made by
 
@@ -109,7 +110,7 @@ curl -X POST https://test-payment.tunl.com/embed/get-card-form-url.php \
    -d '{"api_key":"apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx","secret":"xxxxxxxxxxxxxxxxxxxxxxxxxx","iframe_referer":"https://localhost:8082/"}'
 ```
 
-# All available options
+# All Available Options
 
 Below are all of the available options.
 
@@ -144,7 +145,7 @@ $tunl_form_options = array(
 
 ```
 
-All other parameters are optional, but allow much more control over the output.
+All other parameters are optional but allow much more control over the output.
 
 #### Tunl Form Options
 
@@ -256,7 +257,7 @@ All other parameters are optional, but allow much more control over the output.
 
 # Complete Example
 
-A complete example is already available in less than 100 lines of code in the [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) but we are going to break that down piece by piece here.
+A complete example is already available in less than 100 lines of code in the [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php), but we are going to break that down piece by piece here.
 
 In the "complete example" we create a front end client that has a few fields to gather some info from the customer.  This code will not render a very pretty page, but it cuts right to the core of the intention.
 
@@ -288,7 +289,7 @@ This HTML will render a form that looks like so:
 
 ![image](https://user-images.githubusercontent.com/2927894/228682190-d425278c-e3ab-45b7-a2b6-cdde903f2ddb.png)
 
-In the code above, the user will fill out there details and click the `Make Payment` button.  This button will call some javascript to generate our unique embeddable form url.  We can then udpate the iframe in our mock modal and display it to the user to fill out their credit card details.
+In the code above, the User will fill out there details and click the `Make Payment` button.  This button will call some javascript to generate our unique embeddable form url.  We can then udpate the iframe in our mock modal and display it to the User to fill out their credit card details.
 
 #### Client Side Javascript
 
@@ -324,7 +325,7 @@ The `start` function collects the data from the html input fields and stores the
 
 This function just POST's this data back to the page we are already on (which is actually a php page as can be seen in the full example: [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) and then simply returns the parsed JSON directly to the caller.
 
-The `start` function uses these results to update the `src` attribute on the iframe on our html and removes the `display: none` style from our modal.  The user can now see the credit card form as shown in the image below.
+The `start` function uses these results to update the `src` attribute on the iframe on our html and removes the `display: none` style from our modal.  The User can now see the credit card form as shown in the image below.
 
 ![image](https://user-images.githubusercontent.com/2927894/228682312-9c5c8054-f9a5-4534-a90e-3251c8bbc5a0.png)
 
@@ -371,9 +372,9 @@ Not exactly a modal, but you can easily imagine that part!
 
 ```
 
-The above will look familiar as it is basically a copy and paste of "All available options".  The changes that have been made are to be able to receive input via a JSON POST request that takes in the parameters from our HTML form above.
+The above will look familiar as it is basically a copy and paste of "All Available Options".  The changes that have been made are to be able to receive input via a JSON POST request that takes in the parameters from our HTML form above.
 
-Notice that we are doing a lookup in our own database to set the `amount` field.  This is important to make sure the amount cannot be tampered with by the client performing the request.  The specific implementation here will heavily depened on your own code structure, database, framework, etc.  But the stub function in [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) looks like this:
+Notice that we are doing a lookup in our own database to set the `amount` field.  This is important to make sure the amount cannot be tampered with by the client performing the request.  The specific implementation here will heavily depend on your own code structure, database, framework, etc; but, the stub function in [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) looks like this:
 
 ```php
 function get_amount_from_order($ordernum){
@@ -391,11 +392,11 @@ function get_amount_from_order($ordernum){
 
 ### Receive 400 Error: Malformed Request Body
 
-Make sure the request to the `get-card-form-url.php` contains all the required properties:
+Make sure the request to the `get-card-form-url.php` contains all the following required properties:
 
 - api_key
 - secret
 - iframe_referer
 
-More Troubleshooting coming soon!
+More troubleshooting coming soon!
 
