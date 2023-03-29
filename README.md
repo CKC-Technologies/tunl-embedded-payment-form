@@ -176,6 +176,11 @@ All other parameters are optional, but allow much more control over the output.
             <td>false</td>
             <td>If set to true, puts PHP in an extreme error reporting mode.  Additional data will be displayed related to the embeded form as well. For example: instead of seeing a success page, you will see a prettified JSON object of all the transaction response data and any response returned by the web_hook</td>
         </tr>
+        <tr>
+            <td>verify_only</td>
+            <td>true</td>
+            <td>This parameter controls whether or not the transaction is immediately voided.  The default behavior is set to <code>true</code> and will immediately void transactions directly after creating them. This behavior allows you to verify user card data without commiting to charges.  If you would like to commit to the actual transaction then set this parameter to <code>false</code>. <br> Keep in mind that <code>preauth</code> transactions still require an additional step to complete the authorization and convert them to a sale.</td>
+        </tr>
     </tbody>   
 </table>
 
