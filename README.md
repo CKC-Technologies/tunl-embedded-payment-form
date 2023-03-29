@@ -30,6 +30,8 @@ However, keep in mind the webhook functionality is not able to be tested when us
 
 If you want to test the webhook feature using the quickstart docker-compose approach you will need to run it in an environment that is publicly available and behind SSL and a domain you have control of.
 
+Alternatively, you could point the webhook setting directly to a public endpoint that is not in this project.  Take a look at the [`src/web_hook.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/web_hook.php) file for more info on how to structure your webhook to receive data back from the form.
+
 # Process overview
 
 The steps to embed - Coming Soon!
@@ -38,7 +40,7 @@ The steps to embed - Coming Soon!
 
 # Troubleshooting
 
-### Recieve 400 Error: Malfored Request Body
+### Receive 400 Error: Malformed Request Body
 
 Make sure the request to the `get-card-form-url.php` contains all the required properties:
 
