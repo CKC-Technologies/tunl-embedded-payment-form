@@ -4,8 +4,8 @@ require_once("./ideposit-embed-sdk.php");
 $ideposit_sdk = new iDeposit_SDK;
 
 $tunl_form_options = array(
-    "api_key" => $tunl_api_key,
-    "secret" => $tunl_secret,
+    "api_key" => $tunl_api_key, // from secrets.php
+    "secret" => $tunl_secret,   // from secrets.php
     "iframe_referer" => "https://localhost:8082/",
 );
 
