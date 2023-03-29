@@ -4,6 +4,20 @@
 
 The code in this repo currently uses PHP, but could very easily be ported into other languages.  Eventually there will be more code examples and samples in this repo that demonstrate use in other languages.
 
+## Contents
+
+- [Pre-Reqs](#pre-reqs)
+- [Quick Start](#quick-start)
+- [Process Overview](process-overview)
+  - [Security Warning](security-warning-)
+  - [Peek under the hood](#a-peek-under-the-hood)
+- [All Available Options](#all-available-options)
+  - [Tunl Form Options](#tunl-form-options)
+  - [Payment Data Options](#payment-data-options)
+- [Troubleshooting](#troubleshooting)
+
+# Pre-Reqs
+
 Before attempting to embed our hosted payment form in your web application
 you will need an account on our TUNL merchant platform.  https://tunl.com/contact/
 
@@ -30,10 +44,12 @@ TUNL API Key and Secret.
 Then you should be able to navigate to either
 - https://localhost:8082/
 - https://localhost:8082/kitchen-sink.php
+- https://localhost:8082/client-side-example.php
 
 these files can be found in the `src` folder respectively
 - [`src/index.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/index.php)
 - [`src/kitchen-sink.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/kitchen-sink.php)
+- [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php)
 
 However, keep in mind the webhook functionality is not able to be tested when using the localhost.
 
