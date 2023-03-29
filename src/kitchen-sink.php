@@ -17,6 +17,7 @@ $tunl_form_options = array(
     "api_key" => $tunl_api_key, // from secrets.php
     "secret" => $tunl_secret,   // from secrets.php
     "iframe_referer" => "https://localhost:8082/",
+    "tunl_sandbox" => true,
     "payment_data" => $payment_data,
     // can't test webhooks with localhost
     // "web_hook" => "https://localhost:8082/web_hook.php",
