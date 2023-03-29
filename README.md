@@ -28,7 +28,7 @@ these files can be found in the `src` folder respectively
 
 However, keep in mind the webhook functionality is not able to be tested when using the localhost.
 
-If you want to test the webhook feature using the quickstart docker-compose approach you will need to run it in an environment that is publicly available and behind SSL and a domain you have control of.
+If you want to test the webhook feature using the quickstart docker-compose approach you will need to run it in an environment that is publicly available, behind SSL and a domain you have control of.
 
 Alternatively, you could point the webhook setting directly to a public endpoint that is not in this project.  Take a look at the [`src/web_hook.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/web_hook.php) file for more info on how to structure your webhook to receive data back from the form.
 
