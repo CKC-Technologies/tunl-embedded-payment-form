@@ -198,37 +198,37 @@ All other parameters are optional, but allow much more control over the output.
         <tr>
             <td>amount</td>
             <td>"0.01"</td>
-            <td></td>
+            <td>The amount to be charged (or pre-authorized)</td>
         </tr>
         <tr>
             <td>cardholdername</td>
             <td>null</td>
-            <td></td>
+            <td>The name printed on the physical credit card.</td>
         </tr>
         <tr>
             <td>action</td>
             <td>"preauth"</td>
-            <td></td>
+            <td>The type of payment transaction to post. This can be <code>preauth</code>, <code>sale</code>, or <code>return</code></td>
         </tr>
         <tr>
             <td>ordernum</td>
             <td>null</td>
-            <td></td>
+            <td>An Order Number to add as a reference to this transaction.  If left blank the Tunl API will create its own order number.</td>
         </tr>
         <tr>
             <td>comments</td>
             <td>null</td>
-            <td></td>
+            <td>Any freeform comments you would like to add to this transaction.</td>
         </tr>
         <tr>
             <td>street</td>
             <td>null</td>
-            <td></td>
+            <td>The street of the billing address of the card holder.</td>
         </tr>
         <tr>
             <td>zip</td>
             <td>null</td>
-            <td></td>
+            <td>The zip code of the billing address of the card holder.</td>
         </tr>
     </tbody>   
 </table>
