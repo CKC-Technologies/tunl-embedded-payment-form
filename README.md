@@ -1,5 +1,7 @@
 # Tunl Embeddable Form Documentation
 
+The code in this repo currently uses PHP, but could very easily be ported into other languages.  Eventually there will be more code examples and samples in this repo that demonstrate use in other languages.
+
 Before attempting to embed our hosted payment form in your web application
 you will need an account on our TUNL merchant platform.  https://tunl.com/contact/
 
@@ -39,7 +41,38 @@ Alternatively, you could point the webhook setting directly to a public endpoint
 
 # Process overview
 
-The steps to embed - Coming Soon!
+Basic Steps involved:
+- Craft the options to customize the embedded form
+- Generate a unique URL (similar to stripes "Create Payment Intent")
+- Use the generated url in an iframe
+
+Condensed Example in PHP:
+
+```php
+<?php
+require_once("./ideposit-embed-sdk.php");
+$ideposit_sdk = new iDeposit_SDK;
+
+$tunl_form_options = array(
+    "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "iframe_referer" => "https://localhost:8082/",
+);
+
+$form = $ideposit_sdk->get_form_url($tunl_form_options);
+
+echo $form['url'];
+?>
+```
+
+The above code could be called from a client side fetch call to retreive the unique url and then dynamically render the iframe.  This code could also be modified to accept a JSON body that would allow some custom options to be passed in.  
+
+Keep in mind, this is potentially a sensitive operation and you should review for secure implementation.  For example, the `iframe_referer` should always be a statically set value that is a domain you own.  
+
+It should *_NOT_* be allowed to be set dynamically via JSON options passed in.  This parameter helps to ensure that the form is ONLY allowed to be embedded on your site/application.
+
+Alternatively you could modify this code to be completely Server Side Rendered.  Checkout [`src/index.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/index.php) for an example that uses this technique.
+
 
 
 
