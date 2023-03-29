@@ -89,7 +89,7 @@ curl -X POST https://test-payment.tunl.com/embed/get-card-form-url.php \
    -d '{"api_key":"apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx","secret":"xxxxxxxxxxxxxxxxxxxxxxxxxx","iframe_referer":"https://localhost:8082/"}'
 ```
 
-### All available options
+# All available options
 
 Below are all of the available options.
 
@@ -137,25 +137,96 @@ All other parameters are optional, but allow much more control over the output.
     </thead>
     <tbody>
         <tr>
-            <td>`api_key`</td>
+            <td>api_key</td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <td>`secret`</td>
+            <td>secret</td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <td>`iframe_referer`</td>
+            <td>iframe_referer</td>
             <td></td>
             <td></td>
         </tr>
-    </tbody>
+        <tr>
+            <td>tunl_sandbox</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>payment_data</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>web_hook</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>custom_style_url</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>test_mode</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>   
 </table>
 
 #### Payment Data Options
 
+<table>
+    <thead>
+        <tr>
+            <td>Param</td>
+            <td>Default</td>
+            <td>Description</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>amount</td>
+            <td>"0.01"</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>cardholdername</td>
+            <td>null</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>action</td>
+            <td>"preauth"</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ordernum</td>
+            <td>null</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>comments</td>
+            <td>null</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>street</td>
+            <td>null</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>zip</td>
+            <td>null</td>
+            <td></td>
+        </tr>
+    </tbody>   
+</table>
 
 # Troubleshooting
 
