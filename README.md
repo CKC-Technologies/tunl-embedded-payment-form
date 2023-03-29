@@ -7,7 +7,7 @@ Once you have an account you will need to create an API and Secret.
 This can be performed by clicking the Settings (Gear) Icon in the top of the sidebar
 on the left and scrolling down to the API Keys section and clicking "Create API Key"
 
-Already Have an account? Here are some quick links to create API Keys.
+Already have an account? Here are some quick links to create API Keys.
 
 - https://merchant.tunl.com/merchant/settings (Standard Accounts)
 - https://test.tunl.com/merchant/settings (Test accounts only)
