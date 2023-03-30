@@ -9,12 +9,12 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 - [Pre-Reqs](#pre-reqs)
 - [Quick Start](#quick-start)
 - [Process Overview](#process-overview)
-  - [Security Warning](#security-warning-)
+  - [Security Warning](#-security-warning-)
   - [Peek under the hood](#a-peek-under-the-hood)
 - [All Available Options](#all-available-options)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
-- [COMPLETE EXAMPLE](#complete-example)
+- [Complete Example](#complete-example)
   - [Client Side HTML](#client-side-html)
   - [Client Side Javascript](#client-side-javascript)
   - [PHP Backend](#php-backend)
@@ -80,6 +80,7 @@ $tunl_form_options = array(
     "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "iframe_referer" => "https://localhost:8082/",
+    // "tunl_sandbox" => true, // set this if using a test tunl account api keys
 );
 
 $form = $ideposit_sdk->get_form_url($tunl_form_options);
@@ -88,13 +89,23 @@ echo $form['url'];
 ?>
 ```
 
-The above code could be called from a client side fetch call to retreive the unique url and then dynamically render the iframe.  This code could also be modified to accept a JSON body that would allow some custom options to be passed in.  
+This could be called from a client side fetch to retreive the unique url and then dynamically render the iframe.  This code could also be modified to accept a JSON body that would allow some custom options to be passed in. This is demonstrated in our [Complete Example](#complete-example) 
 
 #### !!! Security Warning !!!
 
 > Keep in mind, this is potentially a sensitive operation and you should review for secure implementation.  For example, the `iframe_referer` should always be a statically set value that is a domain you own.  
 
 > It should *_NOT_* be allowed to be set dynamically via JSON options passed in.  This parameter helps to ensure that the form is ONLY allowed to be embedded on your site/application.
+
+The code above is the bare minimum. This will get you a url to embed the form in an iframe, but there really isn't any context to this form.  The form rendered for the URL generated in the code above will look like this:
+
+![image](https://user-images.githubusercontent.com/2927894/228838375-834b7849-ef64-402b-ab8d-cfbf9d439a6c.png)
+
+The bare minimum form will process a `preauth` transaction for `$0.01` and then immediately void it. This is obviously not very useful except for quick testing to make sure you can connect to your Tunl account.  In the [next section](#all-available-options) We will see how to customize our form and add more context.  Things like, card holder name, amount, transaction type, whether or not to immediately void the transaction, etc.
+
+>Side Note: You can find this voided preauth under [Settled Reports](https://test.tunl.com/payments/settled) in your Tunl Account.  Sort by timestamp descending and filter by VOID_PREAUTH.
+
+![image](https://user-images.githubusercontent.com/2927894/228840005-b052e7dc-b598-4a43-994e-f54ab1b8a677.png)
 
 Alternatively you could modify this code to be completely Server Side Rendered.  Checkout [`src/index.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/index.php) for an example that uses this technique.
 
@@ -289,7 +300,7 @@ This HTML will render a form that looks like so:
 
 ![image](https://user-images.githubusercontent.com/2927894/228682190-d425278c-e3ab-45b7-a2b6-cdde903f2ddb.png)
 
-In the code above, the User will fill out there details and click the `Make Payment` button.  This button will call some javascript to generate our unique embeddable form url.  We can then udpate the iframe in our mock modal and display it to the User to fill out their credit card details.
+In the code above, the User will fill out their details and click the `Make Payment` button.  This button will call some javascript to generate our unique embeddable form url.  We can then udpate the iframe in our mock modal and display it to the User to fill out their credit card details.
 
 #### Client Side Javascript
 
@@ -321,9 +332,9 @@ The javascript in our example `client-side.js` looks like this:
     }
 ```
 
-The `start` function collects the data from the html input fields and stores them in `payment-data` const.  It then passes this data into the `get_form_url` function that we see just below.  
+The `start` function collects the data from the html input fields and stores them in `payment_data` const.  It then passes this data into the `get_form_url` function that we see just below.  
 
-This function just POST's this data back to the page we are already on (which is actually a php page as can be seen in the full example: [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) and then simply returns the parsed JSON directly to the caller.
+This function just POST's this data back to the page we are already on (which is actually a php page as can be seen in the full example code: [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php) and then simply returns the parsed JSON directly to the caller.
 
 The `start` function uses these results to update the `src` attribute on the iframe on our html and removes the `display: none` style from our modal.  The User can now see the credit card form as shown in the image below.
 
@@ -355,15 +366,15 @@ Not exactly a modal, but you can easily imagine that part!
     );
 
     $tunl_form_options = array(
-        "api_key" => $tunl_api_key,
-        "secret" => $tunl_secret,
+        "api_key" => $tunl_api_key, // from secrets.php
+        "secret" => $tunl_secret,   // from secrets.php
         "iframe_referer" => "https://localhost:8082/",
-        "tunl_sandbox" => true,
+        // "tunl_sandbox" => true,
         "payment_data" => $payment_data,
         // "web_hook" => "https://localhost:8082/web_hook.php",
         "custom_style_url" => "https://localhost:8082/custom-embed.css",
         // "debug_mode" => true,
-        "verify_only" => true // true is actually the default value
+        "verify_only" => true // true is actually the default value, no need to explicity set this value
     );
 
     $form = $ideposit_sdk->get_form_url($tunl_form_options);
