@@ -23,6 +23,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Unstyled](#unstyled)
   - [HTML Structure and Selectors](#html-structure-and-selectors)
   - [Basic Customization](#basic-customization)
+  - [Further Improvement](#further-improvement)
 - [Troubleshooting](#troubleshooting)
   - [400 Malformed Request Body](#receive-400-error-malformed-request-body)
   - [Bad API Key and Secret](#bad-api-key-and-secret-combo)
