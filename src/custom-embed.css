@@ -13,6 +13,7 @@ body {
     column-gap: 10px;
 }
 
+.ccname-group {grid-column: span 6}
 .ccno-group {grid-column: span 6}
 .expire-group {grid-column: span 3}
 .cvv-group {grid-column: span 3}
