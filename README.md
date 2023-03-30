@@ -101,7 +101,7 @@ The code above is the bare minimum. This will get you a url to embed the form in
 
 ![image](https://user-images.githubusercontent.com/2927894/228838375-834b7849-ef64-402b-ab8d-cfbf9d439a6c.png)
 
-The bare minimum form will process a `preauth` transaction for `$0.01` and then immediately void it. This is obviously not very useful except for quick testing to make sure you can connect to your Tunl account.  In the [next section](#all-available-options) We will see how to customize our form and add more context.  Things like, card holder name, amount, transaction type, whether or not to immediately void the transaction, etc.
+The bare minimum form will process a `preauth` transaction for `$0.01` and then immediately void it. This is obviously not very useful except for quick testing to make sure you can connect to your Tunl account.  In the [next section](#all-available-options) we will see how to customize our form and add more context.  Things like, card holder name, amount, transaction type, whether or not to immediately void the transaction, etc.
 
 >Side Note: You can find this voided preauth under [Settled Reports](https://test.tunl.com/payments/settled) in your Tunl Account.  Sort by timestamp descending and filter by VOID_PREAUTH.
 
@@ -409,5 +409,82 @@ Make sure the request to the `get-card-form-url.php` contains all the following 
 - secret
 - iframe_referer
 
-More troubleshooting coming soon!
+---
 
+### Bad API Key and Secret Combo
+
+> Error: call to URL https://test-payment.tunl.com/embed/get-card-form-url.php failed with status 401, response Bad API Key and Secret Combo, curl_error , curl_errno 0
+
+Make sure that you have typed in your api key and secret correctly. Additionally, if you are using an API Key and Secret that was created using a Tunl Test Account (from https://test.tunl.com) then you will need to set the `tunl_sandbox` option to `true`
+
+```php
+$tunl_form_options = array(
+    "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
+    ...
+    // "tunl_sandbox" => true, // set this if using a test tunl account api keys
+    ...
+);
+```
+
+---
+
+### Unauthorized
+
+This typically happens when trying to use the generated URL incorrectly.  If you generate the URL and use it immediately in an iframe, this should never happen.  The generated URL employs the use of a `one-time-use-code` that is unique and expires in 1 minute.
+
+Scenarios that an `Unauthorized` error would typically happen:
+- Attempting to use the generated URL more than once
+- Attempting to use a one-time-use-code that does not exist
+- Not using the generated URL (or one-time-use-code) within 1 minute
+
+Example generated URL for reference: https://test-payment.tunl.com/embed/load-embedded-form.php?one-time-use-code=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+---
+
+### Access to this page is restricted to specific domains and must be embedded in an iframe.
+
+This message occurs when trying to access the embedded form page directly or from a domain that has not been authorized by the `iframe_referer` parameter.
+
+---
+
+### payment.tunl.com refused to connect (and other iframe issues)
+
+![image](https://user-images.githubusercontent.com/2927894/228860538-ec0aad32-3e2a-4772-b3eb-d83b09fd9b99.png)
+
+> Refused to frame 'https://payment.tunl.com/' because an ancestor violates the following Content Security Policy directive: "frame-ancestors https://localhost:8082/".
+
+This can occur when the `iframe_referer` is not set properly.  Make sure this option is set the the domain that will be hosting the iframe.  This will be a domain that you own.
+
+```php
+$tunl_form_options = array(
+    ...
+    "iframe_referer" => "https://your.domain.com",
+    ...
+);
+```
+
+---
+
+### This domain is not authorized to embed this page in an iframe.
+
+This message can occur for the same reasons as the previous item.  The `iframe_referer` is likely not set correctly.
+
+---
+
+### Card Authentication Failed
+
+These messages are usually triggered by the tunl gateway.  There should be an additional message to help clue the user as the why the authentication failed.  These are usually things like:
+
+- DECLINED
+- UNSUPPORTED CARD TYPE
+- EXPIRATION DATE MUST BE IN FUTURE
+- BAD CID
+
+The list of possible messages here is the top 4, with DECLINED being the most common.  You can view more information about these failures in the Tunl Application under Reports->Failed: https://test.tunl.com/payments/failed
+
+---
+
+### Unable to complete Transaction. Bad Web Hook Response.
+
+If your webhook responds with anything else other than `200` this message will be displayed to the user.  It is recommended to setup some error handling and logging in your web_hook so that you can review what might have happened in these situations.
