@@ -149,7 +149,7 @@ The only ones that are required are:
 $payment_data = array(
     'amount' => '123.45',
     'cardholdername' => 'Card Holder',
-    'action' => 'preauth', // could be sale, preauth, or return
+    'action' => 'verify', // could be sale, preauth, or verify
     'ordernum' => 'My Custom Reference: ' . time(),
     'comments' => 'My Custom Comments',
     'street' => '2200 Oak St.',
@@ -164,8 +164,7 @@ $tunl_form_options = array(
     "payment_data" => $payment_data,
     "web_hook" => "https://localhost:8082/web_hook.php",
     "custom_style_url" => "https://localhost:8082/custom-embed.css",
-    "debug_mode" => true,
-    "verify_only" => true
+    "debug_mode" => true
 );
 
 ```
@@ -223,11 +222,6 @@ All other parameters are optional but allow much more control over the output.
             <td>false</td>
             <td>If set to true, puts PHP in an extreme error reporting mode.  Additional data will be displayed related to the embeded form as well. For example: instead of seeing a success page, you will see a prettified JSON object of all the transaction response data and any response returned by the web_hook</td>
         </tr>
-        <tr>
-            <td>verify_only</td>
-            <td>true</td>
-            <td>This parameter controls whether or not the transaction is immediately voided.  The default behavior is set to <code>true</code> and will immediately void transactions directly after creating them. This behavior allows you to verify user card data without commiting to charges.  If you would like to commit to the actual transaction then set this parameter to <code>false</code>. <br> Keep in mind that <code>preauth</code> transactions still require an additional step to complete the authorization and convert them to a sale.</td>
-        </tr>
     </tbody>   
 </table>
 
@@ -254,8 +248,8 @@ All other parameters are optional but allow much more control over the output.
         </tr>
         <tr>
             <td>action</td>
-            <td>"preauth"</td>
-            <td>The type of payment transaction to post. This can be <code>preauth</code>, <code>sale</code>, or <code>return</code></td>
+            <td>"verify"</td>
+            <td>The type of payment transaction to post. This can be <code>preauth</code>, <code>sale</code>, or <code>verify</code> <br><br>If <code>verify</code> is set it will run a <code>preauth</code> transaction and immediately void it.  This allows you to verify card holder data without committing to a preauth or sale type transaction. </td>
         </tr>
         <tr>
             <td>ordernum</td>
@@ -372,7 +366,7 @@ Not exactly a modal, but you can easily imagine that part!
     $payment_data = array(
         'amount' => $amount,
         'cardholdername' => $data['cardholdername'] ?? null,
-        'action' => 'preauth',
+        'action' => 'verify',
         'ordernum' => $data['ordernum'] ?? null,
         'comments' => $data['comments'] ?? null,
         'street' => $data['street'] ?? null,
@@ -388,7 +382,6 @@ Not exactly a modal, but you can easily imagine that part!
         // "web_hook" => "https://localhost:8082/web_hook.php",
         "custom_style_url" => "https://localhost:8082/custom-embed.css",
         // "debug_mode" => true,
-        "verify_only" => true // true is actually the default value, no need to explicity set this value
     );
 
     $form = $ideposit_sdk->get_form_url($tunl_form_options);
