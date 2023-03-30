@@ -4,7 +4,7 @@
 
 The code in this repo currently uses PHP but could very easily be ported into other languages.  Eventually, there will be more code examples and samples in this repo that demonstrate use in other languages.
 
-## Contents
+## Table of Contents
 
 - [Pre-Reqs](#pre-reqs)
 - [Quick Start](#quick-start)
@@ -19,6 +19,14 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Client Side Javascript](#client-side-javascript)
   - [PHP Backend](#php-backend)
 - [Troubleshooting](#troubleshooting)
+  - [400 Malformed Request Body](#receive-400-error-malformed-request-body)
+  - [Bad API Key and Secret](#bad-api-key-and-secret-combo)
+  - [Unauthorized](#unauthorized)
+  - [Access restricted to specific domain](#access-to-this-page-is-restricted-to-specific-domains-and-must-be-embedded-in-an-iframe)
+  - [Frame Refused to Connect](#paymenttunlcom-refused-to-connect-and-other-iframe-issues)
+  - [Domain is not authorized to embed](#this-domain-is-not-authorized-to-embed-this-page-in-an-iframe)
+  - [Card Authentication Failed](#card-authentication-failed)
+  - [Bad web hook response](#unable-to-complete-transaction-bad-web-hook-response)
 
 # Pre-Reqs
 
