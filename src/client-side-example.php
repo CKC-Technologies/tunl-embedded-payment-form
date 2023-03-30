@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $payment_data = array(
         'amount' => $amount,
         'cardholdername' => $data['cardholdername'] ?? null,
-        'action' => 'preauth',
+        'action' => 'verify',
         'ordernum' => $data['ordernum'] ?? null,
         'comments' => $data['comments'] ?? null,
         'street' => $data['street'] ?? null,
