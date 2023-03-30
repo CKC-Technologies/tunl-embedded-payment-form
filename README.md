@@ -18,6 +18,11 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Client Side HTML](#client-side-html)
   - [Client Side Javascript](#client-side-javascript)
   - [PHP Backend](#php-backend)
+- [Custom CSS Styling](#custom-css-styling)
+  - [Default](#default-styling)
+  - [Unstyled](#unstyled)
+  - [HTML Structure and Selectors](#html-structure-and-selectors)
+  - [Basic Customization](#basic-customization)
 - [Troubleshooting](#troubleshooting)
   - [400 Malformed Request Body](#receive-400-error-malformed-request-body)
   - [Bad API Key and Secret](#bad-api-key-and-secret-combo)
@@ -406,6 +411,147 @@ function get_amount_from_order($ordernum){
 }
 ```
 
+# Custom CSS Styling
+
+
+### Default Styling
+
+This form comes with some sensible default styling.  You have already seen this in several of the images in this readme, but for the sake of completeness, here it is again:
+
+![image](https://user-images.githubusercontent.com/2927894/228584754-deded60e-5a15-41da-9712-f5cb25db3d4f.png)
+
+This default styling is great for getting started, but likely at odds with your brand and site styles.  In order to get started applying custom styles we will need to set the `custom_style_url` option in our [Tunl Form Options](#tunl-form-options).
+
+# Unstyled
+
+Let's start with a completely unstyled look to see what we are working with. Create an empty CSS file in your project or in a publicly available uri on your domain. Then set the `custom_style_url` option to point directly to it.
+
+```php
+$tunl_form_options = array(
+    ...
+    "custom_style_url" => "https://localhost:8082/custom-embed2.css",
+    ...
+);
+```
+
+We should now see something like this:
+
+![image](https://user-images.githubusercontent.com/2927894/228873005-fc1a7472-434d-4049-8215-4ec05cd32a91.png)
+
+Woof, not very pretty.  Let's see how we can improve this.
+
+### HTML Structure and Selectors
+
+Below is what the underlying HTML looks like.  You can see the we have plenty of class selectors, id's, name attributes and wrapper divs to use for styling.
+
+```html
+<body class="tunl-embedded-body">
+    <div class="tunl-embedded-form-wrapper">
+        <form class="tunl-embedded-form" id="tunl_form" method="post">
+
+            <div class="tunl-field-group ccname-group">
+                <label for="tunl_cc_name">Card Holder Name</label>
+                <input type="text" name="cardholdername" id="tunl_cc_name">
+            </div>
+
+            <div class="tunl-field-group ccno-group">
+                <label for="tunl_cc_no">Credit Card No</label>
+                <input type="text" name="account" id="tunl_cc_no">
+            </div>
+
+            <div class="tunl-field-group expire-group">
+                <label for="tunl_cc_expires">Expiration</label>
+                <input type="text" name="expdate" id="tunl_cc_expires">
+            </div>
+
+            <div class="tunl-field-group cvv-group">
+                <label for="tunl_cc_cvv">CVV</label>
+                <input type="text" name="cv" id="tunl_cc_cvv">
+            </div>
+
+            <div class="tunl-field-group submit-group">
+                <button>Submit</button>
+            </div>
+            
+        </form>
+    </div>
+</body>
+```
+
+### Basic customization
+
+An incredible improvement in style can be had in very few lines of CSS.  For Example:
+
+```css
+* {
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+input,
+button
+{
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 10px;
+}
+```
+
+Will turn the above 1990's form into the results shown below:
+
+![image](https://user-images.githubusercontent.com/2927894/228888764-67c1c61a-52a5-4996-8531-fefb53229b82.png)
+
+### Further Improvement
+
+Throw in some CSS Grid magic (or flexbox) and you can really do anything.
+
+```css
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    font-family: arial;
+}
+
+.tunl-embedded-form {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 10px;
+}
+
+.ccname-group {grid-column: span 6}
+.ccno-group {grid-column: span 3}
+.expire-group {grid-column: span 2}
+.cvv-group {grid-column: span 1}
+.submit-group {grid-column: span 6}
+
+label {
+    display: block;
+    width: 100%;
+}
+
+input, button {
+    display: block;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 15px;
+    box-shadow: 1px 1px 5px -1px grey;
+    width: 100%;
+}
+```
+
+The css above adds some box-shadow and CSS grid to render the following result:
+
+![image](https://user-images.githubusercontent.com/2927894/228891875-38885034-2f19-4256-8e1e-500b376ad8c9.png)
+
+
+
 
 # Troubleshooting
 
@@ -496,3 +642,4 @@ The list of possible messages here is the top 4, with DECLINED being the most co
 ### Unable to complete Transaction. Bad Web Hook Response.
 
 If your webhook responds with anything else other than `200` this message will be displayed to the user.  It is recommended to setup some error handling and logging in your web_hook so that you can review what might have happened in these situations.
+
