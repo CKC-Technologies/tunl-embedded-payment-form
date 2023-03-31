@@ -1,8 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     require_once('./secrets.php');
-    require_once("./ideposit-embed-sdk.php");
-    $ideposit_sdk = new iDeposit_SDK;
+    require_once("./tunl-embed-sdk.php");
+    $tunl_sdk = new TunlEmbedSDK;
 
     // get json payload
     $json = file_get_contents('php://input');
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         "verify_only" => true // true is actually the default value
     );
 
-    $form = $ideposit_sdk->get_form_url($tunl_form_options);
+    $form = $tunl_sdk->get_form_url($tunl_form_options);
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($form);
     exit();

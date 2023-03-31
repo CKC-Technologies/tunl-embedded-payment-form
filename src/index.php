@@ -1,7 +1,7 @@
 <?php
 require_once('./secrets.php');
-require_once("./ideposit-embed-sdk.php");
-$ideposit_sdk = new iDeposit_SDK;
+require_once("./tunl-embed-sdk.php");
+$tunl_sdk = new TunlEmbedSDK;
 
 $tunl_form_options = array(
     "api_key" => $tunl_api_key, // from secrets.php
@@ -10,7 +10,7 @@ $tunl_form_options = array(
     // "tunl_sandbox" => true, // set this if using a test tunl account
 );
 
-$form = $ideposit_sdk->get_form_url($tunl_form_options);
+$form = $tunl_sdk->get_form_url($tunl_form_options);
 
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-class iDeposit_SDK
+class TunlEmbedSDK
 {
     // Properties
     protected $url = null;

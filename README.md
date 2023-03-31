@@ -87,8 +87,8 @@ Condensed Example in PHP:
 
 ```php
 <?php
-require_once("./ideposit-embed-sdk.php");
-$ideposit_sdk = new iDeposit_SDK;
+require_once("./tunl-embed-sdk.php");
+$tunl_sdk = new TunlEmbedSDK;
 
 $tunl_form_options = array(
     "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -97,7 +97,7 @@ $tunl_form_options = array(
     // "tunl_sandbox" => true, // set this if using a test tunl account api keys
 );
 
-$form = $ideposit_sdk->get_form_url($tunl_form_options);
+$form = $tunl_sdk->get_form_url($tunl_form_options);
 
 echo $form['url'];
 ?>
@@ -125,9 +125,9 @@ Alternatively you could modify this code to be completely Server Side Rendered. 
 
 ### A Peek Under the Hood
 
-The [`ideposit-embed-sdk.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/ideposit-embed-sdk.php) is nothing fancy at present.  It just contains all the boilerplate to do CURL calls and a wrapper method to get the form url.  To illustrate, here is a command line version of the CURL call being made by
+The [`tunl-embed-sdk.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php) is nothing fancy at present.  It just contains all the boilerplate to do CURL calls and a wrapper method to get the form url.  To illustrate, here is a command line version of the CURL call being made by
 
-`$ideposit_sdk->get_form_url($tunl_form_options)`
+`$tunl_sdk->get_form_url($tunl_form_options)`
 
 ```bash
 curl -X POST https://test-payment.tunl.com/embed/get-card-form-url.php \
@@ -354,8 +354,8 @@ Not exactly a modal, but you can easily imagine that part!
 
 ```php
     require_once('./secrets.php');
-    require_once("./ideposit-embed-sdk.php");
-    $ideposit_sdk = new iDeposit_SDK;
+    require_once("./tunl-embed-sdk.php");
+    $tunl_sdk = new TunlEmbedSDK;
 
     // get json payload
     $json = file_get_contents('php://input');
@@ -384,7 +384,7 @@ Not exactly a modal, but you can easily imagine that part!
         // "debug_mode" => true,
     );
 
-    $form = $ideposit_sdk->get_form_url($tunl_form_options);
+    $form = $tunl_sdk->get_form_url($tunl_form_options);
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($form);
 
