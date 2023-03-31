@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    font-family: arial;
+}
+
+.tunl-embedded-form {
+    display: grid;
+    grid-template-columns: repeat(120, 1fr);
+    /* column-gap: 10px; */
+    align-items: end;
+}
+
+.ccname-group {grid-column: span 120}
+.ccno-group {grid-column: span 85}
+.expire-group {grid-column: span 20}
+.cvv-group {grid-column: span 15}
+.submit-group {grid-column: span 120}
+
+.expire-group label, .cvv-group label {display: none;}
+.ccno-group input, .expire-group input, .cvv-group input {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.ccno-group:before {
+    background: url(https://test-payment.tunl.com/embed/assets/code.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 30px;
+    display: block;
+    height: 26px;
+    content: '';
+    transform: translate(15px, 26px);
+}
+
+.ccno-group input {
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    border-right: 0px;
+    padding-left: 55px;
+}
+
+.expire-group input {
+    border-radius: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    text-align: center;
+}
+
+.cvv-group input {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border-left: 0px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    width: 100%;
+}
+
+input, button {
+    display: block;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    /* box-shadow: 1px 1px 5px -1px grey; */
+    width: 100%;
+}
+
+/* EMBEDED FORM HTML REFERENCE 
+
+  <body class="tunl-embedded-body">
+    <div class="tunl-embedded-form-wrapper">
+        <form class="tunl-embedded-form" >
+            <div class="tunl-field-group ccno-group">
+                <label for="tunl_cc_no">Credit Card No</label>
+                <input type="text" name="cc_no" id="tunl_cc_no" placeholder />
+            </div>
+
+            <div class="tunl-field-group expire-group">
+                <label for="tunl_cc_expires">Expiration</label>
+                <input type="text" name="cc_expires" id="tunl_cc_expires" />
+            </div>
+
+            <div class="tunl-field-group cvv-group">
+                <label for="tunl_cc_cvv">CVV</label>
+                <input type="text" name="cc_cvv" id="tunl_cc_cvv" />
+            </div>
+
+            <div class="tunl-field-group submit-group">
+                <button>Submit</button>
+            </div>
+        </form>
+    </div>
+</body> */

@@ -1,0 +1,60 @@
+body {
+font-family: Arial;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#tunl-frame {
+    border: none;
+    height: 150px;
+    width: 100%;
+}
+
+button, select {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    width: 100%;
+}
+
+#payment-message.hidden {
+    opacity: 0;
+    max-height: 0px;
+    min-height: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#payment-message {
+    cursor: pointer;
+    display: grid;
+    align-content: center;
+    padding: 10px;
+    position: absolute;
+    border-radius: 5px;
+    width: calc(100% - 15px);
+    opacity: 1;
+    min-height: 50px;
+    max-height: 300px;
+    transition: all 0.3s;
+    overflow: hidden;
+    text-align: center;
+}
+
+#payment-message.success {
+    background: lime;
+}
+
+#payment-message.loading {
+    background: yellow;
+}
+
+#payment-message.error {
+    background: red;
+    color: white;
+}
