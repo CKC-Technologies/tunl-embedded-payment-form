@@ -28,8 +28,27 @@ body {
     padding-right: 0px;
 }
 
+.ccno-group.default-card-icon:before {
+    background-image: url(https://test-payment.tunl.com/embed/assets/code.svg);
+}
+
+.ccno-group.visa-card-icon:before {
+    background-image: url(https://test-payment.tunl.com/embed/assets/visa.svg);
+}
+
+.ccno-group.mastercard-card-icon:before {
+    background-image: url(https://test-payment.tunl.com/embed/assets/mastercard.svg);
+}
+
+.ccno-group.amex-card-icon:before {
+    background-image: url(https://test-payment.tunl.com/embed/assets/amex.svg);
+}
+
+.ccno-group.discover-card-icon:before {
+    background-image: url(https://test-payment.tunl.com/embed/assets/discover.svg);
+}
+
 .ccno-group:before {
-    background: url(https://test-payment.tunl.com/embed/assets/code.svg);
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
