@@ -7,9 +7,9 @@ $data = json_decode($json, true);
 // do stuff with the data - full example reference below
 // at minimum you will likely want to store the following items
 // in your database to be able to perform future actions
-$transaction_id = $data["ttid"];
-$vault_id = $data["vaultId"];
-$orderNum = $data["ordernum"];
+$transaction_id = $data["transaction_ttid"];
+$vault_id = $data["vault_token"];
+$orderNum = $data["transaction_ordernum"];
 
 // if there is an error you can respond with any error code
 // if the status code is not 200 the embedded form api
