@@ -24,7 +24,7 @@ function handleSuccess(results) {
 }
 
 function handleError(results) {
-  showMessage(results.msg, "error");
+  showMessage(results.msg || results, "error");
 }
 
 function showMessage(msg, classVal, autohide = true) {
