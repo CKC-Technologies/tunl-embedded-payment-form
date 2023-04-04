@@ -8,8 +8,9 @@ paymentMsgElm.addEventListener("click", resetPaymentMessage);
 async function change(ev) {
   if (ev.target.value !== "Credit Card") return;
   await tunl.getFrameURL("create.php");
-  tunl.mount("#tunl-frame");
   document.querySelector("#frame-wrapper").style.display = "";
+  await tunl.mount("#tunl-frame");
+  showMessage("Successfully Loaded!", "success")
 }
 
 async function submitTunl() {

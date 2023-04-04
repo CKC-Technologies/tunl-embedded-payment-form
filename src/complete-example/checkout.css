@@ -8,8 +8,10 @@ font-family: Arial;
 
 #tunl-frame {
     border: none;
-    height: 150px;
+    height: 0px;
+    overflow: hidden;
     width: 100%;
+    transition: all 0.3s;
 }
 
 button, select {

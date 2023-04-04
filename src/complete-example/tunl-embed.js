@@ -19,6 +19,28 @@ class TunlEmbed {
     this.#tunl_frame = iframe;
     this.#tunl_frame.src = this.#oneTimeFrameURL;
     this.#startListener();
+    // return this.#sendMessage({action: "wait-for-load"}, "resize_iframe")
+
+    const thisClass = this;
+    const msgID = "resize_iframe";
+
+    const prom = new Promise((resolve, reject) => {
+
+      const myResolve = (data) => {
+        delete data.msgID;
+        resolve(data);
+        delete thisClass.#messages[msgID];
+      };
+
+      const myReject = (data) => {
+        reject(data);
+        delete thisClass.#messages[msgID];
+      };
+
+      thisClass.#messages[msgID] = { resolve: myResolve, reject: myReject };
+    });
+
+    return prom
   }
 
   #startListener() {
@@ -27,6 +49,10 @@ class TunlEmbed {
     window.addEventListener("message", async (event) => {
       if (event.origin !== this.#allowedOriginUrl) return;
       const msgData = await this.#crypto.decryptObject(event.data);
+
+      if (msgData.action === "resize_iframe")
+        this.#handleResizeIFrame(msgData);
+
       if (msgData.msgID === undefined) return;
       if (this.#messages[msgData.msgID] === undefined) return;
 
@@ -37,9 +63,13 @@ class TunlEmbed {
     });
   }
 
-  #sendMessage(msgObject) {
+  #handleResizeIFrame(msgData){
+    this.#tunl_frame.style.height = msgData.bodyHeight.toString() + "px";
+  }
+
+  #sendMessage(msgObject, customID) {
     const thisClass = this;
-    const msgID = crypto.randomUUID();
+    const msgID = customID || crypto.randomUUID();
 
     const prom = new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
@@ -81,7 +111,7 @@ class TunlEmbed {
     this.#allowedOriginUrl = new URL(data.url).origin;
     this.#sharedSecret = data.shared_secret;
     this.#crypto = new TunlCrypto();
-    this.#crypto.setKey(data.shared_secret);
+    await this.#crypto.setKey(data.shared_secret);
   }
 }
 
