@@ -201,7 +201,7 @@ All other parameters are optional but allow much more control over the output.
         <tr>
             <td>allow_client_side_sdk</td>
             <td>false</td>
-            <td>Allows the embedded form to be interacted with using the Tunl Frontend SDK.  [Complete Example Available Here](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example) </td>
+            <td>Allows the embedded form to be interacted with using the Tunl Frontend SDK.  <a href="https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example">Complete Example Available Here</a> </td>
         </tr>
         <tr>
             <td>tunl_sandbox</td>
