@@ -14,10 +14,11 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 - [All Available Options](#all-available-options)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
-- [Complete Example](#complete-example)
+- [Larger Example](#larger-example)
   - [Client Side HTML](#client-side-html)
   - [Client Side Javascript](#client-side-javascript)
   - [PHP Backend](#php-backend)
+- [Tunl Frontend SDK](#tunl-frontend-sdk)
 - [Custom CSS Styling](#custom-css-styling)
   - [Default](#default-styling)
   - [Unstyled](#unstyled)
@@ -280,11 +281,11 @@ All other parameters are optional but allow much more control over the output.
     </tbody>   
 </table>
 
-# Complete Example
+# Larger Example
 
-A complete example is already available in less than 100 lines of code in the [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php), but we are going to break that down piece by piece here.
+A full sample of this example is available in less than 100 lines of code in the [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php), but we are going to break that down piece by piece here.
 
-In the "complete example" we create a front end client that has a few fields to gather some info from the customer.  This code will not render a very pretty page, but it cuts right to the core of the intention.
+In this example, we create a front end client that has a few fields to gather some info from the customer.  This code will not render a very pretty page, but it cuts right to the core of the intention.
 
 #### Client Side HTML
 
@@ -411,8 +412,15 @@ function get_amount_from_order($ordernum){
 }
 ```
 
-# Custom CSS Styling
+# Tunl Frontend SDK
 
+We provide a frontend sdk library for use when needing more control than the example above.  
+
+In the example above, we just call the backend endpoint from the client to fetch the embeddable form URL.  This embedded form is completely isolated from the host.  The primary way to use the above version would be to implement a webhook that gets called when the form is submitted.  This webhook is informed of the results of the submission.
+
+In cases where you would rather receive a response directly in the browser from our embedded form use the Tunl Frontend SDK.  [Full Example and Guide are available here.](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example)
+
+# Custom CSS Styling
 
 ### Default Styling
 
