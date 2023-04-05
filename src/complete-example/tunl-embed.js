@@ -25,7 +25,6 @@ class TunlEmbed {
     const msgID = "resize_iframe";
 
     const prom = new Promise((resolve, reject) => {
-
       const myResolve = (data) => {
         delete data.msgID;
         resolve(data);
@@ -40,7 +39,7 @@ class TunlEmbed {
       thisClass.#messages[msgID] = { resolve: myResolve, reject: myReject };
     });
 
-    return prom
+    return prom;
   }
 
   #startListener() {
@@ -50,8 +49,7 @@ class TunlEmbed {
       if (event.origin !== this.#allowedOriginUrl) return;
       const msgData = await this.#crypto.decryptObject(event.data);
 
-      if (msgData.action === "resize_iframe")
-        this.#handleResizeIFrame(msgData);
+      if (msgData.action === "resize_iframe") this.#handleResizeIFrame(msgData);
 
       if (msgData.msgID === undefined) return;
       if (this.#messages[msgData.msgID] === undefined) return;
@@ -63,7 +61,7 @@ class TunlEmbed {
     });
   }
 
-  #handleResizeIFrame(msgData){
+  #handleResizeIFrame(msgData) {
     this.#tunl_frame.style.height = msgData.bodyHeight.toString() + "px";
   }
 
