@@ -1,3 +1,8 @@
+/*
+  Tunl Embeddable Form Frontend SDK
+  v0.0.4-beta
+*/
+
 class TunlEmbed {
   #oneTimeFrameURL = null;
   #allowedOriginUrl = null;
@@ -5,10 +10,6 @@ class TunlEmbed {
   #crypto = null;
   #tunl_frame = null;
   #messages = {};
-
-  async test() {
-    return await this.#sendMessage({ action: "testing" });
-  }
 
   async submit() {
     return await this.#sendMessage({ action: "submit" });
@@ -246,8 +247,4 @@ class TunlCrypto {
     }
     return window.btoa(binary);
   }
-}
-
-async function testCrypto() {
-  x = new TunlCrypto("hello");
 }
