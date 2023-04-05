@@ -16,7 +16,7 @@ font-family: Arial;
 
 button, select {
     display: block;
-    margin-top: 10px;
+    margin-top: 1px;
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
