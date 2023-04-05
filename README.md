@@ -160,6 +160,7 @@ $tunl_form_options = array(
     "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "iframe_referer" => "https://localhost:8082/",
+    "allow_client_side_sdk" => true,
     "tunl_sandbox" => true,
     "payment_data" => $payment_data,
     "web_hook" => "https://localhost:8082/web_hook.php",
@@ -196,6 +197,11 @@ All other parameters are optional but allow much more control over the output.
             <td>iframe_referer</td>
             <td>null</td>
             <td>Your Domain URL. ie: https://your.domain.com <br> This must be set to the domain you intend to host the embedded form on.</td>
+        </tr>
+        <tr>
+            <td>allow_client_side_sdk</td>
+            <td>false</td>
+            <td>Allows the embedded form to be interacted with using the Tunl Frontend SDK.  [Complete Example Available Here](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example) </td>
         </tr>
         <tr>
             <td>tunl_sandbox</td>
