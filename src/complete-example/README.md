@@ -73,6 +73,8 @@ echo json_encode($form);
 ?>
 ```
 
+The options configured above leverage a lot of default parameters.  In particular, if no `payment_data` is provided, the embedded form will present a card holder name field in addition to the card number, expiration, and cv.  Submitting the form will process a `verify` only action.  `sale` and `preaiuth` actions are also available.  This is described in more detail in the options documentation in our main readme link below:
+
 [View all available configuration options here](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/README.md#all-available-options)
 
 ### Step 3 - Create Your Frontend Markup
@@ -134,6 +136,76 @@ echo json_encode($form);
 })();
 ```
 
-At this point if you open your browser and point it to your `index.html` you should see this result:
+### Step 5 - Test the results
 
-![image](https://user-images.githubusercontent.com/2927894/230185387-4055f303-f6bb-45bf-81c7-edef3f15545e.png)
+At this point if you open your browser and point it to your `index.html` you should have a working payment form.  You can test this by clicking the `Verify Card` button.  An empty form should show some validation about the fields being required and the `tunl.submit()` call should return a response object for you to consume in your client side script.  Additionally filling the form out with valid card info should return a `SUCCESS` type response as shown in the images below.
+
+<table>
+  <tr>
+    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://user-images.githubusercontent.com/2927894/230185387-4055f303-f6bb-45bf-81c7-edef3f15545e.png"><img src="https://user-images.githubusercontent.com/2927894/230185387-4055f303-f6bb-45bf-81c7-edef3f15545e.png" alt="image" style="max-width: 100%;"></a></td>
+    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://user-images.githubusercontent.com/2927894/230185387-4055f303-f6bb-45bf-81c7-edef3f15545e.png"><img src="https://user-images.githubusercontent.com/2927894/230192677-d89b4178-211e-41f4-89cd-c71c2341703b.png" alt="image" style="max-width: 100%;"></a></td>
+    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://user-images.githubusercontent.com/2927894/230185387-4055f303-f6bb-45bf-81c7-edef3f15545e.png"><img src="https://user-images.githubusercontent.com/2927894/230195511-d1f1f4a6-d305-472b-a7f5-91ececa1ddac.png" alt="image" style="max-width: 100%;"></a></td>
+  </tr>
+</table>
+
+### Response Format
+
+The response returned from `await tunl.submit()` has the following structure:
+
+```json
+// successful response
+{
+    "status": "SUCCESS",
+    "msg": "Card was successfully verified.",
+}
+
+// error response
+{
+    "error": "FORM_NOT_VALID",
+    "msg": "Form entry is not valid, please correct errors",
+}
+```
+
+Checking for errors can be quite simple:
+
+```javascript
+// request a form submission and capture the results
+const results = await tunl.submit().catch((err) => err);
+
+// handle success or failure to your liking
+if (results.status === "SUCCESS") console.log("SUCCESS", results);
+if (results.status !== "SUCCESS") console.log("ERROR", results);
+```
+
+or if you prefer the `try-catch` pattern:
+```javascript
+try {
+  const results = await tunl.submit()
+  console.log(results)
+}catch (e) {
+  console.log(e)
+}
+```
+
+### Full Success Response Example
+
+```json
+{
+    "status": "SUCCESS",
+    "msg": "Card was successfully verified.",
+    "embedded_form_action": "verify",
+    "transaction_ttid": "309492984",
+    "transaction_amount": "0.01",
+    "transaction_authnum": "962236",
+    "transaction_timestamp": "2023-04-05 20:33:12 +0000",
+    "transaction_ordernum": "1680726671",
+    "transaction_type": "PREAUTH",
+    "transaction_phardcode": "SUCCESS",
+    "transaction_verbiage": "APPROVED",
+    "vault_token": "0f2c75ae-2817-437b-ac0c-f71b0590095f",
+    "webhook_response": [],
+    "void_ttid": "309492984",
+    "void_phardcode": "SUCCESS",
+    "void_verbiage": "SUCCESS"
+}
+```
