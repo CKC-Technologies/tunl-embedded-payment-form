@@ -148,6 +148,8 @@ At this point if you open your browser and point it to your `index.html` you sho
   </tr>
 </table>
 
+---
+
 ### Response Format
 
 The response returned from `await tunl.submit()` has the following structure:
@@ -187,6 +189,8 @@ try {
 }
 ```
 
+---
+
 ### Full Success Response Example
 
 ```json
@@ -209,3 +213,22 @@ try {
     "void_verbiage": "SUCCESS"
 }
 ```
+
+The full response includes several important details about the transaction that was processed, including your webhook response if you opt to do so (not required).
+
+#### It is recommended to save this entire response in your database for future reference.
+
+The `vault_token` enables you to use the Tunl Vault API to [charge the stored card at a later date and time](#charging-a-card-using-a-vault-token) without storing any sensitive card data on your own servers/databases. 
+
+Likewise, if running a `preauth` type transaction the `transaction_ttid` is required to [complete the pre-auth and process the transaction.](#completing-a-pre-auth-transaction)  
+
+Additionally the transaction id's `transaction_ttid` and `void_ttid` can be helpful references if there are any issues with specific transactions.
+
+
+# Charging a card using a vault token
+
+Coming Soon
+
+# Completing a Pre Auth Transaction
+
+Coming Soon
