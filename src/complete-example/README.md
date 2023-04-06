@@ -25,6 +25,8 @@ The links in the list above are to the complete example code in this directory. 
 
 Let's start with the bare minimum for each component (using PHP as our server language). All other frontend code works regardless of your chosen backend framework or language.
 
+> Quick Start Tip: If you have docker and docker-compose setup on your dev machine, you can either clone this whole repo and run `docker-compose up` and begin experimenting... or if you would like a quick start from scratch we provide an [empty starter release](https://github.com/CKC-Technologies/tunl-embedded-payment-form/releases/tag/empty-docker-starter-2) that is just the docker files and an empty `src` directory for you to mold to your liking.
+
 ### Step 1 - Download Tunl SDK (Optional)
 
 The Server Side SDK is optional as it is only a wrapper around the usual curl/fetch boilerplate.  If you already have your own solution for making POST requests, then refer to the [ALTERNATIVE - SKIP THE SDK](#alternative---skip-the-sdk---generic-curl-example) Example below
