@@ -351,7 +351,128 @@ Looks much better!
 
 ![baremindemo](https://user-images.githubusercontent.com/2927894/230372241-b4e2babe-ccf3-4ada-9a8d-b22635a451fa.gif)
 
+# Integrating with Your Form
 
+Now that we have some nicer styling and messages to provide the user some feedback.  It's time to look at how we can integrate our own form data with the hosted Tunl payment form.
+
+Suppose you have a form that already includes Card holder name, street, address, zip, etc.  In these cases, you will likely handle these fields on your own and save them in the database along with the transaction response returned from our Tunl payment form.  But you most likely don't want the user to have to fill out the Card holder name twice.  Once in your form and again in the tunl payment form.  Let's look at how we solve this problem.
+
+Let's first add some inputs to our markup and some css to make them look nice.
+
+HTML additions:
+
+```diff
+<body>
+    <h1>Bare Minimum Demo</h1>
+
+    <div id="loader">Loading Tunl Embedded Form...</div>
+    <div id="success" style="display: none;">Card Successfully Verified</div>
+    <div id="error" style="display: none;">Error</div>
+
++   <label>Card Holder Name</label>
++   <input name="cardholdername"/>
+
++   <label>Street</label>
++   <input name="street"/>
+
++   <label>Zip</label>
++   <input name="zip"/>
+
++   <label>Comments</label>
++   <input name="comments"/>
+
+    <iframe id="tunl-frame"></iframe>
+    <button style="display: block;">Verify Card</button>
+
+</body>
+```
+
+CSS Additions:
+
+```diff
+...
+...
+
+#loader {background-color: yellow;}
+#error {background-color: red; color:white;}
+#success {background-color: lime;}
+
++input, label {
++  display: block;
++}
+
++input {
++  padding: 10px;
++  border: 1px solid grey;
++  border-radius: 5px;
++  width: 100%;
++  margin-bottom: 10px;
++}
+```
+
+Our form now looks like this:
+
+![image](https://user-images.githubusercontent.com/2927894/230427327-2c7dd633-b6c9-4813-84f8-c3477e7b6b94.png)
+
+
+Let's remove the card holder name field from the embedded tunl payment form, by making the following changes to `create.php`
+
+```diff
+...
+
+// create new SDK instance
+$tunl_sdk = new TunlEmbedSDK;
+
++$payment_data = array(
++    "cardholdername" => "x" // Temporary value to hide this input
++);
+
+$tunl_form_options = array(
+    "api_key" => $tunl_api_key,
+    "secret" => $tunl_secret,
+    "iframe_referer" => "https://ideposit.zwco.cc/",
+    // "tunl_sandbox" => true, // required if using test api keys
+    "allow_client_side_sdk" => true,
++    "payment_data" => $payment_data
+);
+
+```
+
+We now have a form that looks like this:
+
+![image](https://user-images.githubusercontent.com/2927894/230428322-22d9974e-7ae0-49bd-b281-633c65577064.png)
+
+At this point, if we were to submit we would get an error as the `cardholdername` is not valid.  Let's update our client script `checkout.js` to pass the `cardholdername` directly to the iframe via the Tunl Frontend SDK
+
+```diff
+
+  ...
+
+  // create a button click handler
+  document.querySelector("button").addEventListener("click", async () => {
++   // helper function
++   const getVal = (name) => {
++     return document.querySelector(`[name="${name}"]`).value;
++   };
+
++   // set additional payment data
++   const setDataResults = await tunl
++     .setPaymentData({
++       cardholdername: getVal("cardholdername"),
++       street: getVal("street"),
++       zip: getVal("zip"),
++       comments: getVal("comments"),
++     })
+
+    // request a form submission and capture the results
+    const results = await tunl.submit().catch((err) => err);
+    
+    ...
+```
+
+and now we have a complete working form that is integrated with our Embedded Tunl Payment Form!!
+
+![integrate-form](https://user-images.githubusercontent.com/2927894/230431161-14f1f7c3-e418-4bae-ad0b-619884ed2d17.gif)
 
 # Charging a card using a vault token
 
