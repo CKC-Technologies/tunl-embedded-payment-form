@@ -72,6 +72,30 @@ echo json_encode($form);
 ?>
 ```
 
+### ALTERNATIVE - SKIP THE SDK - USE YOUR OWN
+
+```php
+<?php
+
+// set configuration options
+$tunl_form_options = array(
+    "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "iframe_referer" => "https://localhost:8082/",
+    // "tunl_sandbox" => true, // required if using test api keys
+    "allow_client_side_sdk" => true
+);
+
+$results = post("https://test-payment.tunl.com/embed/get-card-form-url.php", $tunl_form_options);
+$results = post("https://payment.tunl.com/embed/get-card-form-url.php", $tunl_form_options);
+
+// respond to the request appropriately using JSON
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($form);
+
+?>
+```
+
 The options configured above leverage a lot of default parameters.  In particular, if no `payment_data` is provided, the embedded form will present a card holder name field in addition to the card number, expiration, and cv.  Submitting the form will process a `verify` only action.  `sale` and `preaiuth` actions are also available.  This is described in more detail in the options documentation in our main readme link below:
 
 [View all available configuration options here](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/README.md#all-available-options)
