@@ -33,6 +33,12 @@ Download the [tunl-embed-sdk.php](https://github.com/CKC-Technologies/tunl-embed
 
 ### Step 2 - Create Your Server Endpoint
 
+Your server endpoint is an important step as this is the beginning of a secure payment process.  
+
+Stripe has the concept of creating a `payment intent`.  This is identical to that concept for all intents and purposes.  
+
+The key difference here is our concept is centered around the idea of requesting a unique, one time use URL, that can be loaded into an iframe that is hosted on your site and domain.  This unique, one time use URL, will render a payment form (or hosted fields) that is/are connected to your Tunl account.  This form can be just the credit card fields (account no, expiration, cvv) or it can optionally host a card holder name field if you so choose.  You have full control over all the final output, including the ability to customize the style via your own CSS. 
+
 `create.php`
 
 ```php
