@@ -15,6 +15,18 @@ async function change(ev) {
 
 async function submitTunl() {
   showMessage("Processing... Please wait...", "loading");
+  const getVal = (name) => {
+    return document.querySelector(`[name="${name}"]`).value;
+  };
+
+  // set additional payment data
+  const setDataResults = await tunl.setPaymentData({
+    cardholdername: getVal("cardholdername"),
+    street: getVal("street"),
+    zip: getVal("zip"),
+    comments: getVal("comments"),
+  });
+  
   const results = await tunl.submit().catch((err) => err);
   if (results.status === "SUCCESS") return handleSuccess(results);
   if (results.status !== "SUCCESS") return handleError(results);
