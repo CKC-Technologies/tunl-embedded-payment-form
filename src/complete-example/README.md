@@ -94,7 +94,7 @@ curl -X POST $API_URL \
 EOF
 ```
 
-The options configured above leverage a lot of default parameters.  In particular, if no `payment_data` is provided, the embedded form will present a card holder name field in addition to the card number, expiration, and cv.  Submitting the form will process a `verify` only action.  `sale` and `preaiuth` actions are also available.  This is described in more detail in the options documentation in our main readme link below:
+The options configured above leverage a lot of default parameters.  In particular, if no `payment_data` is provided, the embedded form will present a card holder name field in addition to the card number, expiration, and cv.  Submitting the form will process a `verify` only action.  `sale` and `preauth` actions are also available.  This is described in more detail in the options documentation in our main readme link below:
 
 [View all available configuration options here](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/README.md#all-available-options)
 
