@@ -182,12 +182,14 @@ The response returned from `await tunl.submit()` has the following structure:
 {
     "status": "SUCCESS",
     "msg": "Card was successfully verified.",
+    ...additional data
 }
 
 // error response
 {
     "error": "FORM_NOT_VALID",
     "msg": "Form entry is not valid, please correct errors",
+    ...additional data
 }
 ```
 
