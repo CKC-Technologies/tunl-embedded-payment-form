@@ -1,6 +1,6 @@
 # Complete Integration Guide
 
-![tunl-embedded-final-demo](https://user-images.githubusercontent.com/2927894/230153145-2dfb6ac8-7194-4282-87df-27da687d58aa.gif)
+![integrate-form](https://user-images.githubusercontent.com/2927894/230431161-14f1f7c3-e418-4bae-ad0b-619884ed2d17.gif)
 
 ## Overview
 
@@ -8,25 +8,14 @@
 
 To begin, make sure you have your Tunl Account and API Keys ready.  For more info see the [Pre-Reqs](https://github.com/CKC-Technologies/tunl-embedded-payment-form#pre-reqs) Section in our main readme.
 
-### Integration Options
-
-This embeddable form is able to be integrated in one of 2 main ways:
-
-- SSR Server Side Rendered (no front end library required)
-- Hybrid
-  - Generate an embeddable URL to use in an iframe
-  - Use the `tunl-embed.js` frontend library to interact on the client
-  
-In this guide we will focus on the Hybrid approach.  Our [Main Readme](https://github.com/CKC-Technologies/tunl-embedded-payment-form#tunl-embeddable-form-documentation) and our basic [index.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/index.php) has more details on the SSR technique.
-
 ## Concepts
 
 In the hybrid approach, there are 5 main components that are required:
 
-- The Server Side Tunl SDK: [tunl-embed-sdk.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php)
+- The Server Side Tunl SDK (optional): [tunl-embed-sdk.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php)
 - Your Server Side Endpoint: [create.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/complete-example/create.php)
 - Your Frontend Markup: [index.html](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/complete-example/index.html)
-- The Frontend Tunl SDK Library: [tunl-embed-sdk.js](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.js)
+- The Frontend Tunl SDK Library
 - Your Frontend Itegration Script: [checkout.js](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/complete-example/checkout.js)
 
 
@@ -36,7 +25,9 @@ The links in the list above are to the complete example code in this directory. 
 
 Let's start with the bare minimum for each component (using PHP as our server language). All other frontend code works regardless of your chosen backend framework or language.
 
-### Step 1 - Download Tunl SDK
+### Step 1 - Download Tunl SDK (Optional)
+
+The Server Side SDK is optional as it is only a wrapper around the usual curl/fetch boilerplate.  If you already have your own solution for making POST requests, then refer to the [ALTERNATIVE - SKIP THE SDK](#alternative---skip-the-sdk---generic-curl-example) Example below
 
 Download the [tunl-embed-sdk.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php) and place in the same folder as the following `create.php` file or in your include path.
 
@@ -62,38 +53,39 @@ $tunl_form_options = array(
     "allow_client_side_sdk" => true
 );
 
-// get the embeddable form url
-$form = $tunl_sdk->get_form_url($tunl_form_options);
+// get the embeddable form url (similiar to Stripe's create payment intent)
+$tunl_client_secrets = $tunl_sdk->get_form_url($tunl_form_options);
 
 // respond to the request appropriately using JSON
 header('Content-Type: application/json; charset=utf-8');
-echo json_encode($form);
+echo json_encode($tunl_client_secrets);
 
 ?>
 ```
 
-### ALTERNATIVE - SKIP THE SDK - USE YOUR OWN
+### ALTERNATIVE - SKIP THE SDK - GENERIC CURL EXAMPLE
 
-```php
-<?php
+```bash
+#!/bin/bash
 
-// set configuration options
-$tunl_form_options = array(
-    "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "iframe_referer" => "https://localhost:8082/",
-    // "tunl_sandbox" => true, // required if using test api keys
-    "allow_client_side_sdk" => true
-);
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
 
-$results = post("https://test-payment.tunl.com/embed/get-card-form-url.php", $tunl_form_options);
-$results = post("https://payment.tunl.com/embed/get-card-form-url.php", $tunl_form_options);
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-// respond to the request appropriately using JSON
-header('Content-Type: application/json; charset=utf-8');
-echo json_encode($form);
-
-?>
+curl -X POST $API_URL \
+-H 'Content-Type: application/json; charset=utf-8' \
+--data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true
+}
+EOF
 ```
 
 The options configured above leverage a lot of default parameters.  In particular, if no `payment_data` is provided, the embedded form will present a card holder name field in addition to the card number, expiration, and cv.  Submitting the form will process a `verify` only action.  `sale` and `preaiuth` actions are also available.  This is described in more detail in the options documentation in our main readme link below:
