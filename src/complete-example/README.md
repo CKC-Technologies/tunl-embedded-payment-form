@@ -65,8 +65,7 @@ $tunl_form_options = array(
 // get the embeddable form url
 $form = $tunl_sdk->get_form_url($tunl_form_options);
 
-// respond to the request appropriately, 
-// here we have chosen a JSON body response
+// respond to the request appropriately using JSON
 header('Content-Type: application/json; charset=utf-8');
 echo json_encode($form);
 
@@ -223,6 +222,131 @@ The `vault_token` enables you to use the Tunl Vault API to [charge the stored ca
 Likewise, if running a `preauth` type transaction the `transaction_ttid` is required to [complete the pre-auth and process the transaction.](#completing-a-pre-auth-transaction)  
 
 Additionally the transaction id's `transaction_ttid` and `void_ttid` can be helpful references if there are any issues with specific transactions.
+
+# Going Further
+
+So far, our form works, but it is not very pretty and we are not providing our user with any feedback.  Let's add some CSS and some basic message divs to inform the user of errors or success.
+
+### Adding CSS
+
+`checkout.css`
+
+```css
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+#tunl-frame {
+  border: none;
+  height: 0px;
+  overflow: hidden;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+button {
+  display: block;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+#loader, #error, #success {
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#loader {background-color: yellow;}
+#error {background-color: red; color:white;}
+#success {background-color: lime;}
+```
+
+Don't forget to include the CSS in your `index.html`
+
+```html
+<head>
+  ...
+  <link rel="stylesheet" href="checkout.css" />
+  ...
+</head>
+```
+
+### Adding Message Divs
+
+Now let's add a `loading`, `error` and `success` div to our markup.
+
+```diff
+<body>
+    <h1>Bare Minimum Demo</h1>
+
++   <div id="loader">Loading Tunl Embedded Form...</div>
++   <div id="success" style="display: none;">Card Successfully Verified</div>
++   <div id="error" style="display: none;">Error</div>
+
+    <iframe id="tunl-frame"></iframe>
+    <button style="display: block;">Verify Card</button>
+
+</body>
+```
+
+### Update your integration script
+
+And finally, add a few lines to our javascript:
+
+```diff
+(async function () {
+  // create new TunlEmbed SDK instance
+  const tunl = new TunlEmbed();
+
+  // tell the Tunl SDK about Your Server Side endpoint url
+  await tunl.getFrameURL("create.php");
+
+  // mount the embedded form in the iframe
+  await tunl.mount("#tunl-frame");
+  
++ // Hide the loader after iframe is loaded
++ document.getElementById("loader").style.display = "none";
+
+  // create a button click handler
+  document.querySelector("button").addEventListener("click", async () => {
+
+    // request a form submission and capture the results
+    const results = await tunl.submit().catch((err) => err);
+
+    // handle success or failure to your liking
+-   if (results.status === "SUCCESS") console.log("SUCCESS", results);
++   if (results.status === "SUCCESS") {
++     document.getElementById("tunl-frame").style.display = "none";
++     document.getElementById("error").style.display = "none";
++     document.querySelector("button").style.display = "none";
++     document.getElementById("success").style.display = "";
++   }
+
+-   if (results.status !== "SUCCESS") console.log("ERROR", results);
++   if (results.status !== "SUCCESS") {
++     document.getElementById("error").style.display = "";
++   }
+  });
+})();
+```
+
+### Results
+
+Looks much better!
+
+![baremindemo](https://user-images.githubusercontent.com/2927894/230372241-b4e2babe-ccf3-4ada-9a8d-b22635a451fa.gif)
+
 
 
 # Charging a card using a vault token
