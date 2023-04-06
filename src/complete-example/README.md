@@ -8,9 +8,9 @@
 
 To begin, make sure you have your Tunl Account and API Keys ready.  For more info see the [Pre-Reqs](https://github.com/CKC-Technologies/tunl-embedded-payment-form#pre-reqs) Section in our main readme.
 
-## Concepts
+## Components
 
-In the hybrid approach, there are 5 main components that are required:
+In this guide, there are 5 main components:
 
 - The Server Side Tunl SDK (optional): [tunl-embed-sdk.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php)
 - Your Server Side Endpoint: [create.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/complete-example/create.php)
