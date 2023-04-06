@@ -33,6 +33,7 @@ class TunlEmbedSDK
         $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if (!($status == 201 || $status == 200)) {
+            http_response_code($status);
             die("Error: call to URL $url failed with status $status, response $json_response, curl_error " . curl_error($curl) . ", curl_errno " . curl_errno($curl));
         }
 
