@@ -341,21 +341,23 @@ And finally, add a few lines to our javascript:
   // create a button click handler
   document.querySelector("button").addEventListener("click", async () => {
 
++   document.getElementById("error").style.display = "none";
+
     // request a form submission and capture the results
     const results = await tunl.submit().catch((err) => err);
 
     // handle success or failure to your liking
 -   if (results.status === "SUCCESS") console.log("SUCCESS", results);
 +   if (results.status === "SUCCESS") {
-+     document.getElementById("tunl-frame").style.display = "none";
-+     document.getElementById("error").style.display = "none";
 +     document.querySelector("button").style.display = "none";
++     document.getElementById("tunl-frame").style.display = "none";
 +     document.getElementById("success").style.display = "";
 +   }
 
 -   if (results.status !== "SUCCESS") console.log("ERROR", results);
 +   if (results.status !== "SUCCESS") {
 +     document.getElementById("error").style.display = "";
++.    document.getElementById("error").innerText = results.msg || "Unknown Error";
 +   }
   });
 })();
@@ -466,19 +468,20 @@ At this point, if we were to submit we would get an error as the `cardholdername
 
   // create a button click handler
   document.querySelector("button").addEventListener("click", async () => {
+    document.getElementById("error").style.display = "none";
+    
 +   // helper function
 +   const getVal = (name) => {
 +     return document.querySelector(`[name="${name}"]`).value;
 +   };
 
 +   // set additional payment data
-+   const setDataResults = await tunl
-+     .setPaymentData({
-+       cardholdername: getVal("cardholdername"),
-+       street: getVal("street"),
-+       zip: getVal("zip"),
-+       comments: getVal("comments"),
-+     })
++   await tunl.setPaymentData({
++     cardholdername: getVal("cardholdername"),
++     street: getVal("street"),
++     zip: getVal("zip"),
++     comments: getVal("comments"),
++   });
 
     // request a form submission and capture the results
     const results = await tunl.submit().catch((err) => err);
