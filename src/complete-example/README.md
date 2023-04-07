@@ -31,6 +31,7 @@
   - [Use the SDK!](#use-the-sdk)
 - [Completing a PREAUTH Transaction](#completing-a-pre-auth-transaction)
   - [Use the SDK!](#use-the-sdk-1)
+- [Tunl Frontend SDK Methods Reference](#)
 
 ## Overview
 
@@ -1079,3 +1080,23 @@ echo json_encode($completePreAuth);
 &nbsp;
 
 &nbsp;
+
+# Tunl Frontend SDK Methods Reference
+
+The full reference is available in our main readme.  [Click here to be taken there](https://github.com/CKC-Technologies/tunl-embedded-payment-form#tunl-frontend-sdk-methods)
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+
