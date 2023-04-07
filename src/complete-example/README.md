@@ -933,7 +933,6 @@ echo json_encode($vaultPayment);
 ?>
 ```
 
-
 [Back to Table of Contents](#table-of-contents)
 
 &nbsp;
@@ -950,7 +949,91 @@ echo json_encode($vaultPayment);
 
 # Completing a Pre Auth Transaction
 
-Coming Soon
+Get a multiuse token with a lifespan of 1 minute
+
+Get a single use auth token with a 1 minute lifetime (not absolutely necessary, but a GREAT practice)
+
+```bash
+curl -X POST \
+  'https://test-api.tunl.com/api/auth' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "username": "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "lifespan": 1,
+  "scope": "PAYMENT_WRITE",
+}'
+```
+
+Reponse:
+
+```json
+{
+  "token": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+  "user": {
+  ...
+  }
+}
+```
+
+Use the token lookup the transaction:
+
+```bash
+# get transaction payment endpoint: /api/payments/{transactionId}
+
+curl -X GET \
+  'https://test-api.tunl.com/api/payments/3216549870' \
+  --header 'Authorization: Bearer zzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+```
+
+Use the token and the previous result to PATCH (Complete pre authorization) the transaction
+
+```bash
+# patch transaction payment endpoint: /api/payments/{transactionId}
+
+curl -X PATCH \
+  'https://test-api.tunl.com/api/payments/3216549870' \
+  --header 'Authorization: Bearer zzzzzzzzzzzzzzzzzzzzzzzzzzzzz' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "ttid": "309628533",
+  "transactionCategory": null,
+  "type": "PREAUTH",
+  "card": "VISA",
+  "account": "XXXXXXXXXXXX1111",
+  ...LOTS MORE!
+}'
+```
+
+# Use the SDK!
+
+The SDK turns the multi step process described above into one simple step!  Below is our PHP SDK example:
+
+```php
+<?php
+
+// require SDK
+require_once("../tunl-embed-sdk.php");
+
+// create new SDK instance
+$tunl_sdk = new TunlEmbedSDK;
+
+// set configuration options
+$preauth_payment_options = array(
+    "api_key" => "apikey_b5a04055f48a4cf490665764a459de83",
+    "secret" => "55f547c3f5e849f8bc02cbd5093fba7a",
+    "ttid" => $_GET['ttid']
+);
+
+// get the embeddable form url (similiar to Stripe's create payment intent)
+$completePreAuth = $tunl_sdk->completePreAuthorization($preauth_payment_options);
+
+// respond to the request appropriately using JSON
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($completePreAuth);
+
+?>
+```
 
 [Back to Table of Contents](#table-of-contents)
 
