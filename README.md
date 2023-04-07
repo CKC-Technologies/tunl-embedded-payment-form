@@ -418,13 +418,13 @@ For the bleeding edge development version use:
 
 #### Description
 
+This method will call your [server end point](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example#step-2---create-your-server-endpoint) to retrieve the unique iframe url and client secret.
+
 #### Params
 
 ```
 URL: string - this can be a FQDN and path or a simple relative path
 ```
-
-This method will call your [server end point](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example#step-2---create-your-server-endpoint) to retrieve the unique iframe url and client secret.
 
 #### Examples
 
@@ -609,7 +609,7 @@ NONE
 
 #### Examples
 
-```
+```javascript
     // request a form submission and capture the results
     const results = await tunl.submit().catch((err) => err);
 
