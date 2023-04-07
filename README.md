@@ -433,6 +433,7 @@ URL: string - this can be a FQDN and path or a simple relative path
 // the following are all valid URL inputs
   await tunl.getFrameURL("create.php");
   await tunl.getFrameURL("/create.php");
+  await tunl.getFrameURL("/create.php?order_id=1000");  // can also pass in query params
   await tunl.getFrameURL("relative/path/create.php");
   await tunl.getFrameURL("/absolute/path/create.php");
   await tunl.getFrameURL("https://your.domain.com/create.php");
