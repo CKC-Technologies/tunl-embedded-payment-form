@@ -8,17 +8,22 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 
 - [Pre-Reqs](#pre-reqs)
 - [Quick Start](#quick-start)
+- [Complete Integration Guide](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example)
 - [Process Overview](#process-overview)
   - [Security Warning](#-security-warning-)
   - [Peek under the hood](#a-peek-under-the-hood)
 - [All Available Options](#all-available-options)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
+- [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
+  - [`getFrameURL`](#getframeurlurl-string)
+  - [`mount`](#mountcssselector-string)
+  - [`setPaymentData`](#setpaymentdatapaymentdata-object)
+  - [`submit`](#submit)
 - [Larger Example](#larger-example)
   - [Client Side HTML](#client-side-html)
   - [Client Side Javascript](#client-side-javascript)
   - [PHP Backend](#php-backend)
-- [Tunl Frontend SDK](#tunl-frontend-sdk)
 - [Custom CSS Styling](#custom-css-styling)
   - [Default](#default-styling)
   - [Unstyled](#unstyled)
@@ -77,9 +82,41 @@ If you want to test the webhook feature using the quickstart docker-compose appr
 
 Alternatively, you could point the webhook setting directly to a public endpoint that is not in this project.  Take a look at the [`src/web_hook.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/web_hook.php) file for more info on how to structure your webhook to receive data back from the form.
 
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+# Complete Integration Guide
+
+### [Click here for our complete step by step integration guide](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
 # Process Overview
 
-BARE MINIMUM Steps involved:
+Steps involved:
 - Craft the options to customize the embedded form
 - Generate a unique URL (similar to Stripe's "Create Payment Intent")
 - Use the generated url in an iframe
@@ -98,9 +135,12 @@ $tunl_form_options = array(
     // "tunl_sandbox" => true, // set this if using a test tunl account api keys
 );
 
-$form = $tunl_sdk->get_form_url($tunl_form_options);
+// get the embeddable form url and client secret (similiar to Stripe's create payment intent)
+$tunl_client_secrets = $tunl_sdk->get_form_url($tunl_form_options);
 
-echo $form['url'];
+// respond to the request appropriately using JSON
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($tunl_client_secrets);
 ?>
 ```
 
@@ -116,7 +156,7 @@ The code above is the bare minimum. This will get you a url to embed the form in
 
 ![image](https://user-images.githubusercontent.com/2927894/228838375-834b7849-ef64-402b-ab8d-cfbf9d439a6c.png)
 
-The bare minimum form will process a `preauth` transaction for `$0.01` and then immediately void it. This is obviously not very useful except for quick testing to make sure you can connect to your Tunl account.  In the [next section](#all-available-options) we will see how to customize our form and add more context.  Things like, card holder name, amount, transaction type, whether or not to immediately void the transaction, etc.
+This basic form will process a `verify` only transaction for `$0.01` and then immediately void it. This is obviously not very useful except for quick testing to make sure you can connect to your Tunl account.  In the [next section](#all-available-options) we will see how to customize our form and add more context.  Things like, card holder name, amount, transaction type, etc.
 
 >Side Note: You can find this voided preauth under [Settled Reports](https://test.tunl.com/payments/settled) in your Tunl Account.  Sort by timestamp descending and filter by VOID_PREAUTH.
 
@@ -126,7 +166,7 @@ Alternatively you could modify this code to be completely Server Side Rendered. 
 
 ### A Peek Under the Hood
 
-The [`tunl-embed-sdk.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php) is nothing fancy at present.  It just contains all the boilerplate to do CURL calls and a wrapper method to get the form url.  To illustrate, here is a command line version of the CURL call being made by
+The [`tunl-embed-sdk.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php) is nothing fancy at present.  It just contains all the boilerplate to do CURL calls and a wrapper method to get the form url and client secret.  To illustrate, here is a command line version of the CURL call being made by
 
 `$tunl_sdk->get_form_url($tunl_form_options)`
 
@@ -135,6 +175,20 @@ curl -X POST https://test-payment.tunl.com/embed/get-card-form-url.php \
    -H 'Content-Type: application/json' \
    -d '{"api_key":"apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx","secret":"xxxxxxxxxxxxxxxxxxxxxxxxxx","iframe_referer":"https://localhost:8082/"}'
 ```
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 # All Available Options
 
@@ -172,6 +226,20 @@ $tunl_form_options = array(
 ```
 
 All other parameters are optional but allow much more control over the output.
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 #### Tunl Form Options
 
@@ -232,6 +300,20 @@ All other parameters are optional but allow much more control over the output.
     </tbody>   
 </table>
 
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
 #### Payment Data Options
 
 <table>
@@ -281,6 +363,323 @@ All other parameters are optional but allow much more control over the output.
     </tbody>   
 </table>
 
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+# Tunl Frontend SDK Methods
+
+We provide an OPTIONAL frontend sdk library to allow for client side interaction.  This allows you to gain even more control over the end user experience and provide a seamless payment form/fields that integrate perfectly with your own applications/solutions.
+
+Our [complete integration guide](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example) goes into step by step detail using the client library.
+
+## Import / Install
+
+Just include the following script in your head tag:
+
+```html
+<script src="https://payment.tunl.com/embed/assets/tunl-embed-sdk.js"></script>
+```
+
+For the bleeding edge development version use:
+
+```html
+<script src="https://test-payment.tunl.com/embed/assets/tunl-embed-sdk.js"></script>
+```
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+## Methods
+
+### `getFrameUrl(URL: string)`
+
+#### Description
+
+#### Params
+
+```
+URL: string - this can be a FQDN and path or a simple relative path
+```
+
+This method will call your [server end point](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example#step-2---create-your-server-endpoint) to retrieve the unique iframe url and client secret.
+
+#### Examples
+
+```javascript
+// tell the Tunl SDK about Your Server Side endpoint url
+// the following are all valid URL inputs
+  await tunl.getFrameURL("create.php");
+  await tunl.getFrameURL("/create.php");
+  await tunl.getFrameURL("relative/path/create.php");
+  await tunl.getFrameURL("/absolute/path/create.php");
+  await tunl.getFrameURL("https://your.domain.com/create.php");
+```
+
+#### Returns
+
+This method doesn't actually return anything, but the server endpoint that it calls should return an object the looks like the one below.  The frontend library automatically handles this information.  There is no need to perform any intermediate manipulation of this information.
+
+```json
+{
+    "url": "https://test-payment.tunl.com/embed/load-embedded-form.php?one-time-use-code=e862721da6a0547f39cda1a7ea7475f8268e1ceb8d23b90209dd9a60a78635842f1379275f51c5d8",
+    "shared_secret": "07d687b5fd040e61f4af3fa3b13457b8d7d8234f1422f437bd2006ffe56a28671521a814cf06f460",
+    "msg": "SUCCESS"
+}
+```
+
+---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+### `mount(cssSelector: string)`
+
+#### Description
+
+This will "mount" the embedded form in the iframe.
+
+#### Params
+
+```
+cssSelector: string - any valid css selector that can be passed into `document.querySelector`
+                       the selected element is expected to be an <IFRAME> node/element
+```
+
+#### Examples
+
+```javascript
+ // mount the embedded form in the iframe
+  await tunl.mount("#tunl-frame"); // selects an iframe with the id of "tunl-frame"
+  await tunl.mount(".tunl-frame"); // selects an iframe with a class of "tunl-frame"
+  await tunl.mount("iframe");      // selects the first <iframe> on the page
+```
+
+#### Returns
+
+NONE
+
+While this method does not return anything, if you use the `await` keyword it will wait to return until the iframe is ready.  This can be helpful for rendering a loading div/image before calling the `mount` method and then hiding the loader immediately after the `mount` method returns.
+
+---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+### `setPaymentData(paymentData: object)`
+
+#### Description
+
+This method is used to set payment details such as card holder name, street, zip, and comments directly on the client.  Technically the iframe does make a server side request to update its server side state with the new payment details, but that is all handled for you.  As this is a sensitive operation, the details that are allowed to be updated are limited to the items shown in the example below.
+
+#### Params
+
+All properties of the object are optional
+
+```typescript
+interface paymentData {
+  cardholdername?: string;
+  ordernum?: string;
+  comments?: string;
+  street?: string;
+  zip?: string;
+}
+```
+
+#### Examples
+
+```javascript
+    // helper function to get values from named <input> elements
+    const getVal = (name) => {
+      return document.querySelector(`[name="${name}"]`).value;
+    };
+
+    // set additional payment data
+    const results = await tunl.setPaymentData({
+      cardholdername: getVal("cardholdername"),
+      street: getVal("street"),
+      zip: getVal("zip"),
+      comments: getVal("comments"),
+    });
+    
+    console.log(results)
+```
+
+#### Returns
+
+This method returns a JSON Object.  This isn't particularly useful for anything other than debugging or confirming expectations.  However, it is a good idea to wrap this in your usual error handling strategy as it is a network call under the hood, so of course the usual failure modes are possible.
+
+```json
+{
+    "status": "SUCCESS",
+    "msg": "Successfully updated payment data.",
+    "payment_data": {
+        "action": "verify",
+        "terminalId": 0,
+        "ordernum": 1680831905,
+        "comments": "comments",
+        "amount": "0.01",
+        "tax": 0,
+        "examount": 0,
+        "street": "street",
+        "zip": "zip",
+        "cv": "",
+        "expdate": "",
+        "account": "",
+        "cardholdername": "Zach",
+        "custref": null,
+        "clerkid": "iDep Embed Form",
+        "autovault": "Y",
+        "vaultAccount": true,
+        "accountId": null,
+        "contactId": null
+    }
+}
+```
+
+---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+### `submit()`
+
+#### Description
+
+This method will attempt to submit the tunl payment form.  The embedded form has its own client side validation that must pass before it will actually submit.  If validation fails this method will return an error.  Other errors could occur as well, but this one will likely be the most common.  On success it will return transaction information that you should store in your database.  This transaction information is completely sanitized and safe to store.
+
+#### Params
+
+NONE
+
+#### Examples
+
+```
+    // request a form submission and capture the results
+    const results = await tunl.submit().catch((err) => err);
+
+    // handle success or failure to your liking
+    if (results.status === "SUCCESS") {
+      document.querySelector("button").style.display = "none";
+      document.getElementById("tunl-frame").style.display = "none";
+      document.getElementById("success").style.display = "";
+    }
+
+    if (results.status !== "SUCCESS") {
+      document.getElementById("error").style.display = "";
+      document.getElementById("error").innerText =
+        results.msg || "Unknown Error";
+    }
+```
+
+#### Returns
+
+Full Success Response:
+
+```json
+{
+    "status": "SUCCESS",
+    "msg": "Card was successfully verified.",
+    "embedded_form_action": "verify",
+    "transaction_ttid": "309574334",
+    "transaction_amount": "0.01",
+    "transaction_authnum": "522169",
+    "transaction_timestamp": "2023-04-06 13:26:05 +0000",
+    "transaction_ordernum": "ClientSetOrderNum",
+    "transaction_type": "PREAUTH",
+    "transaction_phardcode": "SUCCESS",
+    "transaction_verbiage": "APPROVED",
+    "vault_token": "088acc40-c28f-4084-a3d2-b801b9c4fccb",
+    "webhook_response": [],
+    "cardholdername": "Testing Client Set",
+    "street": "client set street",
+    "zip": "49203",
+    "comments": "client set comments",
+    "void_ttid": "309574334",
+    "void_phardcode": "SUCCESS",
+    "void_verbiage": "SUCCESS"
+}
+```
+
+Error response:
+
+```json
+{
+    "error": "FORM_NOT_VALID",
+    "msg": "Form entry is not valid, please correct errors",
+    "msgID": "a414b0ab-0502-4c21-8efa-cd1dfb485305"
+}
+```
+---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
 # Larger Example
 
 A full sample of this example is available in less than 100 lines of code in the [`src/client-side-example.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/client-side-example.php), but we are going to break that down piece by piece here.
@@ -316,6 +715,20 @@ This HTML will render a form that looks like so:
 ![image](https://user-images.githubusercontent.com/2927894/228682190-d425278c-e3ab-45b7-a2b6-cdde903f2ddb.png)
 
 In the code above, the User will fill out their details and click the `Make Payment` button.  This button will call some javascript to generate our unique embeddable form url.  We can then udpate the iframe in our mock modal and display it to the User to fill out their credit card details.
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 #### Client Side Javascript
 
@@ -356,6 +769,20 @@ The `start` function uses these results to update the `src` attribute on the ifr
 ![image](https://user-images.githubusercontent.com/2927894/228682312-9c5c8054-f9a5-4534-a90e-3251c8bbc5a0.png)
 
 Not exactly a modal, but you can easily imagine that part!
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 #### PHP Backend
 
@@ -412,13 +839,22 @@ function get_amount_from_order($ordernum){
 }
 ```
 
-# Tunl Frontend SDK
+---
 
-We provide a frontend sdk library for use when needing more control than the example above.  
 
-In the example above, we just call the backend endpoint from the client to fetch the embeddable form URL.  This embedded form is completely isolated from the host.  The primary way to use the above version would be to implement a webhook that gets called when the form is submitted.  This webhook is informed of the results of the submission.
+### &nbsp;
 
-In cases where you would rather receive a response directly in the browser from our embedded form use the Tunl Frontend SDK.  [Full Example and Guide are available here.](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example)
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 # Custom CSS Styling
 
@@ -447,6 +883,20 @@ We should now see something like this:
 ![image](https://user-images.githubusercontent.com/2927894/228873005-fc1a7472-434d-4049-8215-4ec05cd32a91.png)
 
 Woof, not very pretty.  Let's see how we can improve this.
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 ### HTML Structure and Selectors
 
@@ -486,6 +936,20 @@ Below is what the underlying HTML looks like.  You can see the we have plenty of
 </body>
 ```
 
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
 ### Basic customization
 
 An incredible improvement in style can be had in very few lines of CSS.  For Example:
@@ -511,6 +975,20 @@ button
 Will turn the above 1990's form into the results shown below:
 
 ![image](https://user-images.githubusercontent.com/2927894/228888764-67c1c61a-52a5-4996-8531-fefb53229b82.png)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 ### Further Improvement
 
@@ -559,6 +1037,19 @@ The css above adds some box-shadow and CSS grid to render the following result:
 ![image](https://user-images.githubusercontent.com/2927894/228891875-38885034-2f19-4256-8e1e-500b376ad8c9.png)
 
 
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 
 # Troubleshooting
@@ -572,6 +1063,20 @@ Make sure the request to the `get-card-form-url.php` contains all the following 
 - iframe_referer
 
 ---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 ### Bad API Key and Secret Combo
 
@@ -591,6 +1096,20 @@ $tunl_form_options = array(
 
 ---
 
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
 ### Unauthorized
 
 This typically happens when trying to use the generated URL incorrectly.  If you generate the URL and use it immediately in an iframe, this should never happen.  The generated URL employs the use of a `one-time-use-code` that is unique and expires in 1 minute.
@@ -603,6 +1122,20 @@ Scenarios that an `Unauthorized` error would typically happen:
 Example generated URL for reference: https://test-payment.tunl.com/embed/load-embedded-form.php?one-time-use-code=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 ### Access to this page is restricted to specific domains and must be embedded in an iframe.
 
@@ -628,11 +1161,39 @@ $tunl_form_options = array(
 
 ---
 
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
 ### This domain is not authorized to embed this page in an iframe.
 
 This message can occur for the same reasons as the previous item.  The `iframe_referer` is likely not set correctly.
 
 ---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 ### Card Authentication Failed
 
@@ -646,6 +1207,20 @@ These messages are usually triggered by the tunl gateway.  There should be an ad
 The list of possible messages here is the top 4, with DECLINED being the most common.  You can view more information about these failures in the Tunl Application under Reports->Failed: https://test.tunl.com/payments/failed
 
 ---
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
+
+[Back to table of contents](#table-of-contents)
+
+### &nbsp;
+
+### &nbsp;
+
+### &nbsp;
 
 ### Unable to complete Transaction. Bad Web Hook Response.
 
