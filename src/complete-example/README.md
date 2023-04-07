@@ -763,7 +763,7 @@ and now we have a complete working form that is integrated with our Embedded Tun
 
 # Creating a `Sale` Action Type Form
 
-First let's make some modifications to our `create.php` to allow us to look up an order in a fake database.  These fake orders will have a field named `amount`.  We look up the amount of the order on the backend to prevent clients from setting their own prices.  This concept can be applied broadly to any application that needs to process sales.  The general idea is to process and order or cart first, committing it and all of its records of charges needing to be processed to your backend database.  After that, you can direct your user to a payment page that will then either already have this information stored in session variables or can be looked via an order id.
+First let's make some modifications to our `create.php` to allow us to look up an order in a fake database.  These fake orders will have a field named `amount`.  We look up the amount of the order on the backend to prevent clients from setting their own prices.  This concept can be applied broadly to any application that needs to process sales.  The general idea is to process an order or cart first, committing it and all of its records of charges needing to be processed to your backend database.  After that, you can direct your user to a payment page that will then either already have this information stored in session variables or can be looked via an order id.
 
 `create.php`
 
