@@ -503,12 +503,13 @@ And finally, add a few lines to our javascript:
 +     document.querySelector("button").style.display = "none";
 +     document.getElementById("tunl-frame").style.display = "none";
 +     document.getElementById("success").style.display = "";
++     document.getElementById("success").innerText = results.msg || "Unknown Success";
 +   }
 
 -   if (results.status !== "SUCCESS") console.log("ERROR", results);
 +   if (results.status !== "SUCCESS") {
 +     document.getElementById("error").style.display = "";
-+.    document.getElementById("error").innerText = results.msg || "Unknown Error";
++     document.getElementById("error").innerText = results.msg || "Unknown Error";
 +   }
   });
 })();
@@ -730,6 +731,75 @@ and now we have a complete working form that is integrated with our Embedded Tun
 
 # Creating a `Sale` Action Type Form
 
+First let's make some modifications to our `create.php` to allow us to look up an order in a fake database.  These fake orders will have a field named `amount`.  We look up the amount of the order on the backend to prevent clients from setting their own prices.  This concept can be applied broadly to any application that needs to process sales.  The general idea is to process and order or cart first, committing it and all of its records of charges needing to be processed to your backend database.  After that, you can direct your user to a payment page that will then either already have this information stored in session variables or can be looked via an order id.
+
+`create.php`
+
+```diff
+// create new SDK instance
+$tunl_sdk = new TunlEmbedSDK;
+
++ $fakeOrdersDB = array(
++     "1000" => ['amount' => "123.45"],
++     "2000" => ['amount' => "223.45"],
++     "3000" => ['amount' => "323.45"],
++     "4000" => ['amount' => "423.45"],
++     "5000" => ['amount' => "523.45"],
++     "0" => ['amount' => "0.01"],
++ );
++ $orderID = $_GET['order_id'] ?? "0";
+  $payment_data = array(
+      "cardholdername" => "x", // Temporary value to hide this input
++     "amount" => $fakeOrdersDB[$orderID]['amount'],
++     "action" => "sale"
+  );
+
+// set configuration options
+$tunl_form_options = array(
+    "api_key" =>
+```
+
+Now we can add a url parameter with our order id to our `getFrameURL` call
+
+`checkout.js`
+
+```diff
+(async function () {
+  // create new TunlEmbed SDK instance
+  const tunl = new TunlEmbed();
+
+  // tell the Tunl SDK about Your Server Side endpoint url
+- await tunl.getFrameURL("create.php");
++ await tunl.getFrameURL("create.php?order_id=1000");
+
+  // mount the embedded form in the iframe
+  await tunl.mount("#tunl-frame");
+```
+
+We should also update our button label as we are no longer just verifying the card info, we are actually going to process a sale!!
+
+`index.html`
+
+```diff
+    <label>Comments</label>
+    <input name="comments" />
+
+    <iframe id="tunl-frame"></iframe>
+-   <button style="display: block;">Verify Card</button>
++   <button style="display: block;">Make Payment</button>
+
+</body>
+```
+
+Fill out the form and observe the different response we get.
+
+![image](https://user-images.githubusercontent.com/2927894/230539849-80b1992d-828e-4224-8116-e240d7e61793.png)
+
+If we investigate our Merchant Tunl Account under Reports->Unsettled we should see this transaction in the list.
+
+![image](https://user-images.githubusercontent.com/2927894/230540882-1200e0e6-86f6-4355-b305-78bbf2084c25.png)
+
+
 [Back to Table of Contents](#table-of-contents)
 
 &nbsp;
@@ -745,6 +815,29 @@ and now we have a complete working form that is integrated with our Embedded Tun
 &nbsp;
 
 # Creating a `PreAuth` Action Type Form
+
+Processing a `preauth` transaction is identical to a `sale` with one teeny tiny adjustment:
+
+`create.php`
+
+```diff
+$payment_data = array(
+    "cardholdername" => "x", // Temporary value to hide this input
+    "amount" => $fakeOrdersDB[$orderID]['amount'],
+-   "action" => "sale"
++   "action" => "preauth"
+);
+```
+
+PreAuth Results:
+
+![image](https://user-images.githubusercontent.com/2927894/230541044-64d3e03e-4ff0-498d-9f2f-0d903c12f498.png)
+
+
+Merchant Tunl Report:
+
+![image](https://user-images.githubusercontent.com/2927894/230540770-e688a5c0-ddf2-4e31-ae5e-4dab3caf4453.png)
+
 
 [Back to Table of Contents](#table-of-contents)
 
