@@ -31,7 +31,7 @@
   - [Use the SDK!](#use-the-sdk)
 - [Completing a PREAUTH Transaction](#completing-a-pre-auth-transaction)
   - [Use the SDK!](#use-the-sdk-1)
-- [Tunl Frontend SDK Methods Reference](#)
+- [Tunl Frontend SDK Methods Reference](#tunl-frontend-sdk-methods-reference)
 
 ## Overview
 
