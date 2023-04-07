@@ -855,7 +855,84 @@ Merchant Tunl Report:
 
 # Charging a card using a vault token
 
-Coming Soon
+Get a single use auth token with a 1 minute lifetime (not absolutely necessary, but a GREAT practice)
+
+```bash
+curl -X POST \
+  'https://test-api.tunl.com/api/auth' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "username": "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "lifespan": 1,
+  "scope": "PAYMENT_WRITE",
+  "singleuse": true
+}'
+```
+
+Reponse:
+
+```json
+{
+  "token": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+  "user": {
+  ...
+  }
+}
+```
+
+Use the token to post a vault payment:
+
+```bash
+# vault payment endpoint: /api/vault/token/{token}/payments
+
+curl -X POST \
+  'https://test-api.tunl.com/api/vault/token/xxxxxxxx-yyyy-zzzz-7777-xxxxxxxxxxxx/payments' \
+  --header 'Authorization: Bearer zzzzzzzzzzzzzzzzzzzzzzzzzzzzz' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "amount": "987.65",
+  "action": "sale",
+  "ordernum": "asdf"
+}'
+```
+
+Check your tunl account, you should see this transaction in your unsettle reports
+
+![image](https://user-images.githubusercontent.com/2927894/230546508-069ab20e-4f71-47f4-9fdf-3c2c27534ef5.png)
+
+# Use the SDK!
+
+The SDK turns the multi step process described above into one simple step!  Below is our PHP SDK example:
+
+```php
+<?php
+
+// require SDK
+require_once("../tunl-embed-sdk.php");
+
+// create new SDK instance
+$tunl_sdk = new TunlEmbedSDK;
+
+// set configuration options
+$vault_payment_options = array(
+    "api_key" => "apikey_b5a04055f48a4cf490665764a459de83",
+    "secret" => "55f547c3f5e849f8bc02cbd5093fba7a",
+    "vault_token" => $_GET['vault_token'],
+    "amount" => $_GET['amount'],
+    "ordernum" => $_GET['ordernum']
+);
+
+// get the embeddable form url (similiar to Stripe's create payment intent)
+$vaultPayment = $tunl_sdk->processSaleWithVault($vault_payment_options);
+
+// respond to the request appropriately using JSON
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($vaultPayment);
+
+?>
+```
+
 
 [Back to Table of Contents](#table-of-contents)
 
