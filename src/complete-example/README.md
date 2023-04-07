@@ -2,6 +2,8 @@
 
 ![integrate-form](https://user-images.githubusercontent.com/2927894/230431161-14f1f7c3-e418-4bae-ad0b-619884ed2d17.gif)
 
+# Table of Contents
+
 ## Overview
 
 ### Obtain API Keys
@@ -18,8 +20,21 @@ In this guide, there are 5 main components:
 - The Frontend Tunl SDK Library
 - Your Frontend Itegration Script: [checkout.js](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/complete-example/checkout.js)
 
-
 The links in the list above are to the complete example code in this directory.  This directory is good for a quick start if you don't want to completely build from scratch.  The rest of this guide is how to start from scratch.
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 ## Bare Minimum
 
@@ -27,11 +42,39 @@ Let's start with the bare minimum for each component (using PHP as our server la
 
 > Quick Start Tip: If you have docker and docker-compose setup on your dev machine, you can either clone this whole repo and run `docker-compose up` and begin experimenting... or if you would like a quick start from scratch we provide an [empty starter release](https://github.com/CKC-Technologies/tunl-embedded-payment-form/releases/tag/empty-docker-starter-2) that is just the docker files and an empty `src` directory for you to mold to your liking.
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ### Step 1 - Download Tunl SDK (Optional)
 
 The Server Side SDK is optional as it is only a wrapper around the usual curl/fetch boilerplate.  If you already have your own solution for making POST requests, then refer to the [ALTERNATIVE - SKIP THE SDK](#alternative---skip-the-sdk---generic-curl-example) Example below
 
 Download the [tunl-embed-sdk.php](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/tunl-embed-sdk.php) and place in the same folder as the following `create.php` file or in your include path.
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 ### Step 2 - Create Your Server Endpoint
 
@@ -100,6 +143,20 @@ The options configured above leverage a lot of default parameters.  In particula
 
 [View all available configuration options here](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/README.md#all-available-options)
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ### Step 3 - Create Your Frontend Markup
 
 `index.html`
@@ -130,6 +187,20 @@ The options configured above leverage a lot of default parameters.  In particula
 </html>
 ```
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ### Step 4 - Create Your Frontend Integration Script
 
 `checkout.js`
@@ -159,6 +230,20 @@ The options configured above leverage a lot of default parameters.  In particula
 })();
 ```
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ### Step 5 - Test the results
 
 At this point if you open your browser and point it to your `index.html` you should have a working payment form.  You can test this by clicking the `Verify Card` button.  An empty form should show some validation about the fields being required and the `tunl.submit()` call should return a response object for you to consume in your client side script.  Additionally filling the form out with valid card info should return a `SUCCESS` type response as shown in the images below.
@@ -172,6 +257,20 @@ At this point if you open your browser and point it to your `index.html` you sho
 </table>
 
 ---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 ### Response Format
 
@@ -253,6 +352,20 @@ Likewise, if running a `preauth` type transaction the `transaction_ttid` is requ
 
 Additionally the transaction id's `transaction_ttid` and `void_ttid` can be helpful references if there are any issues with specific transactions.
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 # Going Further
 
 So far, our form works, but it is not very pretty and we are not providing our user with any feedback.  Let's add some CSS and some basic message divs to inform the user of errors or success.
@@ -312,6 +425,20 @@ Don't forget to include the CSS in your `index.html`
 </head>
 ```
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ### Adding Message Divs
 
 Now let's add a `loading`, `error` and `success` div to our markup.
@@ -329,6 +456,20 @@ Now let's add a `loading`, `error` and `success` div to our markup.
 
 </body>
 ```
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 ### Update your integration script
 
@@ -373,11 +514,39 @@ And finally, add a few lines to our javascript:
 })();
 ```
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ### Results
 
 Looks much better!
 
 ![baremindemo](https://user-images.githubusercontent.com/2927894/230372241-b4e2babe-ccf3-4ada-9a8d-b22635a451fa.gif)
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 # Integrating with Your Form
 
@@ -415,6 +584,20 @@ HTML additions:
 </body>
 ```
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 CSS Additions:
 
 ```diff
@@ -441,6 +624,20 @@ CSS Additions:
 Our form now looks like this:
 
 ![image](https://user-images.githubusercontent.com/2927894/230427327-2c7dd633-b6c9-4813-84f8-c3477e7b6b94.png)
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 
 Let's remove the card holder name field from the embedded tunl payment form, by making the following changes to `create.php`
@@ -469,6 +666,20 @@ $tunl_form_options = array(
 We now have a form that looks like this:
 
 ![image](https://user-images.githubusercontent.com/2927894/230428322-22d9974e-7ae0-49bd-b281-633c65577064.png)
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 At this point, if we were to submit we would get an error as the `cardholdername` is not valid.  Let's update our client script `checkout.js` to pass the `cardholdername` directly to the iframe via the Tunl Frontend SDK
 
@@ -503,10 +714,84 @@ and now we have a complete working form that is integrated with our Embedded Tun
 
 ![integrate-form](https://user-images.githubusercontent.com/2927894/230431161-14f1f7c3-e418-4bae-ad0b-619884ed2d17.gif)
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+# Creating a `Sale` Action Type Form
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+# Creating a `PreAuth` Action Type Form
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 # Charging a card using a vault token
 
 Coming Soon
 
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 # Completing a Pre Auth Transaction
 
 Coming Soon
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
