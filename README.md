@@ -82,37 +82,37 @@ If you want to test the webhook feature using the quickstart docker-compose appr
 
 Alternatively, you could point the webhook setting directly to a public endpoint that is not in this project.  Take a look at the [`src/web_hook.php`](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/src/web_hook.php) file for more info on how to structure your webhook to receive data back from the form.
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 # Complete Integration Guide
 
 ### [Click here for our complete step by step integration guide](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example)
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 # Process Overview
 
@@ -176,19 +176,19 @@ curl -X POST https://test-payment.tunl.com/embed/get-card-form-url.php \
    -d '{"api_key":"apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx","secret":"xxxxxxxxxxxxxxxxxxxxxxxxxx","iframe_referer":"https://localhost:8082/"}'
 ```
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 # All Available Options
 
@@ -227,19 +227,19 @@ $tunl_form_options = array(
 
 All other parameters are optional but allow much more control over the output.
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 #### Tunl Form Options
 
@@ -300,19 +300,19 @@ All other parameters are optional but allow much more control over the output.
     </tbody>   
 </table>
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 #### Payment Data Options
 
@@ -363,19 +363,19 @@ All other parameters are optional but allow much more control over the output.
     </tbody>   
 </table>
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 # Tunl Frontend SDK Methods
 
@@ -397,19 +397,19 @@ For the bleeding edge development version use:
 <script src="https://test-payment.tunl.com/embed/assets/tunl-embed-sdk.js"></script>
 ```
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ## Methods
 
@@ -451,19 +451,19 @@ This method doesn't actually return anything, but the server endpoint that it ca
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### `mount(cssSelector: string)`
 
@@ -495,19 +495,19 @@ While this method does not return anything, if you use the `await` keyword it wi
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### `setPaymentData(paymentData: object)`
 
@@ -582,19 +582,19 @@ This method returns a JSON Object.  This isn't particularly useful for anything 
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### `submit()`
 
@@ -666,19 +666,19 @@ Error response:
 ```
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 # Larger Example
 
@@ -716,19 +716,19 @@ This HTML will render a form that looks like so:
 
 In the code above, the User will fill out their details and click the `Make Payment` button.  This button will call some javascript to generate our unique embeddable form url.  We can then udpate the iframe in our mock modal and display it to the User to fill out their credit card details.
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 #### Client Side Javascript
 
@@ -770,19 +770,19 @@ The `start` function uses these results to update the `src` attribute on the ifr
 
 Not exactly a modal, but you can easily imagine that part!
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 #### PHP Backend
 
@@ -841,20 +841,19 @@ function get_amount_from_order($ordernum){
 
 ---
 
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
-
-### &nbsp;
+&nbsp;
 
 # Custom CSS Styling
 
@@ -884,19 +883,19 @@ We should now see something like this:
 
 Woof, not very pretty.  Let's see how we can improve this.
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### HTML Structure and Selectors
 
@@ -926,6 +925,11 @@ Below is what the underlying HTML looks like.  You can see the we have plenty of
                 <label for="tunl_cc_cvv">CVV</label>
                 <input type="text" name="cv" id="tunl_cc_cvv">
             </div>
+            
+            <div class="tunl-field-group combo-error-group">
+                <p class="error-message" style="padding: 5px; height: 55px;"></p>
+                <p class="error-message-height-gauge"></p>
+            </div>
 
             <div class="tunl-field-group submit-group">
                 <button>Submit</button>
@@ -936,19 +940,19 @@ Below is what the underlying HTML looks like.  You can see the we have plenty of
 </body>
 ```
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### Basic customization
 
@@ -976,19 +980,19 @@ Will turn the above 1990's form into the results shown below:
 
 ![image](https://user-images.githubusercontent.com/2927894/228888764-67c1c61a-52a5-4996-8531-fefb53229b82.png)
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### Further Improvement
 
@@ -1037,19 +1041,19 @@ The css above adds some box-shadow and CSS grid to render the following result:
 ![image](https://user-images.githubusercontent.com/2927894/228891875-38885034-2f19-4256-8e1e-500b376ad8c9.png)
 
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 
 # Troubleshooting
@@ -1064,19 +1068,19 @@ Make sure the request to the `get-card-form-url.php` contains all the following 
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### Bad API Key and Secret Combo
 
@@ -1096,19 +1100,19 @@ $tunl_form_options = array(
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### Unauthorized
 
@@ -1123,19 +1127,19 @@ Example generated URL for reference: https://test-payment.tunl.com/embed/load-em
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### Access to this page is restricted to specific domains and must be embedded in an iframe.
 
@@ -1161,19 +1165,19 @@ $tunl_form_options = array(
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### This domain is not authorized to embed this page in an iframe.
 
@@ -1181,19 +1185,19 @@ This message can occur for the same reasons as the previous item.  The `iframe_r
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### Card Authentication Failed
 
@@ -1208,19 +1212,19 @@ The list of possible messages here is the top 4, with DECLINED being the most co
 
 ---
 
-### &nbsp;
+[Back to Table of Contents](#table-of-contents)
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-[Back to table of contents](#table-of-contents)
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
-### &nbsp;
+&nbsp;
 
 ### Unable to complete Transaction. Bad Web Hook Response.
 
