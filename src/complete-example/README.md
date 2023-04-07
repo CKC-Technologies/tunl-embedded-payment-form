@@ -4,6 +4,34 @@
 
 # Table of Contents
 
+- [Overview](#overview)
+- [Components/Concepts](#components)
+- [Starting Steps](#starting-steps)
+  - [Step 1 - Download Tunl SDK (Optional)](#step-1---download-tunl-sdk-optional)
+  - [Step 2 - Create Your Server Endpoint](#step-2---create-your-server-endpoint)
+    - [ALTERNATIVE - SKIP THE SDK - GENERIC CURL EXAMPLE](#alternative---skip-the-sdk---generic-curl-example)
+  - [Step 3 - Create Your Frontend Markup](#step-3---create-your-frontend-markup)
+  - [Step 4 - Create Your Frontend Integration Script](#step-4---create-your-frontend-integration-script)
+  - [Step 5 - Test the Results](#step-5---test-the-results)
+- [Form Submission JSON Response Format](#response-format)
+  - [Full Success Response Example](#full-success-response-example)
+- [Going Further - Make it pretty!](#going-further)
+  - [Adding CSS](#adding-css)
+  - [Adding Message Divs](#adding-message-divs)
+  - [Update your integration script](#update-your-integration-script)
+  - [Results](#results)
+- [Integrating with your own form](#integrating-with-your-form)
+  - [HTML Additions](#html-additions)
+  - [CSS Additions](#css-additions)
+  - [Remove card holder name field from embedded form](#remove-card-holder-name-field-from-embedded-form)
+  - [Update your integration script to use your data](#update-the-integration-script-to-include-your-data)
+- [Creating a SALE action type form](#creating-a-sale-action-type-form)
+- [Creating a PREAUTH action type form](#creating-a-preauth-action-type-form)
+- [Charging a card using a Vault Token](#charging-a-card-using-a-vault-token)
+  - [Use the SDK!](#use-the-sdk)
+- [Completing a PREAUTH Transaction](#completing-a-pre-auth-transaction)
+  - [Use the SDK!](#use-the-sdk-1)
+
 ## Overview
 
 ### Obtain API Keys
@@ -36,7 +64,7 @@ The links in the list above are to the complete example code in this directory. 
 
 &nbsp;
 
-## Bare Minimum
+## Starting Steps
 
 Let's start with the bare minimum for each component (using PHP as our server language). All other frontend code works regardless of your chosen backend framework or language.
 
@@ -557,7 +585,7 @@ Suppose you have a form that already includes Card holder name, street, address,
 
 Let's first add some inputs to our markup and some css to make them look nice.
 
-HTML additions:
+#### HTML additions:
 
 ```diff
 <body>
@@ -599,7 +627,7 @@ HTML additions:
 
 &nbsp;
 
-CSS Additions:
+#### CSS Additions:
 
 ```diff
 ...
@@ -640,6 +668,7 @@ Our form now looks like this:
 
 &nbsp;
 
+#### Remove Card Holder Name Field from embedded form
 
 Let's remove the card holder name field from the embedded tunl payment form, by making the following changes to `create.php`
 
@@ -681,6 +710,8 @@ We now have a form that looks like this:
 &nbsp;
 
 &nbsp;
+
+#### Update the integration script to include your data
 
 At this point, if we were to submit we would get an error as the `cardholdername` is not valid.  Let's update our client script `checkout.js` to pass the `cardholdername` directly to the iframe via the Tunl Frontend SDK
 
