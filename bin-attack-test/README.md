@@ -25,4 +25,4 @@ Any other response is interpreted as a potential failure.  Failures due to reque
 
 Sample Report Screenshot:
 
-![Screen Shot 2023-04-14 at 1 00 14 AM](https://user-images.githubusercontent.com/2927894/232041306-9bbaec11-2fd1-4146-94c2-4eb6fad3425f.png)
+![image](https://user-images.githubusercontent.com/2927894/232043524-c2ecd70e-6251-4e0c-93ca-dc6fd29eaf55.png)
