@@ -21,6 +21,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [`setFocus`](#setfocus)
   - [`setPaymentData`](#setpaymentdatapaymentdata-object)
   - [`checkValidity`](#checkvalidity)
+  - [`addEventListener`](#addeventlistenertype-string-listener-function)
   - [`submit`](#submit)
 - [Larger Example](#larger-example)
   - [Client Side HTML](#client-side-html)
@@ -697,6 +698,74 @@ Error Response:
     "msgID": "db63eebc-ec02-4734-82fe-74801904dfed"
 }
 ```
+
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+### `addEventListener(type: string, listener: function)`
+
+#### Description
+
+This will add an event listener to the tunl payment iframe.  The events that are currently available are:
+
+- `paymentFormBecameValid` - fires when the form is complete and valid
+- `paymentFormBecameInvalid` - fires if the form subsequently becomes INVALID
+
+#### Params
+
+```
+type:       A case-sensitive string representing the event type to listen for.
+
+listener:   The callback function to be fired in response to the event.
+```
+
+#### Examples
+
+```javascript
+tunl.addEventListener("paymentFormBecameValid", (ev) => console.log(ev))
+tunl.addEventListener("paymentFormBecameInvalid", (ev) => console.log(ev))
+```
+
+#### Listener Callback Arguments
+
+```
+event: an object containing basic info from the event
+```
+
+Example `paymentFormBecameValid` Event Object:
+
+```json
+{
+    "event": "paymentFormBecameValid",
+    "msg": "Form is complete and valid.",
+    "msgID": "event"
+}
+```
+
+Example `paymentFormBecameInvalid` Event Object
+
+```json
+{
+    "event": "paymentFormBecameInvalid",
+    "msg": "Form is no longer valid!",
+    "msgID": "event"
+}
+```
+
+
 
 ---
 
