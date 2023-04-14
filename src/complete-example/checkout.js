@@ -10,6 +10,7 @@ async function change(ev) {
   await tunl.getFrameURL("create.php");
   document.querySelector("#frame-wrapper").style.display = "";
   await tunl.mount("#tunl-frame");
+  await tunl.setFocus();
   showMessage("Successfully Loaded!", "success")
 }
 
