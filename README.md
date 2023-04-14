@@ -496,7 +496,7 @@ cssSelector: string - any valid css selector that can be passed into `document.q
 options?: MountOptions -  {
                             url?:               string (iFrame URL),
                             shared_secret?:     string,
-                            disableAutoResize: boolean,
+                            disableAutoResize?: boolean,
                           }
 ```
 
