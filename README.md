@@ -414,7 +414,7 @@ For the bleeding edge development version use:
 
 ## Methods
 
-### `getFrameUrl(URL: string)`
+### `getFrameUrl(URL: string, options: FetchOptions)`
 
 #### Description
 
@@ -424,6 +424,8 @@ This method will call your [server end point](https://github.com/CKC-Technologie
 
 ```
 URL: string - this can be a FQDN and path or a simple relative path
+
+Options: [FetchOptions object](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
 ```
 
 #### Examples
@@ -494,6 +496,48 @@ cssSelector: string - any valid css selector that can be passed into `document.q
 NONE
 
 While this method does not return anything, if you use the `await` keyword it will wait to return until the iframe is ready.  This can be helpful for rendering a loading div/image before calling the `mount` method and then hiding the loader immediately after the `mount` method returns.
+
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+### `setFocus()`
+
+#### Description
+
+This will set the focus on the first input inside the payment iframe.
+
+#### Params
+
+NONE
+
+#### Examples
+
+```javascript
+  // mount the embedded form in the iframe
+  await tunl.mount("iframe");
+  
+  // then immediately set focus on the first input in the iframe
+  await tunl.setFocus();
+```
+
+#### Returns
+
+NONE
+
+While this method does not return anything, if you use the `await` keyword it will wait to return until the iframe input focus is ready.  This can be helpful for rendering a loading div/image before calling the `mount` method and then hiding the loader immediately after the `mount` method returns.
 
 ---
 
