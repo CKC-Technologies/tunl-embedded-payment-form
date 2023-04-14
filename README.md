@@ -423,6 +423,8 @@ For the bleeding edge development version use:
 
 This method will call your [server end point](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example#step-2---create-your-server-endpoint) to retrieve the unique iframe url and client secret.
 
+If you do not want to use this method, you can call the endpoint yourself and pass the data directly into the `mount` function via the `options` argument.  See `mount` function documentation below for more details.
+
 #### Params
 
 ```
@@ -442,6 +444,13 @@ Options: [FetchOptions object](https://developer.mozilla.org/en-US/docs/Web/API/
   await tunl.getFrameURL("relative/path/create.php");
   await tunl.getFrameURL("/absolute/path/create.php");
   await tunl.getFrameURL("https://your.domain.com/create.php");
+  
+  // Example with options
+  await tunl.getFrameURL("create.php", {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify(data)
+  });
 ```
 
 #### Returns
@@ -472,7 +481,7 @@ This method doesn't actually return anything, but the server endpoint that it ca
 
 &nbsp;
 
-### `mount(cssSelector: string)`
+### `mount(cssSelector: string, options?: MountOptions)`
 
 #### Description
 
@@ -483,6 +492,12 @@ This will "mount" the embedded form in the iframe.
 ```
 cssSelector: string - any valid css selector that can be passed into `document.querySelector`
                        the selected element is expected to be an <IFRAME> node/element
+                       
+options?: MountOptions -  {
+                            url?:               string (iFrame URL),
+                            shared_secret?:     string,
+                            disableResizeEvent: boolean,
+                          }
 ```
 
 #### Examples
@@ -492,7 +507,25 @@ cssSelector: string - any valid css selector that can be passed into `document.q
   await tunl.mount("#tunl-frame"); // selects an iframe with the id of "tunl-frame"
   await tunl.mount(".tunl-frame"); // selects an iframe with a class of "tunl-frame"
   await tunl.mount("iframe");      // selects the first <iframe> on the page
+  
+        // how to manually call the create.php endpoint and use the results
+  // await tunl.getFrameURL("create.php");
+  const fetchResp = await fetch("create.php");
+  const frameData = await fetchResp.json();
+  await tunl.mount("#tunl-frame", frameData);
+  
+  // or build the options object yourself:
+  await tunl.mount("#tunl-frame", {
+    url: frameData.url,
+    shared_secret: frameData.shared_secret,
+    disableResizeEvent: true,  // prevent the iframe from controlling its own height
+  });
+  
 ```
+
+#### A note on the `disableResizeEvent`
+
+Our iframe disables overflow (scrollbars) to prevent strange CSS bugs from causing them.  We control height internally by default because we have validation messages that drive the height of the iframe larger and smaller depending on current validation state.  If you would like full control over this behavior you can disable it here and listen for `resize` events.
 
 #### Returns
 
