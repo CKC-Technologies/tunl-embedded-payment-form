@@ -1,5 +1,9 @@
 # Bin Attack Tests
 
+https://user-images.githubusercontent.com/2927894/232045636-d79109b3-9e7d-45c4-83e0-ebe2350e8d7f.mp4
+
+---
+
 The Tunl Embedded Form was tested for vulnerability to bin attacks.  
 
 This exploit script (not included for obvious reasons) generates the following unique values for every test:
@@ -21,7 +25,9 @@ The test expects `Captcha Failed.` response messages.  If this is true, the test
 
 Any other response is interpreted as a potential failure.  Failures due to request "timeouts" are not considered failures.
 
-### [Click here to read the full report](https://ckc-technologies.github.io/tunl-embedded-payment-form/bin-attack-report.html)
+#### This test was ran 100 times each on 5 different browsers for a total of 500 tests.  The total time for the attack took 14 minutes. Which is a little longer the 1.5 seconds each.
+
+### [Click here to see the full test results](https://ckc-technologies.github.io/tunl-embedded-payment-form/bin-attack-report.html)
 
 Sample Report Screenshot:
 
