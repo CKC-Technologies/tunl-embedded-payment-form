@@ -20,6 +20,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [`mount`](#mountcssselector-string)
   - [`setFocus`](#setfocus)
   - [`setPaymentData`](#setpaymentdatapaymentdata-object)
+  - [`checkValidity`](#checkvalidity)
   - [`submit`](#submit)
 - [Larger Example](#larger-example)
   - [Client Side HTML](#client-side-html)
@@ -624,6 +625,76 @@ This method returns a JSON Object.  This isn't particularly useful for anything 
         "accountId": null,
         "contactId": null
     }
+}
+```
+
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+### `checkValidity()`
+
+#### Description
+
+This will check if the payment form inside the iframe is valid or not.  This is not required as the submit function will automatically validate and report errors.  This function is provided to allow for edge cases where your integration may require advanced knowledge of the form's validity before attempting to submit.
+
+#### Params
+
+NONE
+
+#### Examples
+
+```javascript
+async function testCheck(){
+  const results = await tunl.checkValidity().catch((err) => err);
+  console.log(results);
+}
+```
+
+#### Returns
+
+Success Response:
+
+```json
+{
+    "status": "SUCCESS",
+    "msg": "Form entry is valid."
+}
+```
+
+Error Response:
+
+```json
+{
+    "error": "FORM_NOT_VALID",
+    "msg": "Form entry is not valid, please correct errors",
+    "errors": [
+        {
+            "input": "account",
+            "error": "Field is required"
+        },
+        {
+            "input": "expdate",
+            "error": "Field is required"
+        },
+        {
+            "input": "cv",
+            "error": "Field is required"
+        }
+    ],
+    "msgID": "db63eebc-ec02-4734-82fe-74801904dfed"
 }
 ```
 
