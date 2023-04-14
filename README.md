@@ -496,7 +496,7 @@ cssSelector: string - any valid css selector that can be passed into `document.q
 options?: MountOptions -  {
                             url?:               string (iFrame URL),
                             shared_secret?:     string,
-                            disableResizeEvent: boolean,
+                            disableAutoResize: boolean,
                           }
 ```
 
@@ -518,14 +518,14 @@ options?: MountOptions -  {
   await tunl.mount("#tunl-frame", {
     url: frameData.url,
     shared_secret: frameData.shared_secret,
-    disableResizeEvent: true,  // prevent the iframe from controlling its own height
+    disableAutoResize: true,  // prevent the iframe from controlling its own height
   });
   
 ```
 
-#### A note on the `disableResizeEvent`
+#### A note on the `disableAutoResize`
 
-Our iframe disables overflow (scrollbars) to prevent strange CSS bugs from causing them.  We control height internally by default because we have validation messages that drive the height of the iframe larger and smaller depending on current validation state.  If you would like full control over this behavior you can disable it here and listen for `resize` events.
+Our iframe disables overflow (scrollbars) to prevent strange CSS bugs from causing them.  We control height internally by default because we have validation messages that drive the height of the iframe larger and smaller depending on current validation state.  If you would like full control over this behavior you can disable it here and listen for `resize` events.  See the `addEventListener` for more info.
 
 #### Returns
 
@@ -756,6 +756,7 @@ This will add an event listener to the tunl payment iframe.  The events that are
 
 - `paymentFormBecameValid` - fires when the form is complete and valid
 - `paymentFormBecameInvalid` - fires if the form subsequently becomes INVALID
+- `resize` - fires when the internal body height of the iframe changes.
 
 #### Params
 
@@ -770,6 +771,9 @@ listener:   The callback function to be fired in response to the event.
 ```javascript
 tunl.addEventListener("paymentFormBecameValid", (ev) => console.log(ev))
 tunl.addEventListener("paymentFormBecameInvalid", (ev) => console.log(ev))
+tunl.addEventListener("resize", (msgData) => {
+  document.querySelector('#tunl-frame').style.height = msgData.bodyHeight.toString() + "px";
+});
 ```
 
 #### Listener Callback Arguments
