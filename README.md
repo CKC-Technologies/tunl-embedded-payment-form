@@ -18,6 +18,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 - [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
   - [`getFrameURL`](#getframeurlurl-string)
   - [`mount`](#mountcssselector-string)
+  - [`setFocus`](#setfocus)
   - [`setPaymentData`](#setpaymentdatapaymentdata-object)
   - [`submit`](#submit)
 - [Larger Example](#larger-example)
