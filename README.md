@@ -17,7 +17,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Payment Data Options](#payment-data-options)
 - [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
   - [`getFrameURL`](#getframeurlurl-string-options-fetchoptions)
-  - [`mount`](#mountcssselector-string)
+  - [`mount`](#mountcssselector-string-options-mountoptions)
   - [`setFocus`](#setfocus)
   - [`setPaymentData`](#setpaymentdatapaymentdata-object)
   - [`checkValidity`](#checkvalidity)
