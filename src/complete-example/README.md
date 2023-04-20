@@ -1000,6 +1000,7 @@ curl -X POST \
   "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "lifespan": 1,
   "scope": "PAYMENT_WRITE",
+  "singleuse": true
 }'
 ```
 
