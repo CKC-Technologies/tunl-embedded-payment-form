@@ -887,6 +887,10 @@ Merchant Tunl Report:
 
 # Charging a card using a vault token
 
+Get a multiuse token with a lifespan of 1 minute
+
+OR
+
 Get a single use auth token with a 1 minute lifetime (not absolutely necessary, but a GREAT practice)
 
 ```bash
@@ -982,6 +986,8 @@ echo json_encode($vaultPayment);
 # Completing a Pre Auth Transaction
 
 Get a multiuse token with a lifespan of 1 minute
+
+OR
 
 Get a single use auth token with a 1 minute lifetime (not absolutely necessary, but a GREAT practice)
 
