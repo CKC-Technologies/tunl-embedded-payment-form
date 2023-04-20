@@ -332,7 +332,7 @@ All other parameters are optional but allow much more control over the output.
         <tr>
             <td>amount</td>
             <td>"0.01"</td>
-            <td>The amount to be charged (or pre-authorized)</td>
+            <td>The amount to be charged (or pre-authorized). <br><br> Keep in mind that a HOLD for whatever amount you specify here will be applied to the user's card.  If you are just trying to 'verify' that a card is real and can be charged, it is best to leave this setting at the default 0.01.</td>
         </tr>
         <tr>
             <td>cardholdername</td>
