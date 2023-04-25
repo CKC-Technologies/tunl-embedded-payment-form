@@ -16,7 +16,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
 - [`/update-payment-data.php`](#embedupdate-payment-dataphp)
-  - [Important Security Note](#important--you-need-to-be-careful-not-to-pass-this-server_secret-to-the-clientbrowser-this-is-a-temporary-value-that-only-lasts-the-life-of-the-form--it-should-only-be-stored-on-your-server-in-some-kind-of-session-variable)
+  - [Important Security Note](#important--you-should-never-pass-this-server_secret-to-the-clientbrowser-this-is-a-temporary-value-that-only-lasts-the-life-of-the-form-but-knowledge-of-the-server-secret-enables-modifying-payment-data-such-as-the-amount-to-be-charged--it-should-only-be-stored-on-your-server-in-some-kind-of-session-variable)
   - [Example curl call](#example-curl-call)
 - [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
   - [`getFrameURL`](#getframeurlurl-string-options-fetchoptions)
