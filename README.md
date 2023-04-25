@@ -33,7 +33,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Custom Client Responses](#replacing-the-standard-response-entirely-with-your-own-custom-response)
   - [Example Transaction Data](#example-transaction-data)
   - [Example Error Data](#example-error-data)
-  - [Complete WebHook Example]()
+  - [Complete WebHook Example](#complete-webhook-example-with-comments)
 - [Custom CSS Styling](#custom-css-styling)
   - [Default](#default-styling)
   - [Unstyled](#unstyled)
