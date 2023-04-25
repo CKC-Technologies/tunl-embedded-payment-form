@@ -12,7 +12,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 - [Process Overview](#process-overview)
   - [Security Warning](#-security-warning-)
   - [Peek under the hood](#a-peek-under-the-hood)
-- [All Available Options](#all-available-options)
+- [`/get-card-form-url.php` Options](#embedget-card-form-urlphp-options)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
 - [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
@@ -201,7 +201,7 @@ curl -X POST https://test-payment.tunl.com/embed/get-card-form-url.php \
 
 &nbsp;
 
-# All Available Options
+# `/embed/get-card-form-url.php` Options
 
 Below are all of the available options.
 
@@ -231,9 +231,37 @@ $tunl_form_options = array(
     "payment_data" => $payment_data,
     "web_hook" => "https://localhost:8082/web_hook.php",
     "custom_style_url" => "https://localhost:8082/custom-embed.css",
-    "debug_mode" => true
+    "debug_mode" => true,
+    "showCardHolderField" => false,
+    "showStreetField" => false,
+    "showZipField" => false,
 );
 
+```
+
+Example Curl Call:
+
+```bash
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+-H 'Content-Type: application/json; charset=utf-8' \
+--data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true
+}
+EOF
 ```
 
 All other parameters are optional but allow much more control over the output.
@@ -307,6 +335,26 @@ All other parameters are optional but allow much more control over the output.
             <td>debug_mode</td>
             <td>false</td>
             <td>If set to true, puts PHP in an extreme error reporting mode.  Additional data will be displayed related to the embeded form as well. For example: instead of seeing a success page, you will see a prettified JSON object of all the transaction response data and any response returned by the web_hook</td>
+        </tr>
+        <tr>
+            <td id="return_server_token">return_server_token</td>
+            <td>false</td>
+            <td>If set to true, the info returned from this API call will include a <code>server_secret</code> property.  This server secret can be used to perform updates to the embedded form payment data after it has already been loaded and presented to the user.  <br><br><strong>!!!IMPORTANT!!!  You need to be careful not to pass this secret to the client/browser!!! This is a temporary value that only lasts the life of the form.  It should only be stored on your server in some kind of session variable.</strong> </td>
+        </tr>
+        <tr>
+            <td>show_card_holder_field</td>
+            <td>false</td>
+            <td>Force our built in Card Holder Name input field to be displayed in our embedded form.  This is helpful, but for full control and customizeability we recommend that you implement your own fields and styling.  You can then set this data using <a href="#setpaymentdatapaymentdata-object"><code>setPaymentData</code></a> in our client library.</td>
+        </tr>
+        <tr>
+            <td>show_street_field</td>
+            <td>false</td>
+            <td>Force our built in Street input field to be displayed in our embedded form. This is helpful, but for full control and customizeability we recommend that you implement your own fields and styling.  You can then set this data using <a href="#setpaymentdatapaymentdata-object"><code>setPaymentData</code></a> in our client library</td>
+        </tr>
+        <tr>
+            <td>show_zip_field</td>
+            <td>false</td>
+            <td>Force our built in Zip Code input field to be displayed in our embedded form. This is helpful, but for full control and customizeability we recommend that you implement your own fields and styling.  You can then set this data using <a href="#setpaymentdatapaymentdata-object"><code>setPaymentData</code></a> in our client library</td>
         </tr>
     </tbody>   
 </table>
