@@ -155,7 +155,7 @@ echo json_encode($tunl_client_secrets);
 ?>
 ```
 
-This could be called from a client side fetch to retreive the unique url and then dynamically render the iframe.  This code could also be modified to accept a JSON body that would allow some custom options to be passed in. This is demonstrated in our [Complete Example](#complete-example) 
+This could be called from a client side fetch to retreive the unique url and then dynamically render the iframe.  This code could also be modified to accept a JSON body that would allow some custom options to be passed in. This is demonstrated in our [Complete Example](https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example) 
 
 #### !!! Security Warning !!!
 
