@@ -29,6 +29,11 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [PHP Backend](#php-backend)
 - [WebHooks](#webhooks)
   - [Overview](#overview)
+  - [Enabling Your WebHook](#enabling-your-webhook)
+  - [Custom Client Responses](#replacing-the-standard-response-entirely-with-your-own-custom-response)
+  - [Example Transaction Data](#example-transaction-data)
+  - [Example Error Data](#example-error-data)
+  - [Complete WebHook Example]()
 - [Custom CSS Styling](#custom-css-styling)
   - [Default](#default-styling)
   - [Unstyled](#unstyled)
@@ -1089,7 +1094,21 @@ function get_amount_from_order($ordernum){
 
 WebHooks allow you to handle more advanced transaction scenarios.  WebHooks will be called either on a transaction failure (and include error info) OR on transaction success (and include transaction data#returns-5).  WebHook must respond with JSON data.  Any response from your webhook is passed thru back to the client for your own use on the client side.  Optionally, you can disable the standard response all together as shown below.
 
-#### Replacing the standard response entirely with your own custom response.
+### Enabling Your WebHook
+
+Your webhook can be enabled by setting the `web_hook` [tunl form option](https://github.com/CKC-Technologies/tunl-embedded-payment-form#tunl-form-options).
+
+Example in your PHP backend:
+
+```php
+$tunl_form_options = array(
+    ...
+    "web_hook" => "https://ideposit.zwco.cc/web_hook.php",
+    ...
+);
+```
+
+### Replacing the standard response entirely with your own custom response.
 
 To disable the standard response make sure to set a property named `only_return_webhook_response_to_client` to `true` in your webhook json response.  Here is an example in PHP:
 
@@ -1138,6 +1157,60 @@ echo json_encode($newData);
   "curl_error": "",
   "curl_errno": 0
 }
+```
+
+### Complete WebHook Example (with comments)
+
+```php
+<?php
+
+// get json payload
+$json = file_get_contents('php://input');
+$data = json_decode($json, true);
+
+// if this web hook is called with a transaction error
+if ($data['status'] !== "SUCCESS"){
+    // perform your own custom error processing
+    // optionally respond with custom response
+    handleErr($data);
+    exit();
+}
+
+// do stuff with the data
+// at minimum you will likely want to store the following items
+// in your database to be able to perform future actions
+$transaction_id = $data["transaction_ttid"];
+$vault_id = $data["vault_token"];
+$orderNum = $data["transaction_ordernum"];
+
+// handle any errors in your own code
+if ($some_potential_error_inside_the_webhook){
+
+    // respond with any code other than 200
+    // Tunl API will attempt to void the transaction.
+    http_response_code(500);
+    exit();
+}
+
+// returned data is passed thru back to the client
+$newData = array(
+    // you can disable the standard response if you want full control.
+    'only_return_webhook_response_to_client' => true,
+    'other_data' => $data
+);
+echo json_encode($newData);
+
+function handleErr($data){
+    echo json_encode(array(
+        "some_custom" => "error response",
+
+        // Example only: be careful about passing unhandled error data back to the client.
+        // https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html
+        "data" => $data 
+    ));
+}
+
+?>
 ```
 
 ---
