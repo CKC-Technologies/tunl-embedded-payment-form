@@ -1190,7 +1190,7 @@ function get_amount_from_order($ordernum){
 
 ### Overview
 
-WebHooks allow you to handle more advanced transaction scenarios.  WebHooks will be called either on a transaction failure (and include error info) OR on transaction success (and include transaction data#returns-5).  WebHook must respond with JSON data.  Any response from your webhook is passed thru back to the client for your own use on the client side.  Optionally, you can disable the standard response all together as shown below.
+WebHooks allow you to handle more advanced transaction scenarios.  WebHooks will be called either on a transaction failure (and include error info) OR on transaction success (and include transaction data).  WebHook must respond with JSON data.  Any response from your webhook is passed thru back to the client for your own use on the client side.  Optionally, you can disable the standard response all together as shown below.
 
 ### Enabling Your WebHook
 
