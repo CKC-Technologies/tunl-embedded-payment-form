@@ -27,6 +27,8 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Client Side HTML](#client-side-html)
   - [Client Side Javascript](#client-side-javascript)
   - [PHP Backend](#php-backend)
+- [WebHooks](#webhooks)
+  - [Overview](#overview)
 - [Custom CSS Styling](#custom-css-styling)
   - [Default](#default-styling)
   - [Unstyled](#unstyled)
@@ -867,6 +869,7 @@ Full Success Response:
     "transaction_type": "PREAUTH",
     "transaction_phardcode": "SUCCESS",
     "transaction_verbiage": "APPROVED",
+    "transaction_code": "1",
     "vault_token": "088acc40-c28f-4084-a3d2-b801b9c4fccb",
     "webhook_response": [],
     "cardholdername": "Testing Client Set",
@@ -875,7 +878,8 @@ Full Success Response:
     "comments": "client set comments",
     "void_ttid": "309574334",
     "void_phardcode": "SUCCESS",
-    "void_verbiage": "SUCCESS"
+    "void_verbiage": "SUCCESS".
+    "void_code": "1"
 }
 ```
 
@@ -1060,6 +1064,79 @@ function get_amount_from_order($ordernum){
     // $amount = fetch_from_db($ordernum);
     // return $amount;
     return "123.45";
+}
+```
+
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+# WebHooks
+
+### Overview
+
+WebHooks allow you to handle more advanced transaction scenarios.  WebHooks will be called either on a transaction failure (and include error info) OR on transaction success (and include transaction data#returns-5).  WebHook must respond with JSON data.  Any response from your webhook is passed thru back to the client for your own use on the client side.  Optionally, you can disable the standard response all together as shown below.
+
+#### Replacing the standard response entirely with your own custom response.
+
+To disable the standard response make sure to set a property named `only_return_webhook_response_to_client` to `true` in your webhook json response.  Here is an example in PHP:
+
+```php
+$newData = array(
+    'only_return_webhook_response_to_client' => true,
+    'other_data' => $data
+);
+echo json_encode($newData);
+```
+
+### Example Transaction Data
+
+```json
+{
+  "status": "SUCCESS",
+  "msg": "Sale processed successfully.",
+  "embedded_form_action": "sale",
+  "transaction_ttid": "311489097",
+  "transaction_amount": "6545.00",
+  "transaction_authnum": "647828",
+  "transaction_timestamp": "2023-04-25 01:29:38 +0000",
+  "transaction_ordernum": "1682386177",
+  "transaction_type": "SALE",
+  "transaction_phardcode": "SUCCESS",
+  "transaction_verbiage": "APPROVED",
+  "transaction_code": "1",
+  "vault_token": "244cac1d-1893-440f-8ba0-16cf48be2524",
+  "webhook_response": [],
+  "cardholdername": "Zach",
+  "street": "",
+  "zip": "",
+  "comments": ""
+}
+```
+
+### Example Error Data:
+
+```json
+{
+  "data": {
+    "message": "BAD CID",
+    "code": "PaymentException"
+  },
+  "status": 400,
+  "curl_error": "",
+  "curl_errno": 0
 }
 ```
 
