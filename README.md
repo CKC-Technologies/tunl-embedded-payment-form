@@ -13,11 +13,12 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Security Warning](#-security-warning-)
   - [Peek under the hood](#a-peek-under-the-hood)
 - [`/get-card-form-url.php` Options](#embedget-card-form-urlphp-options)
+  - [Example curl call](#example-curl-call)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
 - [`/update-payment-data.php`](#embedupdate-payment-dataphp)
   - [Important Security Note](#important--you-should-never-pass-this-server_secret-to-the-clientbrowser-this-is-a-temporary-value-that-only-lasts-the-life-of-the-form-but-knowledge-of-the-server-secret-enables-modifying-payment-data-such-as-the-amount-to-be-charged--it-should-only-be-stored-on-your-server-in-some-kind-of-session-variable)
-  - [Example curl call](#example-curl-call)
+  - [Example curl call](#example-curl-call-2)
 - [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
   - [`getFrameURL`](#getframeurlurl-string-options-fetchoptions)
   - [`mount`](#mountcssselector-string-options-mountoptions)
@@ -242,7 +243,7 @@ $tunl_form_options = array(
 
 ```
 
-Example Curl Call:
+### Example Curl Call:
 
 ```bash
 #!/bin/bash
