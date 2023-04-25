@@ -15,6 +15,9 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 - [`/get-card-form-url.php` Options](#embedget-card-form-urlphp-options)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
+- [`/update-payment-data.php`](#embedupdate-payment-dataphp)
+  - [Important Security Note](#important--you-need-to-be-careful-not-to-pass-this-server_secret-to-the-clientbrowser-this-is-a-temporary-value-that-only-lasts-the-life-of-the-form--it-should-only-be-stored-on-your-server-in-some-kind-of-session-variable)
+  - [Example curl call](#example-curl-call)
 - [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
   - [`getFrameURL`](#getframeurlurl-string-options-fetchoptions)
   - [`mount`](#mountcssselector-string-options-mountoptions)
@@ -421,6 +424,52 @@ All other parameters are optional but allow much more control over the output.
         </tr>
     </tbody>   
 </table>
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+# `/embed/update-payment-data.php`
+
+This endpoint allows you to update payment data (including `action` and `amount`) for an embedded form after it has already been loaded and displayed to the end user.  In order to use this endpoint, you need the `server_secret` that can optionally be returned by the [`/get-card-form-url.php`](#embedget-card-form-urlphp-options) call.  For this value to be returned in that call you need to set the [`return_server_token`](#user-content-return_server_token) option to `true`.
+
+#### !!!IMPORTANT!!!  You should NEVER pass this `server_secret` to the client/browser!!! This is a temporary value that only lasts the life of the form, but knowledge of the server secret enables modifying payment data such as the `amount` to be charged.  It should only be stored on your server in some kind of session variable.
+
+### Example curl call
+
+```bash
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/update-payment-data.php"
+
+API_URL="https://test-payment.tunl.com/embed/update-payment-data.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+-H 'Content-Type: application/json; charset=utf-8' \
+--data-binary @- << EOF
+{
+  "server_secret": "bf51fbeccef9df9c49b28c5967ac279b51f5ef9dafbba59a7f7210ad5252c34f03f2f187edb0053d",
+  "payment_data": {
+    "amount": "1000.10",
+    "action": "sale",
+    "comments": "set on update endpoint"
+  }
+}
+EOF
+```
 
 [Back to Table of Contents](#table-of-contents)
 
