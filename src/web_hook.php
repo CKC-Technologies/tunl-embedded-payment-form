@@ -4,48 +4,46 @@
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-// do stuff with the data - full example reference below
+// if this web hook is called with a transaction error
+if ($data['status'] !== "SUCCESS"){
+    // perform your own custom error processing
+    // optionally respond with custom response
+    handleErr($data);
+    exit();
+}
+
+// do stuff with the data
 // at minimum you will likely want to store the following items
 // in your database to be able to perform future actions
 $transaction_id = $data["transaction_ttid"];
 $vault_id = $data["vault_token"];
 $orderNum = $data["transaction_ordernum"];
 
-// if there is an error you can respond with any error code
-// if the status code is not 200 the embedded form api
-// will attempt to void the transaction.
-if ($some_potential_error){
+// handle any errors in your own code
+if ($some_potential_error_inside_the_webhook){
+
+    // respond with any code other than 200
+    // Tunl API will attempt to void the transaction.
     http_response_code(500);
     exit();
 }
 
-// returing data is not required 
-// will ONLY be displayed when using 'debug_mode'
-echo json_encode($data);
+// returned data is passed thru back to the client
+$newData = array(
+    // you can disable the standard response if you want full control.
+    'only_return_webhook_response_to_client' => true,
+    'other_data' => $data
+);
+echo json_encode($newData);
 
-// FULL RESPONSE EXAMPLE/REFERENCE:
-//$data = {
-//    "status": "SUCCESS",
-//    "msg": "Card was successfully verified.",
-//    "embedded_form_action": "verify",
-//    "transaction_ttid": "309574334",
-//    "transaction_amount": "0.01",
-//    "transaction_authnum": "522169",
-//    "transaction_timestamp": "2023-04-06 13:26:05 +0000",
-//    "transaction_ordernum": "ClientSetOrderNum",
-//    "transaction_type": "PREAUTH",
-//    "transaction_phardcode": "SUCCESS",
-//    "transaction_verbiage": "APPROVED",
-//    "vault_token": "088acc40-c28f-4084-a3d2-b801b9c4fccb",
-//    "webhook_response": [],
-//    "cardholdername": "Testing Client Set",
-//    "street": "client set street",
-//    "zip": "49203",
-//    "comments": "client set comments",
-//    "void_ttid": "309574334",
-//    "void_phardcode": "SUCCESS",
-//    "void_verbiage": "SUCCESS"
-// }
+function handleErr($data){
+    echo json_encode(array(
+        "some_custom" => "error response",
 
+        // Example only: be careful about passing unhandled error data back to the client.
+        // https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html
+        "data" => $data 
+    ));
+}
 
 ?>
