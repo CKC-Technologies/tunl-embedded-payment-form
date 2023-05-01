@@ -1201,7 +1201,7 @@ Example in your PHP backend:
 ```php
 $tunl_form_options = array(
     ...
-    "web_hook" => "https://ideposit.zwco.cc/web_hook.php",
+    "web_hook" => "https://yoursite.com/web_hook.php",
     ...
 );
 ```
@@ -1218,29 +1218,53 @@ $newData = array(
 echo json_encode($newData);
 ```
 
+The above let's you choose when and what messages should be sent to the client/browser directly from your webhook, any others sent back without this parameter set will include the standard responses from our embedded form server.
+
+---
+
+Or disable it entirely via the create URL call in the options.  This will disable the standard response completely and ONLY respond with data directly from your web_hook.
+
+```php
+$tunl_form_options = array(
+    ...
+    "web_hook" => "https://yoursite.com/web_hook.php",
+    "only_return_webhook_response_to_client" => true,
+    ...
+);
+```
+
 ### Example Transaction Data
 
 ```json
 {
-  "status": "SUCCESS",
-  "msg": "Sale processed successfully.",
-  "embedded_form_action": "sale",
-  "transaction_ttid": "311489097",
-  "transaction_amount": "6545.00",
-  "transaction_authnum": "647828",
-  "transaction_timestamp": "2023-04-25 01:29:38 +0000",
-  "transaction_ordernum": "1682386177",
-  "transaction_type": "SALE",
-  "transaction_phardcode": "SUCCESS",
-  "transaction_verbiage": "APPROVED",
-  "transaction_code": "1",
-  "vault_token": "244cac1d-1893-440f-8ba0-16cf48be2524",
-  "webhook_response": [],
-  "cardholdername": "Zach",
-  "street": "",
-  "zip": "",
-  "comments": ""
+  "data": {
+    {
+      "status": "SUCCESS",
+      "msg": "Sale processed successfully.",
+      "embedded_form_action": "sale",
+      "transaction_ttid": "311489097",
+      "transaction_amount": "6545.00",
+      "transaction_authnum": "647828",
+      "transaction_timestamp": "2023-04-25 01:29:38 +0000",
+      "transaction_ordernum": "1682386177",
+      "transaction_type": "SALE",
+      "transaction_phardcode": "SUCCESS",
+      "transaction_verbiage": "APPROVED",
+      "transaction_code": "1",
+      "vault_token": "244cac1d-1893-440f-8ba0-16cf48be2524",
+      "webhook_response": [],
+      "cardholdername": "Zach",
+      "street": "",
+      "zip": "",
+      "comments": ""
+      ... lot's more!
+    }
+  },
+  "status": 200,
+  "curl_error": "",
+  "curl_errno": 0
 }
+
 ```
 
 ### Example Error Data:
@@ -1267,7 +1291,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 // if this web hook is called with a transaction error
-if ($data['status'] !== "SUCCESS"){
+if ($data['status'] !== 200){
     // perform your own custom error processing
     // optionally respond with custom response
     handleErr($data);
@@ -1281,26 +1305,33 @@ $transaction_id = $data["transaction_ttid"];
 $vault_id = $data["vault_token"];
 $orderNum = $data["transaction_ordernum"];
 
+$some_potential_error_inside_the_webhook = false;
 // handle any errors in your own code
 if ($some_potential_error_inside_the_webhook){
 
     // respond with any code other than 200
     // Tunl API will attempt to void the transaction.
     http_response_code(500);
+    handleErr(array("test" => "test"));
     exit();
 }
 
 // returned data is passed thru back to the client
-$newData = array(
-    // you can disable the standard response if you want full control.
-    'only_return_webhook_response_to_client' => true,
-    'other_data' => $data
-);
-echo json_encode($newData);
+echo json_encode(array(
+    "status" => "SUCCESS",
+    "msg" => "Your Success Message",
+
+    // you can disable the standard response if you want full control. 
+    // (Or set this in the createUrl Options)
+    // 'only_return_webhook_response_to_client' => true,
+    
+    "data" => [ /* YOUR WEBHOOK RESPONSE DATA GOES HERE */ ]
+));
 
 function handleErr($data){
     echo json_encode(array(
-        "some_custom" => "error response",
+        "status" => "ERROR",
+        "msg" => "Your Error Message",
 
         // Example only: be careful about passing unhandled error data back to the client.
         // https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html
