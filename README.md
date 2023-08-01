@@ -45,6 +45,10 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Basic Customization](#basic-customization)
   - [Further Improvement](#further-improvement)
   - [Full Reference Default CSS](#full-default-css)
+- [Dual Vaulting](#dual-vaulting)
+  - [Overview](#dual-vaulting-overview)
+  - [Providers](#dual-vaulting-providers)
+  - [RepayOnline](#repay-online) 
 - [Troubleshooting](#troubleshooting)
   - [400 Malformed Request Body](#receive-400-error-malformed-request-body)
   - [Bad API Key and Secret](#bad-api-key-and-secret-combo)
@@ -1742,6 +1746,257 @@ button {
 }
 
 ```
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+# Dual Vaulting
+
+### Overview
+
+Dual Vaulting allows you to add additional supported providers to vault (tokenize) card data.
+
+The example below shows the basic additional config parameters to setup additional providers.
+
+```diff
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+ -H 'Content-Type: application/json; charset=utf-8' \
+ --data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true,
++   "additional_vault_providers": [
++     { ... another provider },
++     { ... another provider }
++   ]
+}
+EOF
+```
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+### Providers
+
+We currently support RepayOnline, but additional providers are generally easy to add, please inquire if you would like to see a new provider added to the list!
+
+### RepayOnline
+
+The example below shows how to configure RepayOnline as an additional vault provider:
+
+```diff
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+ -H 'Content-Type: application/json; charset=utf-8' \
+ --data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true,
++   "additional_vault_providers": [
++     {
++       "provider": "repayonline",
++       "api-version": "1",
++       "rg-api-secure-token": "xxxxxxx",
++       "rg-api-user": "User_Name",
++       "sandbox": true
++     }
++   ]
+}
+EOF
+```
+
+## Receving the vault tokens
+
+The rest of the process for integration is identical, the only new part will be the availability of the additional vault token(s) inside the response payload.
+
+The current response includes a `vault_token` property that contains the Tunl Vault Token.
+
+The additional RepayOnline token info will be provided inside the `additional_vault_tokens` property in the response payload as shown below:
+
+```diff
+{
+    "status": "SUCCESS",
+    "msg": "Sale processed successfully.",
+    ...
+    "vault_token": "b26aad1c-5ec3-49a5-9702-671875cf2630",
++   "additional_vault_tokens": [
++     {
++       "provider": "repayonline",
++       "token": "1234567890",
++       "full_response": {
++           "card_token_key": 1082478257,
++           "exp_date": "0324",
++           "name_on_card": "Zach",
++           "street": "",
++           "zip": "",
++           "last4": "1111",
++           "card_type": "VISA",
++           "is_eligible_for_disbursement": false,
++           "customer_id": null,
++           "custom_fields": [],
++           "nickname": null,
++           "bin": "411111",
++           "external_payment_token": null,
++           "card_info": {
++               "brand": "VISA",
++               "type": "CREDIT"
++           }
++        }
++     }
++   ]
+    ...
+}
+```
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+### Exception Responses
+
+Errors returned from the additional vault providers will be returned as shown below:
+
+```diff
+{
+    "status": "SUCCESS",
+    "msg": "Sale processed successfully.",
+    ...
+    "vault_token": "b26aad1c-5ec3-49a5-9702-671875cf2630",
+    "additional_vault_tokens": [
+      {
+        "provider": "repayonline",
+-       "token": "1234567890"
++       "error": true,
++       "error_code": 400,
++       "error_msg": "Something Bad Happened!",
++       "error_obj": { ... error object }
+      },
+      { ... other token },
+      { ... other token }
+    ]
+    ...
+}
+```
+
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+### Disabling Tunl Vault
+
+If you are configuring additional vault providers and would like to disable the tunl vault (to make the other providers primary) then you can set the autovault to 'N' in the `payment_data` object.  In the example below, only the repayonline vault provider will be executed:
+
+```diff
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+ -H 'Content-Type: application/json; charset=utf-8' \
+ --data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true,
+    "additional_vault_providers": [
+      {
+        "provider": "repayonline",
+        "api-version": "1",
+        "rg-api-secure-token": "xxxxxxx",
+        "rg-api-user": "User_Name",
+        "sandbox": true
+      },
+      { ... another provider },
+      { ... another provider }
+    ],
++   "payment_data": {
++       "autovault": "N"
++   }
+}
+EOF
+```
+
+### Additional Vault Provider Order
+
+Additional vault providers will be processed in the order that they appear in the `additional_vault_providers` array.
+
+---
 
 [Back to Table of Contents](#table-of-contents)
 
