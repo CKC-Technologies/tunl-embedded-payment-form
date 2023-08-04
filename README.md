@@ -48,7 +48,8 @@ The code in this repo currently uses PHP but could very easily be ported into ot
 - [Dual Vaulting](#dual-vaulting)
   - [Overview](#overview-1)
   - [Providers](#providers)
-  - [RepayOnline](#repayonline)
+    - [RepayOnline](#repayonline)
+    - [BridgePay](#bridgepay)
   - [Exception Responses](#exception-responses)
   - [Disabling Tunl Vault](#disabling-tunl-vault)
   - [Provider Order (Priority)](#additional-vault-provider-order)
@@ -1890,6 +1891,125 @@ The additional RepayOnline token info will be provided inside the `additional_va
 +               "brand": "VISA",
 +               "type": "CREDIT"
 +           }
++        }
++     }
++   ]
+    ...
+}
+```
+---
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+### BridgePay
+
+The example below shows how to configure BridgePay as an additional vault provider:
+
+```diff
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+ -H 'Content-Type: application/json; charset=utf-8' \
+ --data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true,
++   "additional_vault_providers": [
++     {
++       "provider": "bridgepay",
++       "username": "asdf",
++       "password": "asdf",
++       "merchantAccountCode": "123123123",
++       "invoiceNumber": "InvoiceNumber123",
++       "transIndustryType": "DM",
++       "storedCredential": "InitialUnscheduled",
++       "networkReferenceNumber": "60319733",
++       "holderType": "P",
++       "accountType": "R",
++       "sandbox": true
++     }
++   ]
+}
+EOF
+```
+
+## Receving the vault tokens
+
+The rest of the process for integration is identical, the only new part will be the availability of the additional vault token(s) inside the response payload.
+
+The current response includes a `vault_token` property that contains the Tunl Vault Token.
+
+The additional RepayOnline token info will be provided inside the `additional_vault_tokens` property in the response payload as shown below:
+
+```diff
+{
+    "status": "SUCCESS",
+    "msg": "Sale processed successfully.",
+    ...
+    "vault_token": "b26aad1c-5ec3-49a5-9702-671875cf2630",
++   "additional_vault_tokens": [
++     {
++       "provider": "bridgepay",
++       "token": "1000000010261111",
++       "expirationDate": "1234",
++       "full_response": {
++           "cardType": "Visa",
++           "token": "1000000010261111",
++           "authorizationCode": "118192",
++           "referenceNumber": "345694081",
++           "gatewayResult": "00000",
++           "authorizedAmount": 1234,
++           "originalAmount": 1234,
++           "expirationDate": "1234",
++           "cvResult": "N",
++           "cvMessage": "Not matches",
++           "isCommercialCard": "False",
++           "gatewayTransID": "4434790404",
++           "gatewayMessage": "A01 - Approved",
++           "internalMessage": "Approved: 118192 (approval code)",
++           "transactionDate": "20230803",
++           "remainingAmount": 0,
++           "isoCountryCode": "840",
++           "isoCurrencyCode": "USD",
++           "isoTransactionDate": "2023-08-03T21:58:54.523",
++           "isoRequestDate": "2023-08-03T21:58:54.523",
++           "networkReferenceNumber": "345694081",
++           "merchantCategoryCode": "5999",
++           "networkMerchantId": "123123123",
++           "networkTerminalId": "10001",
++           "maskedPAN": "************1111",
++           "responseTypeDescription": "auth",
++           "cardClass": "Credit",
++           "cardModifier": "None",
++           "cardHolderName": "Test",
++           "providerResponseMessage": "Approved",
++           "organizationId": "57182",
++           "merchantAccountCode": "14043001",
++           "requestType": "004",
++           "responseCode": "00000",
++           "responseDescription": "Successful Request"
 +        }
 +     }
 +   ]
