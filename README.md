@@ -20,6 +20,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Important Security Note](#important--you-should-never-pass-this-server_secret-to-the-clientbrowser-this-is-a-temporary-value-that-only-lasts-the-life-of-the-form-but-knowledge-of-the-server-secret-enables-modifying-payment-data-such-as-the-amount-to-be-charged--it-should-only-be-stored-on-your-server-in-some-kind-of-session-variable)
   - [Example curl call](#example-curl-call-1)
 - [Tunl Frontend SDK Methods](#tunl-frontend-sdk-methods)
+  - [Include Client Side Scripts](#import--install)
   - [`getFrameURL`](#getframeurlurl-string-options-fetchoptions)
   - [`mount`](#mountcssselector-string-options-mountoptions)
   - [`setFocus`](#setfocus)
