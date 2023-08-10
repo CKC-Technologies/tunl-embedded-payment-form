@@ -129,7 +129,7 @@ $tunl_form_options = array(
     "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "iframe_referer" => "https://localhost:8082/",
-    // "tunl_sandbox" => true, // required if using test api keys
+    "tunl_sandbox" => true, // required if using test api keys
     "allow_client_side_sdk" => true
 );
 
@@ -687,7 +687,7 @@ $tunl_form_options = array(
     "api_key" => $tunl_api_key,
     "secret" => $tunl_secret,
     "iframe_referer" => "https://ideposit.zwco.cc/",
-    // "tunl_sandbox" => true, // required if using test api keys
+    "tunl_sandbox" => true, // required if using test api keys
     "allow_client_side_sdk" => true,
 +    "payment_data" => $payment_data
 );
