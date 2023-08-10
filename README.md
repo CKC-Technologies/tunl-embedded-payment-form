@@ -156,7 +156,8 @@ $tunl_form_options = array(
     "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "iframe_referer" => "https://localhost:8082/",
-    // "tunl_sandbox" => true, // set this if using a test tunl account api keys
+    "tunl_sandbox" => true, // set this if using a test tunl account api keys
+    "allow_client_side_sdk" => true
 );
 
 // get the embeddable form url and client secret (similiar to Stripe's create payment intent)
@@ -222,6 +223,8 @@ The only ones that are required are:
 - `api_key` - Your Tunl API Key
 - `secret`  - Your Tunl API Secret
 - `iframe_referer` - Your Domain URL
+- `tunl_sandbox` - Not strictly require, but commonly needed during development
+- `allow_client_side_sdk` - Not strictly required, but almost always what you want
 
 ```php
 
@@ -1151,7 +1154,8 @@ Not exactly a modal, but you can easily imagine that part!
         "api_key" => $tunl_api_key, // from secrets.php
         "secret" => $tunl_secret,   // from secrets.php
         "iframe_referer" => "https://localhost:8082/",
-        // "tunl_sandbox" => true,
+        "tunl_sandbox" => true, // set this if using a test tunl account api keys
+        "allow_client_side_sdk" => true
         "payment_data" => $payment_data,
         // "web_hook" => "https://localhost:8082/web_hook.php",
         "custom_style_url" => "https://localhost:8082/custom-embed.css",
@@ -2172,9 +2176,8 @@ Make sure that you have typed in your api key and secret correctly. Additionally
 $tunl_form_options = array(
     "api_key" => "apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
-    ...
-    // "tunl_sandbox" => true, // set this if using a test tunl account api keys
-    ...
+    "tunl_sandbox" => true, // set this if using a test tunl account api keys
+    "allow_client_side_sdk" => true
 );
 ```
 
