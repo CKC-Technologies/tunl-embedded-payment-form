@@ -1,6 +1,6 @@
 <?php
-require_once('./secrets.php');
-require_once("./tunl-embed-sdk.php");
+require_once('../secrets.php');
+require_once("../tunl-embed-sdk.php");
 $tunl_sdk = new TunlEmbedSDK;
 
 $tunl_form_options = array(
