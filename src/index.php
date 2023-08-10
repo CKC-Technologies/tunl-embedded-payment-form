@@ -7,7 +7,7 @@ $tunl_form_options = array(
     "api_key" => $tunl_api_key, // from secrets.php
     "secret" => $tunl_secret,   // from secrets.php
     "iframe_referer" => "https://localhost:8082/",
-    // "tunl_sandbox" => true, // set this if using a test tunl account
+    "tunl_sandbox" => true, // set this if using a test tunl account
 );
 
 $form = $tunl_sdk->get_form_url($tunl_form_options);
