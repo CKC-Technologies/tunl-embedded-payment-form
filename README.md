@@ -231,6 +231,7 @@ $tunl_form_options = array(
     "secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxx",
     "iframe_referer" => "https://localhost:8082/",
     "allow_client_side_sdk" => true,
+    "disable_captcha" => false,
     "tunl_sandbox" => true,
     "payment_data" => $payment_data,
     "web_hook" => "https://localhost:8082/web_hook.php",
@@ -314,6 +315,11 @@ All other parameters are optional but allow much more control over the output.
             <td>allow_client_side_sdk</td>
             <td>false</td>
             <td>Allows the embedded form to be interacted with using the Tunl Frontend SDK.  <a href="https://github.com/CKC-Technologies/tunl-embedded-payment-form/tree/main/src/complete-example">Complete Example Available Here</a> </td>
+        </tr>
+        <tr>
+            <td>disable_captcha</td>
+            <td>false</td>
+            <td> Disables the Captcha System for testing purposes, this switch ONLY works in our TEST environments. </td>
         </tr>
         <tr>
             <td>tunl_sandbox</td>
