@@ -49,7 +49,7 @@ In order to initiate a transfer you need the following items
 
 ##### Endpoint: `POST /api/payments/ach/merchant/{merchantId}`
 
-###### Payload Example:
+##### Payload Example:
 ```json
 {
     "action": "sale",
@@ -91,6 +91,203 @@ fetch(url, options)
   .catch(err => console.error('error:' + err));
 ```
 
+### Response
+
+```json
+{
+  "ttid": "cd8433ce-31be-4069-a156-dde6a1b7d8b9",
+  "transactionCategory": "ACH",
+  "type": "SALE",
+  "card": null,
+  "account": "****************",
+  "routingNumber": null,
+  "accountType": "CHECKING",
+  "expdate": null,
+  "authnum": "2",
+  "batchnum": null,
+  "cardholdername": "Zach TestThree",
+  "avs": null,
+  "cv": null,
+  "ptrannum": "7dbecd10-ba4c-ee11-8154-ee5b5eeb80f1",
+  "clerkid": "Custom Clerk",
+  "stationid": "Station ID",
+  "comments": "My Custom Comments",
+  "amount": "6.00",
+  "timestamp": "2023-09-06 13:34:22 +0000",
+  "verbiage": "PENDING",
+  "code": "2",
+  "phardcode": "PENDING",
+  "entrymode": null,
+  "tax": "1.00",
+  "examount": "2.00",
+  "ordernum": null,
+  "custref": null,
+  "balance": null,
+  "unsettled": true,
+  "vaultId": 0,
+  "vaultToken": null,
+  "contact": {
+    "id": null,
+    "merchantId": 0,
+    "firstName": null,
+    "lastName": null,
+    "email": null,
+    "companyName": null,
+    "street": null,
+    "city": null,
+    "state": null,
+    "zip": null,
+    "homePhone": null,
+    "cellPhone": null,
+    "officePhone": null,
+    "createdDate": null,
+    "modifiedDate": null,
+    "createdBy": null,
+    "modifiedBy": null,
+    "achEnabled": false,
+    "active": false,
+    "locations": null,
+    "accountNumber": 0,
+    "accounts": []
+  },
+  "contactAccount": {
+    "id": null,
+    "contactId": null,
+    "merchantId": 0,
+    "vaultId": 0,
+    "name": null,
+    "description": null,
+    "cardholder": null,
+    "account": null,
+    "expdate": null,
+    "billingStreet": null,
+    "billingZip": null,
+    "accountPaymentMethodType": null,
+    "achAccountResponseDetails": null
+  },
+  "recurringSchedule": {
+    "id": null,
+    "accountId": null,
+    "contactId": null,
+    "merchantId": 0,
+    "transactionAmount": 0.0,
+    "startDate": null,
+    "endDate": null,
+    "installments": 0,
+    "installmentsRemaining": 0,
+    "processEvery": 0,
+    "processInterval": 0,
+    "description": null,
+    "notificationDays": 0,
+    "enableUserAdminNotifications": 0,
+    "enableContactNotifications": 0,
+    "lastPaymentDate": null,
+    "nextPaymentDate": null,
+    "status": 0,
+    "surchargeOn": false,
+    "contact": null,
+    "account": null
+  },
+  "surcharge": {
+    "id": null,
+    "merchantId": 0,
+    "maximumTransaction": 0.0,
+    "allowUserDisabling": false,
+    "recurringSurcharges": false,
+    "refundTransactionSurcharges": false,
+    "receiptHeader": "",
+    "receiptFooter": "",
+    "active": false,
+    "rules": [],
+    "createdDate": null,
+    "modifiedDate": null,
+    "createdBy": null,
+    "modifiedBy": null,
+    "calculatedSurchargeAmount": 0.0,
+    "transactionAmountWithSurchargeAmount": 0.0,
+    "calculatedSurchargeMessage": null
+  },
+  "surchargeAmount": 0.0,
+  "invoice": {
+    "id": null,
+    "merchantId": 0,
+    "contactId": null,
+    "invoiceTitle": null,
+    "invoiceNumber": 0,
+    "taxType": null,
+    "taxRate": 0.0,
+    "totalLatePaymentFee": 0.0,
+    "notificationLastRunDay": 0,
+    "totalAmount": 0.0,
+    "totalCost": 0.0,
+    "totalDiscount": 0.0,
+    "totalTax": 0.0,
+    "totalPaid": 0.0,
+    "totalDue": 0.0,
+    "invoiceReferenceNumber": null,
+    "dueDate": null,
+    "dueDateReminder": false,
+    "dueDateReminderNotificationDays": 0,
+    "allowLatePayment": false,
+    "allowPartialPayment": false,
+    "latePaymentFee": 0.0,
+    "expirationDate": null,
+    "missedPaymentReminderNotificationDays": 0,
+    "status": null,
+    "invoicePayments": [],
+    "invoiceLineItems": [],
+    "attachments": [],
+    "contact": {
+      "id": null,
+      "merchantId": 0,
+      "firstName": null,
+      "lastName": null,
+      "email": null,
+      "companyName": null,
+      "street": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "homePhone": null,
+      "cellPhone": null,
+      "officePhone": null,
+      "createdDate": null,
+      "modifiedDate": null,
+      "createdBy": null,
+      "modifiedBy": null,
+      "achEnabled": false,
+      "active": false,
+      "locations": null,
+      "accountNumber": 0,
+      "accounts": []
+    },
+    "merchant": {
+      "id": 0,
+      "email": null,
+      "merchantDba": null,
+      "merchantName": null,
+      "address": null,
+      "city": null,
+      "state": null,
+      "zipCode": null,
+      "phone": null,
+      "payLink": null
+    },
+    "createdDate": null,
+    "modifiedDate": null,
+    "createdBy": null,
+    "modifiedBy": null,
+    "surchargeOn": false,
+    "totalSurcharge": 0.0
+  },
+  "levelIIIProcessingRequested": null,
+  "levelIIIDataValid": null,
+  "levelIIIValidationFailureDetails": null
+}
+```
+
+---
+
 
 ## Transfer Payload Options
 
@@ -110,6 +307,43 @@ fetch(url, options)
 }
 ```
 
+---
+
+# Listing Transfers
+
+##### Endpoint `GET /api/payments/ach/merchant/{merchantId}/unsettled/{monthsBack}`
+##### Endpoint `GET /api/payments/ach/merchant/{merchantId}/settled/{monthsBack}`
+##### Endpoint `GET /api/payments/ach/merchant/{merchantId}/failed/{monthsBack}`
+
+### Response
+
+An array of transfers with the same structure shown above in what gets returned from initiating a transfer
+
+---
+
+# Retreiving a Transfer by ID
+
+##### Endpoint `GET /api/payments/ach/merchant/{merchantId}/{transactionId}`
+
+### Response
+
+A single transfer with the same structure shown above in what gets returned from initiating a transfer
+
+---
+
+# Void Transfer
+
+##### Endpoint `POST /api/payments/ach/merchant/{merchantId}/void/{transactionId}`
+
+#### Body
+
+None
+
+### Response
+
+A single transfer with the same structure shown above in what gets returned from initiating a transfer
+
+---
 
 # Find Contact ID's and Funding Source Vault ID's
 
