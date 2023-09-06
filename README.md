@@ -301,23 +301,26 @@ The ACH Form provides several convenience features
 - Provides all the legal copy that is required.
 - Automatically Creates Contacts if they don't exist (based on email)
 - Instant Account Verification via Plaid
+- ~~Micro Deposit Flow via Plaid (NOT COMPLETE)~~
 - Automatically Adds a Funding Source to an existing contact if exists (base on email)
 - Automatically initiates a transfer against the newly added funding source.
 - Returns all of the above info for you to store in your own integration to process future transfers against the new funding source.
 
 ### Differences vs the Credit Card Form:
 
-Currently this form provides the Initial Onboarding flow and transfer functionality. 
+While the embedded credit card form allows for any customer to return and fill out card details and make payments at any time, this form is more of a "single-use" flow designed to onboard a customer and capture a funding source to be used in future transfers. Currently this form provides the Initial Customer Onboarding flow and transfer functionality ONLY. 
  
 Returning customers that have already added a funding source via this form is **NOT SUPPORTED**
 
+If a customer that has already been onboarded using this form attempts to go through the process again an error will occur.
+
 Currently as the integrator you will need to provide any "Returning Customer" checkout feature in your application.
 
-We recommened onboarding your customer via your application and storing the funding source details in your database. This will allow you to display those funding sources via your application.  The customer could then select from the list and initiate future transfers.
+You can use the tunl API to fetch a list of funding sources for any existing customers in your system, but how you associate customers in your system with contacts in your Tunl account is up to you.
 
 However, if all that is needed is onboarding the customer/contact and getting a vault token/id that can be used to process future transfers via your integration/service then this form provides exactly everything you need.
 
-If all you need to do is onboard and get a vault id back without initating a transfer you can leave out the `payment_data` key or set it to `null` (Shown below)
+If all you need to do is onboard and get a vault id back without initating a transfer you can leave out the `payment_data` key or set it to `null` (Shown below).
 
 ### Example ACH Curl Call:
 
@@ -344,8 +347,6 @@ curl -X POST $API_URL \
 }
 EOF
 ```
-
-All other parameters are optional but allow much more control over the output.
 
 [Back to Table of Contents](#table-of-contents)
 
