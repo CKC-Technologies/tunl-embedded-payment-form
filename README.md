@@ -16,6 +16,8 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Example curl call](#example-curl-call)
   - [Tunl Form Options](#tunl-form-options)
   - [Payment Data Options](#payment-data-options)
+- [`/get-ach-form-url.php` Options](#embedget-ach-form-urlphp-options)
+  - [ACH Description](#ach-description)
 - [`/update-payment-data.php`](#embedupdate-payment-dataphp)
   - [Important Security Note](#important--you-should-never-pass-this-server_secret-to-the-clientbrowser-this-is-a-temporary-value-that-only-lasts-the-life-of-the-form-but-knowledge-of-the-server-secret-enables-modifying-payment-data-such-as-the-amount-to-be-charged--it-should-only-be-stored-on-your-server-in-some-kind-of-session-variable)
   - [Example curl call](#example-curl-call-1)
@@ -265,6 +267,77 @@ curl -X POST $API_URL \
     "iframe_referer": "https://localhost:8082/",
     "tunl_sandbox": true,
     "allow_client_side_sdk": true
+}
+EOF
+```
+
+All other parameters are optional but allow much more control over the output.
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+# `/embed/get-ach-form-url.php` Options
+
+### ACH Description
+
+The options for the ACH form are identical to the Card Form, the only difference is the endpoint that you call to get an ACH form.
+
+The ACH Form provides several convenience features
+
+- Provides all the legal copy that is required.
+- Automatically Creates Contacts if they don't exist (based on email)
+- Instant Account Verification via Plaid
+- Automatically Adds a Funding Source to an existing contact if exists (base on email)
+- Automatically initiates a transfer against the newly added funding source.
+- Returns all of the above info for you to store in your own integration to process future transfers against the new funding source.
+
+### Differences vs the Credit Card Form:
+
+Currently this form provides the Initial Onboarding flow and transfer functionality. 
+ 
+Returning customers that have already added a funding source via this form is **NOT SUPPORTED**
+
+Currently as the integrator you will need to provide any "Returning Customer" checkout feature in your application.
+
+We recommened onboarding your customer via your application and storing the funding source details in your database. This will allow you to display those funding sources via your application.  The customer could then select from the list and initiate future transfers.
+
+However, if all that is needed is onboarding the customer/contact and getting a vault token/id that can be used to process future transfers via your integration/service then this form provides exactly everything you need.
+
+If all you need to do is onboard and get a vault id back without initating a transfer you can leave out the `payment_data` key or set it to `null` (Shown below)
+
+### Example ACH Curl Call:
+
+```bash
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-ach-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-ach-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+-H 'Content-Type: application/json; charset=utf-8' \
+--data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true,
+    "payment_data" => null,
 }
 EOF
 ```
