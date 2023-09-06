@@ -419,7 +419,7 @@ After the customer has completed the plaid flow your `results` will contain the 
 }
 ```
 
-The important deatils to store for performing future transfers are the `contactId` and the `vaultId`
+The important details to store for performing future transfers are the `contactId` and the `vaultId`
 
 For more information on performing ACH Transfers see our [ACH Guide](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/ACH.md)
 
