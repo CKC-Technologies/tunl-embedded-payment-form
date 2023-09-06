@@ -18,6 +18,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Payment Data Options](#payment-data-options)
 - [`/get-ach-form-url.php` Options](#embedget-ach-form-urlphp-options)
   - [ACH Description](#ach-description)
+  - [Difference vs Credit Card Form](#differences-vs-the-credit-card-form)
 - [`/update-payment-data.php`](#embedupdate-payment-dataphp)
   - [Important Security Note](#important--you-should-never-pass-this-server_secret-to-the-clientbrowser-this-is-a-temporary-value-that-only-lasts-the-life-of-the-form-but-knowledge-of-the-server-secret-enables-modifying-payment-data-such-as-the-amount-to-be-charged--it-should-only-be-stored-on-your-server-in-some-kind-of-session-variable)
   - [Example curl call](#example-curl-call-1)
@@ -288,6 +289,8 @@ All other parameters are optional but allow much more control over the output.
 &nbsp;
 
 # `/embed/get-ach-form-url.php` Options
+
+![image](https://github.com/CKC-Technologies/tunl-embedded-payment-form/assets/2927894/f68ea02a-1f2e-4e6f-b2ed-e3aac4efab25)
 
 ### ACH Description
 
