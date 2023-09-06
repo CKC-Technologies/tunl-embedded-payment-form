@@ -382,3 +382,11 @@ Example Response (Truncated for clarity)
   ...
 ]
 ```
+
+---
+
+### Plaid Integration
+
+Currently adding funding sources requires a Plaid Link integration, we provide endpoints to enable this activity, but they are not meant for direct use.
+
+However, check out our docs for [embedding our ACH form in your application](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/README.md#embedget-ach-form-urlphp-options).  If you are already familiar with integrating our Embedded Credit Card Form you are 90% of the way there!
