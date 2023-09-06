@@ -348,6 +348,82 @@ curl -X POST $API_URL \
 EOF
 ```
 
+### Frontend Scripts
+
+All frontend work is identical to the credit card form.  Here is an example for quick reference:
+
+```javascript
+(async function () {
+  // create new TunlEmbed SDK instance
+  const tunl = new TunlEmbed();
+
+  // tell the Tunl SDK about Your Server Side endpoint url
+  await tunl.getFrameURL("create.php");
+
+  // mount the embedded form in the iframe
+  await tunl.mount("#tunl-frame");
+
+  // create a button click handler
+  document.querySelector("button").addEventListener("click", async () => {
+
+    // request a form submission and capture the results
+    const results = await tunl.submit().catch((err) => err);
+
+    // handle success or failure to your liking
+    if (results.status === "SUCCESS") console.log("SUCCESS", results);
+    if (results.status !== "SUCCESS") console.log("ERROR", results);
+    
+  });
+})();
+```
+
+Once the `tunl.submit()` method is called it will validate the form and kick off the plaid flow:
+
+<img width="507" alt="image" src="https://github.com/CKC-Technologies/tunl-embedded-payment-form/assets/2927894/cb8d847f-e30f-43eb-bf8c-042a81f9964a">
+
+After the customer has completed the plaid flow your `results` will contain the following payload:
+
+```json
+{
+    "status": "SUCCESS",
+    "msg": "Successfully added funding source and initiated transfer.",
+    "ttid": "a8063f30-d5eb-4362-8b02-126249c67eb4",
+    "amount": "65.00",
+    "authnum": "2",
+    "timestamp": "2023-09-06 16:56:54 +0000",
+    "ordernum": null,
+    "type": "SALE",
+    "phardcode": "PENDING",
+    "verbiage": "PENDING",
+    "code": "2",
+    "batchnum": null,
+    "ptrannum": "1546425d-d64c-ee11-8154-ee5b5eeb80f1",
+    "clerkid": "Custom Clerk",
+    "stationid": "Station ID",
+    "entrymode": null,
+    "tax": "1.00",
+    "examount": "2.00",
+    "custref": null,
+    "balance": null,
+    "unsettled": true,
+    "vaultId": 7999,                                            // the tunl vault id, required when performing transfers
+    "accountName": "Plaid Checking",                            // Plaid Provided Account Nickname
+    "accountMask": "0000",                                      // Plaid Provided Account Mask
+    "account_id": "z88N4KJ4wdCnkLJ54dmlhmjPlDowD8clnMbXy",      // the Plaid Account ID
+    "verificationMethod": "PLAID",                              // this currently will always be "PLAID"
+    "micro_deposits": false,                                    // whether or not the user chose micro deposits
+    "contactId": "bbe2d464-1679-4c7a-b35a-5e1748d3a120",        // internal tunl contact id, required when performing transfers
+    "fundingSourceId": "bd17d2d1-ffb1-47f5-b6e0-5a0857acd704",  // internal tunl account id, helpful to retreive later by this id
+    "externalAchId": "914e11c5-bb52-4780-a8e9-d84b4602f4d5",    // external reference (not needed)
+    "bankAccountType": "checking"
+}
+```
+
+The important deatils to store for performing future transfers are the `contactId` and the `vaultId`
+
+For more information on performing ACH Transfers see our [ACH Guide](https://github.com/CKC-Technologies/tunl-embedded-payment-form/blob/main/ACH.md)
+
+
 [Back to Table of Contents](#table-of-contents)
 
 &nbsp;
