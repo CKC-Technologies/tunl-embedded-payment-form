@@ -2000,6 +2000,7 @@ curl -X POST $API_URL \
 +       "api-version": "1",
 +       "rg-api-secure-token": "xxxxxxx",
 +       "rg-api-user": "User_Name",
++       "customer_key": "xxxxxxxx",
 +       "sandbox": true
 +     }
 +   ]
