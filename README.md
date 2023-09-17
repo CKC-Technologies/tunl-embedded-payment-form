@@ -2000,7 +2000,8 @@ curl -X POST $API_URL \
 +       "api-version": "1",
 +       "rg-api-secure-token": "xxxxxxx",
 +       "rg-api-user": "User_Name",
-+       "customer_key": "xxxxxxxx",
++       "rg-merchant-id": "xxxxxxxx", // OPTIONAL, but may be required for users with multiple merchants
++       "customer_key": "xxxxxxxx", // OPTIONAL, but possibly required for tokenizing against a specific customer.
 +       "sandbox": true
 +     }
 +   ]
