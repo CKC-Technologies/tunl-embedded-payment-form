@@ -49,6 +49,7 @@ The code in this repo currently uses PHP but could very easily be ported into ot
   - [Basic Customization](#basic-customization)
   - [Further Improvement](#further-improvement)
   - [Full Reference Default CSS](#full-default-css)
+- [Vault on Insufficient Funds](#vault-on-insufficient-funds)
 - [Dual Vaulting](#dual-vaulting)
   - [Overview](#overview-1)
   - [Providers](#providers)
@@ -1917,6 +1918,50 @@ button {
 
 &nbsp;
 
+# Vault On Insufficient Funds
+
+There are use cases where a transaction may fail for insufficient funds, but you still want to vault the card data as the card data is likely valid.
+
+You can provide the `vault_on_nsf` option in the config as shown below, this will bypass the usual checks and allow a card to be vaulted.  Keep in mind that the transaction is still considered failed.
+
+```diff
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+ -H 'Content-Type: application/json; charset=utf-8' \
+ --data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true,
++   "vault_on_nsf": true
+}
+EOF
+```
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 # Dual Vaulting
 
 ### Overview
@@ -1951,6 +1996,7 @@ curl -X POST $API_URL \
 }
 EOF
 ```
+
 ---
 
 [Back to Table of Contents](#table-of-contents)
