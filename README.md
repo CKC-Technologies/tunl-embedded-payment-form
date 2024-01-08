@@ -241,9 +241,9 @@ $tunl_form_options = array(
     "web_hook" => "https://localhost:8082/web_hook.php",
     "custom_style_url" => "https://localhost:8082/custom-embed.css",
     "debug_mode" => true,
-    "showCardHolderField" => false,
-    "showStreetField" => false,
-    "showZipField" => false,
+    "show_card_holder_field" => false,
+    "show_street_field" => false,
+    "show_zip_field" => false,
 );
 
 ```
