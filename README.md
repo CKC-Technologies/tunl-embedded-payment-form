@@ -2139,7 +2139,6 @@ curl -X POST $API_URL \
 +   "additional_vault_providers": [
 +     {
 +       "provider": "bridgepay",
-+       "pathtivity": false,        # Set to true to use the the pathtivity url instead of bridgepay
 +       "username": "asdf",
 +       "password": "asdf",
 +       "merchantAccountCode": "123123123",
@@ -2150,6 +2149,7 @@ curl -X POST $API_URL \
 +       "holderType": "P",
 +       "accountType": "R",
 +       "sandbox": true
++       # "whitelabel": "pathtivity"          # use whitelabel to select a whitelabel url provider.  pathtivity is currently the only extra option.
 +     }
 +   ]
 }
