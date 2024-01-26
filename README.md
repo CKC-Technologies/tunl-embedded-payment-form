@@ -2150,7 +2150,7 @@ curl -X POST $API_URL \
 +       "accountType": "R",
 +       "sandbox": true
 +       # "whitelabel": "pathtivity"          # use whitelabel to select a whitelabel url provider.  pathtivity is currently the only extra option.
-+       # "operation": "tokenOnly"            # default is "pennyAuth" which will put a "0.01" temp auth hold on the card, "tokenOnly" returns the card token only
++       # "operation": "pennyAuth"            # default is "pennyAuth" which will put a "0.01" temp auth hold on the card, "tokenOnly" (default) returns the card token only
 +     }
 +   ]
 }
