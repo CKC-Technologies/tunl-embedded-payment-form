@@ -1924,6 +1924,8 @@ There are use cases where a transaction may fail for insufficient funds, but you
 
 You can provide the `vault_on_nsf` option in the config as shown below, this will bypass the usual checks and allow a card to be vaulted.  Keep in mind that the transaction is still considered failed.
 
+> NOTE: This will also allow transactions that would normally fail for "BLOCKED 1ST USE"
+
 ```diff
 #!/bin/bash
 
