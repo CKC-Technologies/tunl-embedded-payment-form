@@ -1964,6 +1964,50 @@ EOF
 
 &nbsp;
 
+# Vault Only
+
+There are use cases where you may to vault card information without verifying any card details.
+
+You can provide the `vault_only` option in the config as shown below, this will bypass the usual checks and allow a card to be vaulted regardless of validity.
+
+```diff
+#!/bin/bash
+
+# Production URL
+# API_URL="https://payment.tunl.com/embed/get-card-form-url.php"
+
+API_URL="https://test-payment.tunl.com/embed/get-card-form-url.php"
+API_KEY="apikey_xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+curl -X POST $API_URL \
+ -H 'Content-Type: application/json; charset=utf-8' \
+ --data-binary @- << EOF
+{
+    "api_key": "$API_KEY",
+    "secret": "$SECRET",
+    "iframe_referer": "https://localhost:8082/",
+    "tunl_sandbox": true,
+    "allow_client_side_sdk": true,
++   "vault_only": true
+}
+EOF
+```
+
+[Back to Table of Contents](#table-of-contents)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 # Dual Vaulting
 
 ### Overview
@@ -2050,6 +2094,7 @@ curl -X POST $API_URL \
 +       "rg-api-user": "User_Name",
 +       "rg-merchant-id": "xxxxxxxx", // OPTIONAL, but may be required for users with multiple merchants
 +       "customer_key": "xxxxxxxx", // OPTIONAL, but possibly required for tokenizing against a specific customer.
++       "zero-auth" => true, // this option will add an additional authorization of the card before attempting to tokenize with repay, if this fails the card will not be tokenized with repay.
 +       "sandbox": true
 +     }
 +   ]
