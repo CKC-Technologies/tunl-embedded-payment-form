@@ -2094,6 +2094,7 @@ curl -X POST $API_URL \
 +       "rg-api-user": "User_Name",
 +       "rg-merchant-id": "xxxxxxxx", // OPTIONAL, but may be required for users with multiple merchants
 +       "customer_key": "xxxxxxxx", // OPTIONAL, but possibly required for tokenizing against a specific customer.
++       "zero-auth" => true, // this option will add an additional authorization of the card before attempting to tokenize with repay, if this fails the card will not be tokenized with repay.
 +       "sandbox": true
 +     }
 +   ]
