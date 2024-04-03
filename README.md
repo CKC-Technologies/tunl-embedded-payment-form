@@ -2102,7 +2102,7 @@ curl -X POST $API_URL \
 EOF
 ```
 
-## Receving the vault tokens
+## Receiving the vault tokens
 
 The rest of the process for integration is identical, the only new part will be the availability of the additional vault token(s) inside the response payload.
 
